@@ -15,39 +15,17 @@
   --ink:#0A1628;--ink2:#1C2E40;--muted:#4A5F72;
   --border:#B8CCE0;--border-s:#D0DFE8;
   --accent:#2874A6;--accent-light:#D5E8F5;
-  --success:#1A6B3A;--success-bg:#E5F4EB;
-  --warn:#A0410D;--warn-bg:#FAEEE9;
-  --stat:#1A2F4A;--terra:#C0522A;--terra-light:#FAEEE9;
-  --tr:0.7s;
+  --success:#1A6B3A;--warn:#A0410D;--terra:#C0522A;--terra-light:#FAEEE9;
+  --stat:#1A2F4A;--tr:0.7s;
 }
-[data-theme="grecia"]{
-  --hero-bg:#0A3D62;--hero-bg2:#1A5276;--hero-accent:#F0C040;
-  --hero-s1:#D4AC0D;--hero-s2:#1A8FCA;--hero-s3:#27AE60;
-  --nav-bg:#0A3D62;--nav-border:#1A8FCA;--nav-active:#F0C040;
-  --page-bg:#F0F7FF;--sand:#E8F2FA;--sand2:#D0E5F5;
-  --ink:#051525;--ink2:#0D2B42;--muted:#3A5570;
-  --border:#90C0E0;--border-s:#C0DCF0;
-  --accent:#1A8FCA;--accent-light:#D0EAF8;--stat:#0A3D62;
-}
-[data-theme="turquia"]{
-  --hero-bg:#2C1654;--hero-bg2:#3D2070;--hero-accent:#00BCD4;
-  --hero-s1:#8B0000;--hero-s2:#00838F;--hero-s3:#E65100;
-  --nav-bg:#2C1654;--nav-border:#00838F;--nav-active:#00BCD4;
-  --page-bg:#F5F0FF;--sand:#EDE8F8;--sand2:#DDD5F0;
-  --ink:#1A0A30;--ink2:#2D1A48;--muted:#5A4878;
-  --border:#C0A8E0;--border-s:#D8C8F0;
-  --accent:#00838F;--accent-light:#E0F5F8;--stat:#2C1654;
-}
+[data-theme="grecia"]{--hero-bg:#0A3D62;--hero-bg2:#1A5276;--hero-accent:#F0C040;--hero-s1:#D4AC0D;--hero-s2:#1A8FCA;--hero-s3:#27AE60;--nav-bg:#0A3D62;--nav-border:#1A8FCA;--nav-active:#F0C040;--page-bg:#F0F7FF;--sand:#E8F2FA;--sand2:#D0E5F5;--ink:#051525;--ink2:#0D2B42;--muted:#3A5570;--border:#90C0E0;--border-s:#C0DCF0;--accent:#1A8FCA;--accent-light:#D0EAF8;--stat:#0A3D62;}
+[data-theme="turquia"]{--hero-bg:#2C1654;--hero-bg2:#3D2070;--hero-accent:#00BCD4;--hero-s1:#8B0000;--hero-s2:#00838F;--hero-s3:#E65100;--nav-bg:#2C1654;--nav-border:#00838F;--nav-active:#00BCD4;--page-bg:#F5F0FF;--sand:#EDE8F8;--sand2:#DDD5F0;--ink:#1A0A30;--ink2:#2D1A48;--muted:#5A4878;--border:#C0A8E0;--border-s:#D8C8F0;--accent:#00838F;--accent-light:#E0F5F8;--stat:#2C1654;}
 body,div,button,input,select,textarea,span,p{transition:background-color var(--tr) ease,border-color var(--tr) ease,color var(--tr) ease;}
 html{scroll-behavior:smooth}
 body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);font-size:16px;line-height:1.6}
-
-/* SYNC */
 .sync-bar{background:var(--hero-bg2);color:rgba(255,255,255,.85);font-size:13px;font-weight:700;text-align:center;padding:6px;display:flex;align-items:center;justify-content:center;gap:8px}
 .sdot{width:9px;height:9px;border-radius:50%;background:#4CAF50;flex-shrink:0;transition:background .3s}
 .sdot.warn{background:#FF9800}.sdot.err{background:#F44336}
-
-/* HERO */
 .hero{background:var(--hero-bg);color:#fff;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--hero-s1),var(--hero-s2),var(--hero-s3),var(--hero-s1))}
 .hi{max-width:860px;margin:0 auto;position:relative}
@@ -66,34 +44,31 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
 .theme-row{display:flex;align-items:center;gap:6px;margin-top:1.25rem;background:rgba(0,0,0,.2);border-radius:10px;padding:7px 12px;flex-wrap:wrap}
 .theme-row span{font-size:11px;color:rgba(255,255,255,.45);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .tbtn{border:2px solid transparent;border-radius:16px;padding:4px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;opacity:.7;transition:all .3s}
-.tbtn:hover{opacity:1}
-.tbtn.on{opacity:1;border-color:rgba(255,255,255,.7);color:#fff}
+.tbtn:hover{opacity:1}.tbtn.on{opacity:1;border-color:rgba(255,255,255,.7);color:#fff}
 .tbtn[data-t="amsterdam"]{background:rgba(40,116,166,.6);color:#A8D4F5}
 .tbtn[data-t="grecia"]{background:rgba(26,143,202,.6);color:#AADDF5}
 .tbtn[data-t="turquia"]{background:rgba(0,131,143,.6);color:#A0EEF5}
 .hero-stats{display:flex;gap:2rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.12);flex-wrap:wrap}
 .hstat p:first-child{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:2px;font-weight:700}
 .hstat p:last-child{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700}
-
 .ebanner{background:#FFF8E7;border-bottom:2px solid #E8A020;padding:.6rem 2rem;font-size:14px;font-weight:700;color:#7A4A00;text-align:center;display:none}
 .ebanner.show{display:block}
-
-/* NAV */
 .nav-wrap{background:var(--nav-bg);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--nav-border)}
 .nav{max-width:860px;margin:0 auto;display:flex;padding:0 1rem;overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
 .ntab{padding:.85rem .9rem;font-size:13px;font-weight:700;color:rgba(255,255,255,.6);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;margin-bottom:-3px}
 .ntab:hover{color:rgba(255,255,255,.9)}.ntab.active{color:#fff;border-color:var(--nav-active)}
 .ntab-edit{color:var(--hero-accent) !important}
-
 .main{max-width:860px;margin:0 auto;padding:1.75rem 2rem}
 .section{display:none}.section.active{display:block}
-
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.75rem}
 .scard{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center}
 .scard p:first-child{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px;font-weight:700}
 .scard p:last-child{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--stat)}
+
+/* WEATHER CHIP */
+.weather-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.9);margin-left:8px;vertical-align:middle}
+.weather-chip-day{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;background:var(--accent-light);color:var(--accent);border:1px solid var(--border-s)}
 
 /* DAY CARDS */
 .day-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
@@ -105,52 +80,59 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
 .p-transito{background:#EEF0F3;color:#3A4A5A;border:1px solid #C5CEDA}
 .day-info{flex:1;min-width:0;cursor:pointer}
 .day-info strong{font-size:15px;font-weight:700;display:block;color:var(--ink)}
-.day-info span{font-size:13px;color:var(--muted)}
-.day-meta{display:flex;gap:6px;margin-top:3px;flex-wrap:wrap}
-.day-meta-chip{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--sand);color:var(--muted);border:1px solid var(--border-s)}
+.day-info .day-meta{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
 .day-actions{display:flex;gap:6px;align-items:center}
 .ibtn{background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:13px;font-weight:700;color:var(--ink2);white-space:nowrap}
 .ibtn:hover{background:var(--accent-light);border-color:var(--accent)}
 .chev{font-size:13px;color:var(--muted);transition:transform .2s;cursor:pointer;flex-shrink:0;font-weight:700}
 .chev.open{transform:rotate(90deg)}
 .day-body{display:none;border-top:1.5px solid var(--border-s)}.day-body.open{display:block}
-.elist{padding:.25rem 1rem}
+.elist{padding:.25rem .75rem}
 
-/* EVENT CARDS — rico */
-.ecard{background:var(--card);border:1.5px solid var(--border-s);border-radius:12px;margin:.5rem 0;overflow:hidden}
-.ecard-hd{display:flex;gap:10px;align-items:flex-start;padding:.75rem 1rem}
-.etype-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+/* EVENT CARDS */
+.ecard{background:var(--card);border:1.5px solid var(--border-s);border-radius:12px;margin:.4rem 0;overflow:hidden}
+.ecard-hd{display:flex;gap:10px;align-items:flex-start;padding:.7rem 1rem}
+.etype-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .etype-vuelo{background:#DDEEFF}.etype-hotel{background:#DDEEE5}.etype-actividad{background:#FFF0D8}
 .etype-restaurante{background:#FDDEE8}.etype-traslado{background:#EDEEF0}.etype-otro{background:#F0EDF8}
 .ecard-main{flex:1;min-width:0}
-.ecard-title{font-size:15px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ecard-title{font-size:15px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .ecard-sub{font-size:13px;color:var(--muted);margin-top:2px}
-.ecard-time{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:8px;white-space:nowrap}
-.ecard-actions{display:flex;gap:4px;align-items:flex-start}
-
-/* PAGO BADGE */
-.badge-pago{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;white-space:nowrap}
+.ecard-time{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:8px;white-space:nowrap;flex-shrink:0}
+.ecard-actions{display:flex;gap:4px;align-items:flex-start;flex-shrink:0}
+.badge-pago{font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px;white-space:nowrap}
 .badge-pago.si{background:#E5F4EB;color:#1A6B3A;border:1px solid #A0CCB0}
 .badge-pago.no{background:#FFF3E0;color:#8B4500;border:1px solid #E0B870}
-.badge-pago.na{background:var(--sand);color:var(--muted);border:1px solid var(--border-s)}
-
-/* EVENT DETAIL GRID */
-.edetails{padding:0 1rem .75rem 3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.edetails{padding:0 1rem .7rem 3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .edetail{background:var(--sand);border-radius:8px;padding:7px 10px;border:1px solid var(--border-s)}
 .edetail label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);display:block;margin-bottom:2px;font-weight:700}
 .edetail p{font-size:13px;font-weight:700;color:var(--ink);word-break:break-word}
 .edetail.full{grid-column:1/-1}
 .edetail a{color:var(--accent);text-decoration:none;font-weight:700}
-.edetail a:hover{text-decoration:underline}
+
+/* ACTION BUTTONS on events */
+.ecard-btns{display:flex;gap:6px;flex-wrap:wrap;padding:0 1rem .75rem 3.5rem}
+.action-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);color:var(--ink2);cursor:pointer;text-decoration:none;transition:background .15s}
+.action-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.action-btn.flight{border-color:#B5CCEE;color:#1E4F8C;background:#DDEEFF}
+.action-btn.maps{border-color:#A5CCB5;color:#1A6B3A;background:#DDEEE5}
+.action-btn.route{border-color:#E0C090;color:#6A3500;background:#FFF0D8}
+
+/* ROUTE CONNECTOR */
+.route-connector{display:flex;align-items:center;gap:8px;padding:4px 1rem 4px 3.5rem;margin:0}
+.route-line{width:2px;height:20px;background:var(--border);border-radius:1px;flex-shrink:0;margin-left:17px}
+.route-btn{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-light);border:1px solid var(--border-s);border-radius:8px;padding:3px 10px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.route-btn:hover{background:var(--accent);color:#fff}
 
 /* HOTELS */
 .hotel-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1.35rem;margin-bottom:10px}
 .hotel-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:10px}
 .hotel-name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--stat)}
-.hfields{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:12px}
+.hfields{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:10px}
 .hfield{background:var(--sand);border:1px solid var(--sand2);border-radius:8px;padding:9px 11px}
 .hfield label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:3px;font-weight:700}
 .hfield p{font-size:14px;font-weight:700;color:var(--ink)}
+.hfield a{color:var(--accent);font-weight:700;text-decoration:none;font-size:13px}
 .hotel-obs{font-size:13px;color:var(--warn);background:var(--terra-light);border-left:3px solid var(--terra);border-radius:0 8px 8px 0;padding:9px 13px;font-weight:700;line-height:1.5}
 
 /* CHECKLIST */
@@ -193,8 +175,6 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
 .photo-thumb:hover .photo-del{display:flex}
 .add-photo-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border:2px dashed var(--border);border-radius:12px;cursor:pointer;font-size:15px;font-weight:700;color:var(--accent);background:var(--accent-light);margin-top:4px}
 .upload-prog{background:var(--accent-light);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;font-weight:700;color:var(--stat);margin-top:8px;display:none}
-
-/* VISOR */
 .vbg{display:none;position:fixed;inset:0;background:rgba(10,22,40,.93);z-index:300;align-items:center;justify-content:center;flex-direction:column;padding:1rem}
 .vbg.open{display:flex}
 .vimg{max-width:94vw;max-height:80vh;border-radius:12px;object-fit:contain}
@@ -217,17 +197,9 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
 .pf-empty{color:var(--muted);font-style:italic;font-size:13px}
 .edit-prof-btn{margin-top:12px;width:100%;padding:9px;border:1.5px solid var(--border);border-radius:9px;background:none;font-family:'Lato',sans-serif;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer}
 .edit-prof-btn:hover{background:var(--accent-light)}
-
 .add-row{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:2px dashed var(--border);border-radius:12px;cursor:pointer;font-size:14px;font-weight:700;color:var(--accent);margin-top:6px;background:rgba(0,0,0,.02)}
 .add-row:hover{background:var(--accent-light)}
 .loading{text-align:center;padding:2rem;color:var(--muted);font-size:15px;font-weight:700}
-
-/* EVENT TYPE SELECTOR */
-.etype-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
-.etype-btn{border:2px solid var(--border);border-radius:10px;padding:10px 6px;cursor:pointer;text-align:center;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;color:var(--ink2);background:var(--sand);transition:all .15s}
-.etype-btn:hover{border-color:var(--accent);background:var(--accent-light)}
-.etype-btn.sel{border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
-.etype-btn span{display:block;font-size:22px;margin-bottom:4px}
 
 /* MODAL */
 .mbg{display:none;position:fixed;inset:0;background:rgba(10,22,40,.65);z-index:200;align-items:center;justify-content:center;padding:1rem}
@@ -240,6 +212,7 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
 .frow input,.frow select,.frow textarea{width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:9px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);background:var(--sand);outline:none}
 .frow input:focus,.frow select:focus,.frow textarea:focus{border-color:var(--accent)}
 .frow textarea{resize:vertical;min-height:70px}
+.frow input[type=time],.frow input[type=date]{cursor:pointer}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .f3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .mft{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1.5px solid var(--border-s);flex-wrap:wrap}
@@ -247,27 +220,36 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
 .bsav{padding:9px 18px;border:none;border-radius:9px;background:var(--nav-bg);color:#fff;font-family:'Lato',sans-serif;font-size:14px;cursor:pointer;font-weight:700}
 .bdel{padding:9px 18px;border:none;border-radius:9px;background:#B02020;color:#fff;font-family:'Lato',sans-serif;font-size:14px;cursor:pointer;font-weight:700}
 .sep{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;padding:.5rem 0 .25rem;border-top:1px solid var(--border-s);margin-top:4px}
-.tchk{display:flex;gap:12px;flex-wrap:wrap}
-.tchk label{display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;font-weight:700;color:var(--ink2)}
-.tchk input{cursor:pointer;accent-color:var(--accent);width:18px;height:18px}
 .pago-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--sand);border-radius:9px;border:2px solid var(--border)}
 .pago-row label{font-size:14px;font-weight:700;color:var(--ink2);flex:1}
 .pago-toggle{display:flex;gap:6px}
 .ptbtn{padding:5px 14px;border-radius:8px;font-size:13px;font-weight:700;border:2px solid var(--border);cursor:pointer;font-family:'Lato',sans-serif;background:var(--card);color:var(--muted)}
 .ptbtn.si{background:#E5F4EB;color:#1A6B3A;border-color:#A0CCB0}
 .ptbtn.no{background:#FFF3E0;color:#8B4500;border-color:#E0B870}
+.etype-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+.etype-btn{border:2px solid var(--border);border-radius:10px;padding:10px 6px;cursor:pointer;text-align:center;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;color:var(--ink2);background:var(--sand)}
+.etype-btn:hover{border-color:var(--accent);background:var(--accent-light)}
+.etype-btn.sel{border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
+.etype-btn span{display:block;font-size:22px;margin-bottom:4px}
+.auto-calc{font-size:11px;color:var(--success);font-weight:700;padding:4px 8px;background:#E5F4EB;border-radius:6px;display:inline-block;margin-top:4px}
+/* Hotel selector in event form */
+.hotel-select-row{background:var(--accent-light);border:2px solid var(--accent);border-radius:9px;padding:10px 12px;margin-bottom:8px}
+.hotel-select-row label{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.hotel-select-row select{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'Lato',sans-serif;font-size:14px;color:var(--ink);background:var(--card);outline:none}
 
 @media(max-width:600px){
   .hero{padding:2rem 1.25rem 1.75rem}.main{padding:1.25rem}
   .stats-grid{grid-template-columns:repeat(2,1fr)}.hero-stats{gap:1.25rem}.nav{padding:0 .5rem}
   .f2,.f3{grid-template-columns:1fr}.profile-fields{grid-template-columns:1fr}.pf.full{grid-column:1}
-  .edetails{padding-left:1rem;grid-template-columns:1fr}.etype-grid{grid-template-columns:repeat(3,1fr)}
+  .edetails{padding-left:1rem;grid-template-columns:1fr}
+  .ecard-btns{padding-left:1rem}
+  .route-connector{padding-left:1rem}
+  .etype-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body data-theme="amsterdam">
 
-<!-- VISOR FOTO -->
 <div class="vbg" id="vbg" onclick="closeViewer()">
   <button class="vclose" onclick="closeViewer()">×</button>
   <img class="vimg" id="vimg" src="" alt="">
@@ -278,9 +260,7 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
 <div class="mbg" id="m-ev"><div class="mbox">
   <h3 id="m-ev-t">Evento <button onclick="cm('m-ev')">×</button></h3>
   <input type="hidden" id="ev-di"><input type="hidden" id="ev-ei">
-
-  <!-- TIPO -->
-  <div class="frow" id="ev-tipo-row">
+  <div class="frow">
     <label>Tipo de evento</label>
     <div class="etype-grid">
       <button class="etype-btn sel" data-tipo="vuelo" onclick="selTipo('vuelo',this)"><span>✈</span>Vuelo</button>
@@ -291,13 +271,10 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
       <button class="etype-btn" data-tipo="otro" onclick="selTipo('otro',this)"><span>📌</span>Otro</button>
     </div>
   </div>
-
   <div class="f2">
-    <div class="frow"><label>Hora</label><input id="ev-hora" placeholder="08:00" maxlength="5"></div>
-    <div class="frow"><label>Fecha</label><input id="ev-fecha" placeholder="15 jul" maxlength="10"></div>
+    <div class="frow"><label>Hora de inicio</label><input type="time" id="ev-hora"></div>
+    <div class="frow"><label>Fecha</label><input type="date" id="ev-fecha"></div>
   </div>
-
-  <!-- CAMPOS COMUNES -->
   <div class="frow"><label id="ev-titulo-lbl">Título</label><input id="ev-titulo" placeholder="Ej: Vuelo EZE → AMS"></div>
 
   <!-- VUELO -->
@@ -311,79 +288,87 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
       <div class="frow"><label>Origen</label><input id="v-origen" placeholder="Ej: EZE — Ezeiza"></div>
       <div class="frow"><label>Destino</label><input id="v-destino" placeholder="Ej: AMS — Schiphol"></div>
     </div>
-    <div class="f3">
-      <div class="frow"><label>Salida</label><input id="v-salida" placeholder="08:00"></div>
-      <div class="frow"><label>Llegada</label><input id="v-llegada" placeholder="23:55"></div>
-      <div class="frow"><label>Duración</label><input id="v-duracion" placeholder="13h 30m"></div>
+    <div class="f2">
+      <div class="frow"><label>Hora salida</label><input type="time" id="v-salida" oninput="calcDuracion()"></div>
+      <div class="frow"><label>Hora llegada</label><input type="time" id="v-llegada" oninput="calcDuracion()"></div>
     </div>
+    <div class="frow"><label>Duración <span id="duracion-auto"></span></label><input id="v-duracion" placeholder="Se calcula automáticamente"></div>
     <div class="f2">
       <div class="frow"><label>Terminal</label><input id="v-terminal" placeholder="Ej: Terminal 3"></div>
       <div class="frow"><label>Escala</label><input id="v-escala" placeholder="Ej: Sin escala"></div>
     </div>
     <div class="f2">
-      <div class="frow"><label>Código PNR / reserva</label><input id="v-pnr" placeholder="Ej: ABC123"></div>
+      <div class="frow"><label>Código PNR</label><input id="v-pnr" placeholder="Ej: BWCTB7"></div>
       <div class="frow"><label>Clase</label><input id="v-clase" placeholder="Ej: Economy"></div>
     </div>
-    <div class="frow"><label>Equipaje incluido</label><input id="v-equipaje" placeholder="Ej: 23kg bodega + 10kg cabina"></div>
-    <div class="frow"><label>Notas</label><textarea id="v-notas" placeholder="Check-in online, milla, asientos, etc."></textarea></div>
+    <div class="frow"><label>Equipaje</label><input id="v-equipaje" placeholder="Ej: 23kg bodega + 10kg cabina"></div>
+    <div class="frow"><label>Asientos</label><input id="v-asientos" placeholder="Ej: ER 14A · JN 14B · VS 15A · GG 15B"></div>
+    <div class="frow"><label>Notas</label><textarea id="v-notas" placeholder="Check-in online, millas, upgrade..."></textarea></div>
   </div>
 
-  <!-- HOTEL -->
+  <!-- HOTEL — con selector -->
   <div id="campos-hotel" style="display:none">
-    <div class="sep">Datos del hotel</div>
+    <div class="sep">Hotel</div>
+    <div class="hotel-select-row">
+      <label>🔗 Vincular con hotel ya cargado</label>
+      <select id="h-selector" onchange="fillHotelFromSelector()">
+        <option value="">— Elegir hotel guardado —</option>
+      </select>
+    </div>
     <div class="frow"><label>Nombre del hotel</label><input id="h-nombre" placeholder="Ej: Hotel Atenas Plaka"></div>
-    <div class="frow"><label>Dirección</label><input id="h-dir" placeholder="Calle, ciudad"></div>
+    <div class="frow"><label>Ciudad</label><input id="h-ciudad" placeholder="Ej: Atenas"></div>
+    <div class="frow"><label>Dirección</label><input id="h-dir" placeholder="Calle, barrio, ciudad"></div>
+    <div class="frow"><label>Link Google Maps</label><input id="h-maps" placeholder="https://maps.google.com/..."></div>
     <div class="f2">
-      <div class="frow"><label>Check-in</label><input id="h-cin" placeholder="15 jul · 14:00"></div>
-      <div class="frow"><label>Check-out</label><input id="h-cout" placeholder="17 jul · 11:00"></div>
+      <div class="frow"><label>Fecha check-in</label><input type="date" id="h-cin-fecha"></div>
+      <div class="frow"><label>Hora check-in</label><input type="time" id="h-cin-hora"></div>
+    </div>
+    <div class="f2">
+      <div class="frow"><label>Fecha check-out</label><input type="date" id="h-cout-fecha"></div>
+      <div class="frow"><label>Hora check-out</label><input type="time" id="h-cout-hora"></div>
     </div>
     <div class="f2">
       <div class="frow"><label>N° confirmación</label><input id="h-conf" placeholder="Ej: BK-123456"></div>
-      <div class="frow"><label>Teléfono</label><input id="h-tel" placeholder="+30 21 0000 0000"></div>
+      <div class="frow"><label>Teléfono / WhatsApp</label><input id="h-tel" placeholder="+30 210 000 0000"></div>
     </div>
-    <div class="f2">
-      <div class="frow"><label>Habitaciones</label><input id="h-hab" placeholder="Ej: 2 dobles, vista al mar"></div>
-      <div class="frow"><label>Desayuno</label><input id="h-desayuno" placeholder="Incluido / No incluido"></div>
-    </div>
-    <div class="frow"><label>Link de reserva</label><input id="h-link" placeholder="https://..."></div>
-    <div class="frow"><label>Notas</label><textarea id="h-notas" placeholder="Pedidos especiales, acceso, parking, etc."></textarea></div>
+    <div class="frow"><label>Notas</label><textarea id="h-notas" placeholder="Pedidos especiales, acceso, parking..."></textarea></div>
   </div>
 
   <!-- ACTIVIDAD -->
   <div id="campos-actividad" style="display:none">
     <div class="sep">Datos de la actividad</div>
     <div class="frow"><label>Lugar / dirección</label><input id="a-lugar" placeholder="Ej: Acrópolis, Atenas"></div>
+    <div class="frow"><label>Link Google Maps</label><input id="a-maps" placeholder="https://maps.google.com/..."></div>
     <div class="f2">
-      <div class="frow"><label>Duración estimada</label><input id="a-duracion" placeholder="Ej: 3 horas"></div>
+      <div class="frow"><label>Hora fin</label><input type="time" id="a-horafin"></div>
       <div class="frow"><label>Precio por persona</label><input id="a-precio" placeholder="Ej: €25 / gratis"></div>
     </div>
     <div class="f2">
-      <div class="frow"><label>N° confirmación / entrada</label><input id="a-conf" placeholder="Ej: QR-78901"></div>
-      <div class="frow"><label>Proveedor / guía</label><input id="a-proveedor" placeholder="Ej: GetYourGuide"></div>
+      <div class="frow"><label>N° confirmación</label><input id="a-conf" placeholder="Ej: QR-78901"></div>
+      <div class="frow"><label>Proveedor</label><input id="a-proveedor" placeholder="Ej: GetYourGuide"></div>
     </div>
     <div class="frow"><label>Link de reserva</label><input id="a-link" placeholder="https://..."></div>
-    <div class="frow"><label>Notas</label><textarea id="a-notas" placeholder="Qué llevar, cómo llegar, tips, dress code..."></textarea></div>
+    <div class="frow"><label>Notas / tips</label><textarea id="a-notas" placeholder="Qué llevar, cómo llegar, dress code..."></textarea></div>
   </div>
 
   <!-- RESTAURANTE -->
   <div id="campos-restaurante" style="display:none">
     <div class="sep">Datos del restaurante</div>
-    <div class="frow"><label>Nombre del restaurante</label><input id="r-nombre" placeholder="Ej: Taverna Plaka"></div>
+    <div class="frow"><label>Nombre</label><input id="r-nombre" placeholder="Ej: Taverna Plaka"></div>
     <div class="frow"><label>Dirección</label><input id="r-dir" placeholder="Calle, barrio, ciudad"></div>
+    <div class="frow"><label>Link Google Maps</label><input id="r-maps" placeholder="https://maps.google.com/..."></div>
     <div class="f2">
       <div class="frow"><label>Tipo de cocina</label><input id="r-cocina" placeholder="Ej: Griega, mariscos"></div>
       <div class="frow"><label>Precio estimado</label><input id="r-precio" placeholder="Ej: €30/persona"></div>
     </div>
     <div class="f2">
-      <div class="frow"><label>Horario</label><input id="r-horario" placeholder="Ej: 20:30"></div>
-      <div class="frow"><label>N° de reserva</label><input id="r-conf" placeholder="Ej: 4 personas - nombre"></div>
+      <div class="frow"><label>N° de reserva</label><input id="r-conf" placeholder="Ej: 4 pax — nombre"></div>
+      <div class="frow"><label>Estado reserva</label>
+        <select id="r-reserva"><option value="">— Estado —</option><option>Reserva hecha ✓</option><option>Sin reserva — entrar directo</option><option>Pendiente de reserva</option></select>
+      </div>
     </div>
     <div class="frow"><label>Link / web</label><input id="r-link" placeholder="https://..."></div>
-    <div class="frow">
-      <label>Reserva</label>
-      <select id="r-reserva"><option value="">— Estado —</option><option value="Reserva hecha ✓">Reserva hecha ✓</option><option value="Sin reserva — entrar directo">Sin reserva — entrar directo</option><option value="Pendiente de reserva">Pendiente de reserva</option></select>
-    </div>
-    <div class="frow"><label>Notas</label><textarea id="r-notas" placeholder="Pedidos especiales, alérgenos, vista, ambiente..."></textarea></div>
+    <div class="frow"><label>Notas</label><textarea id="r-notas" placeholder="Pedidos especiales, alérgenos, ambiente..."></textarea></div>
   </div>
 
   <!-- TRASLADO -->
@@ -394,11 +379,16 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
       <div class="frow"><label>Destino</label><input id="tr-destino" placeholder="Ej: Puerto del Pireo"></div>
     </div>
     <div class="f2">
-      <div class="frow"><label>Medio</label>
-        <select id="tr-medio"><option value="">— Elegir —</option><option>Taxi / Uber</option><option>Metro / Subte</option><option>Tren</option><option>Bus</option><option>Ferry</option><option>Auto alquilado</option><option>Transfer privado</option><option>A pie</option></select>
-      </div>
-      <div class="frow"><label>Duración estimada</label><input id="tr-duracion" placeholder="Ej: 40 min"></div>
+      <div class="frow"><label>Link Maps origen</label><input id="tr-maps-o" placeholder="https://maps.google.com/..."></div>
+      <div class="frow"><label>Link Maps destino</label><input id="tr-maps-d" placeholder="https://maps.google.com/..."></div>
     </div>
+    <div class="f2">
+      <div class="frow"><label>Medio</label>
+        <select id="tr-medio"><option value="">— Elegir —</option><option>Taxi / Uber</option><option>Metro / Subte</option><option>Tren</option><option>Bus</option><option>Ferry</option><option>Auto alquilado</option><option>Transfer privado</option><option>A pie</option><option>Bicicleta</option></select>
+      </div>
+      <div class="frow"><label>Hora llegada</label><input type="time" id="tr-llegada" oninput="calcDuracionTraslado()"></div>
+    </div>
+    <div class="frow"><label>Duración <span id="duracion-traslado-auto"></span></label><input id="tr-duracion" placeholder="Se calcula automáticamente"></div>
     <div class="f2">
       <div class="frow"><label>Precio estimado</label><input id="tr-precio" placeholder="Ej: €15 / gratis"></div>
       <div class="frow"><label>N° reserva / línea</label><input id="tr-conf" placeholder="Ej: Línea 3 — Azul"></div>
@@ -408,11 +398,11 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
 
   <!-- OTRO -->
   <div id="campos-otro" style="display:none">
-    <div class="frow"><label>Detalle / descripción</label><textarea id="o-notas" placeholder="Descripción, info útil..."></textarea></div>
     <div class="frow"><label>Lugar / dirección</label><input id="o-lugar" placeholder="Opcional"></div>
+    <div class="frow"><label>Link Google Maps</label><input id="o-maps" placeholder="https://maps.google.com/..."></div>
+    <div class="frow"><label>Detalle</label><textarea id="o-notas" placeholder="Descripción, info útil..."></textarea></div>
   </div>
 
-  <!-- PAGO — siempre visible -->
   <div class="sep">Estado de pago</div>
   <div class="pago-row">
     <label>¿Está pago?</label>
@@ -422,7 +412,6 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
       <button class="ptbtn" id="pago-na" onclick="setPago('na')">— N/A</button>
     </div>
   </div>
-
   <div class="mft">
     <button class="bcnl" onclick="cm('m-ev')">Cancelar</button>
     <button class="bdel" id="b-edel" onclick="delEv()" style="display:none">Eliminar</button>
@@ -436,7 +425,7 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
   <input type="hidden" id="d-idx">
   <div class="frow"><label>Título del día</label><input id="d-label" placeholder="Ej: Amsterdam — canales y museos"></div>
   <div class="f2">
-    <div class="frow"><label>Referencia (Día X / fecha)</label><input id="d-date" placeholder="Día 2 · 16 jul"></div>
+    <div class="frow"><label>Fecha</label><input type="date" id="d-fecha"></div>
     <div class="frow"><label>Ciudad</label>
       <select id="d-city"><option value="amsterdam">Amsterdam</option><option value="grecia">Grecia</option><option value="turquia">Turquía</option><option value="transito">Tránsito / vuelo</option></select>
     </div>
@@ -448,21 +437,46 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
   </div>
 </div></div>
 
-<!-- MODAL HOTEL -->
+<!-- MODAL HOTEL COMPLETO -->
 <div class="mbg" id="m-hotel"><div class="mbox">
   <h3 id="m-hotel-t">Alojamiento <button onclick="cm('m-hotel')">×</button></h3>
   <input type="hidden" id="ht-idx">
-  <div class="frow"><label>Nombre</label><input id="ht-name"></div>
-  <div class="frow"><label>Ciudad / zona</label><input id="ht-city"></div>
+  <div class="frow"><label>Nombre del hotel</label><input id="ht-name" placeholder="Ej: Katikies Santorini"></div>
+  <div class="frow"><label>Ciudad / zona</label><input id="ht-city" placeholder="Ej: Oia, Santorini"></div>
+  <div class="frow"><label>Dirección</label><input id="ht-dir" placeholder="Calle, número, ciudad"></div>
+  <div class="frow"><label>Link Google Maps</label><input id="ht-maps" placeholder="https://maps.google.com/..."></div>
   <div class="f2">
-    <div class="frow"><label>Check-in</label><input id="ht-cin"></div>
-    <div class="frow"><label>Check-out</label><input id="ht-cout"></div>
+    <div class="frow"><label>Fecha check-in</label><input type="date" id="ht-cin-fecha"></div>
+    <div class="frow"><label>Hora check-in</label><input type="time" id="ht-cin-hora"></div>
   </div>
   <div class="f2">
-    <div class="frow"><label>Duración</label><input id="ht-noch"></div>
-    <div class="frow"><label>N° confirmación</label><input id="ht-conf"></div>
+    <div class="frow"><label>Fecha check-out</label><input type="date" id="ht-cout-fecha"></div>
+    <div class="frow"><label>Hora check-out</label><input type="time" id="ht-cout-hora"></div>
   </div>
-  <div class="frow"><label>Observaciones</label><textarea id="ht-obs"></textarea></div>
+  <div class="f2">
+    <div class="frow"><label>N° confirmación</label><input id="ht-conf" placeholder="Ej: BK-123456"></div>
+    <div class="frow"><label>Plataforma</label>
+      <select id="ht-plat"><option value="">— Elegir —</option><option>Booking.com</option><option>Airbnb</option><option>Expedia</option><option>Hotels.com</option><option>Agoda</option><option>Directo con el hotel</option><option>Agencia de viajes</option></select>
+    </div>
+  </div>
+  <div class="f2">
+    <div class="frow"><label>Teléfono / WhatsApp</label><input id="ht-tel" placeholder="+30 210 000 0000"></div>
+    <div class="frow"><label>Habitaciones</label><input id="ht-hab" placeholder="Ej: 2 dobles, vista al mar"></div>
+  </div>
+  <div class="f2">
+    <div class="frow"><label>Desayuno</label><input id="ht-desayuno" placeholder="Incluido / No incluido"></div>
+    <div class="frow"><label>Link de reserva</label><input id="ht-link" placeholder="https://..."></div>
+  </div>
+  <div class="frow"><label>Observaciones</label><textarea id="ht-obs" placeholder="Pedidos especiales, acceso, parking, cancelación..."></textarea></div>
+  <div class="sep">Estado de pago</div>
+  <div class="pago-row">
+    <label>¿Está pago?</label>
+    <div class="pago-toggle">
+      <button class="ptbtn" id="ht-pago-si" onclick="setHotelPago('si')">✓ Sí, pago</button>
+      <button class="ptbtn" id="ht-pago-no" onclick="setHotelPago('no')">⏳ Pendiente</button>
+      <button class="ptbtn" id="ht-pago-na" onclick="setHotelPago('na')">— N/A</button>
+    </div>
+  </div>
   <div class="mft">
     <button class="bcnl" onclick="cm('m-hotel')">Cancelar</button>
     <button class="bdel" id="b-hdel" onclick="delHotel()" style="display:none">Eliminar</button>
@@ -486,24 +500,14 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
 <div class="mbg" id="m-profile"><div class="mbox">
   <h3 id="m-profile-t">Perfil <button onclick="cm('m-profile')">×</button></h3>
   <input type="hidden" id="prof-key">
-  <div class="frow"><label>🍽 Comida — gustos y restricciones</label><textarea id="prof-comida" placeholder="Ej: Le encantan los mariscos. No come cerdo. Alérgica a los frutos secos."></textarea></div>
-  <div class="frow"><label>🛍 Shopping — marcas y gustos</label><textarea id="prof-shopping" placeholder="Ej: Le gusta Zara, H&M. Mercados de pulgas."></textarea></div>
-  <div class="frow"><label>🎯 Actividades favoritas</label><textarea id="prof-actividades" placeholder="Ej: Museos, paseos en globo, fotografía, shows."></textarea></div>
+  <div class="frow"><label>🍽 Comida — gustos y restricciones</label><textarea id="prof-comida"></textarea></div>
+  <div class="frow"><label>🛍 Shopping — marcas y gustos</label><textarea id="prof-shopping"></textarea></div>
+  <div class="frow"><label>🎯 Actividades favoritas</label><textarea id="prof-actividades"></textarea></div>
   <div class="frow"><label>😴 Ritmo de viaje</label>
-    <select id="prof-ritmo">
-      <option value="">— Elegir —</option>
-      <option>🌅 Madrugadora y ritmo intenso</option>
-      <option>😴 Dormilona y ritmo tranquilo</option>
-      <option>🌅 Madrugador y ritmo intenso</option>
-      <option>😴 Dormilón y ritmo tranquilo</option>
-      <option>🔄 Flexible según el día</option>
-    </select>
+    <select id="prof-ritmo"><option value="">— Elegir —</option><option>🌅 Madrugadora y ritmo intenso</option><option>😴 Dormilona y ritmo tranquilo</option><option>🌅 Madrugador y ritmo intenso</option><option>😴 Dormilón y ritmo tranquilo</option><option>🔄 Flexible según el día</option></select>
   </div>
-  <div class="frow"><label>💬 Nota libre para el grupo</label><textarea id="prof-nota" placeholder="Cualquier cosa útil que el grupo deba saber..."></textarea></div>
-  <div class="mft">
-    <button class="bcnl" onclick="cm('m-profile')">Cancelar</button>
-    <button class="bsav" onclick="savProfile()">Guardar perfil</button>
-  </div>
+  <div class="frow"><label>💬 Nota libre para el grupo</label><textarea id="prof-nota"></textarea></div>
+  <div class="mft"><button class="bcnl" onclick="cm('m-profile')">Cancelar</button><button class="bsav" onclick="savProfile()">Guardar perfil</button></div>
 </div></div>
 
 <!-- APP -->
@@ -513,7 +517,7 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
   <div class="hi">
     <p class="hero-dest" id="hero-dest">🌍 El Gran Viaje Mediterráneo</p>
     <h1 id="hero-title">Amsterdam · Grecia<br><em>& Turquía</em></h1>
-    <p class="hero-sub">Verano 2025 · Itinerario compartido · 4 viajeros</p>
+    <p class="hero-sub">Verano 2026 · Itinerario compartido · 4 viajeros</p>
     <div class="travelers" id="tvl-list"></div>
     <div class="theme-row">
       <span>Destino:</span>
@@ -612,14 +616,14 @@ const app = initializeApp({
   appId:"1:82332333762:web:956ab3770a8ddc7d182d5b"
 });
 const db = getFirestore(app);
-
 const setSS=(s,m)=>{document.getElementById('stxt').textContent=m;document.getElementById('sdot').className='sdot'+(s==='ok'?'':s==='warn'?' warn':' err');};
 
 // ── STATE ─────────────────────────────────────────────────
-let EM=false,EVTIPO='vuelo',PAGADO='na';
+let EM=false,EVTIPO='vuelo',PAGADO='na',HOTEL_PAGO='na';
 let AP={i:'ER',a:'av1',n:'Eugenia Romero'};
 let PAP={i:'ER',a:'av1',n:'Eugenia Romero'};
 let DAYS=[],HOTELS=[],CHECKLIST={},CHECKS={},NOTES=[],PHOTOS=[],PROFILES={},AVATARS={};
+let WEATHER_CACHE={};
 
 const TVL=[{i:'ER',n:'Eugenia',fn:'Eugenia Romero',a:'av1'},{i:'JN',n:'Juan José',fn:'Juan José Noguera',a:'av2'},{i:'VS',n:'Valeria',fn:'Valeria Secchi',a:'av3'},{i:'GG',n:'Gustavo',fn:'Gustavo García',a:'av4'}];
 const FN={ER:'Eugenia Romero',JN:'Juan José Noguera',VS:'Valeria Secchi',GG:'Gustavo García'};
@@ -628,9 +632,16 @@ const CL={amsterdam:'Amsterdam',grecia:'Grecia',turquia:'Turquía',transito:'Tr�
 const TIPO_ICO={vuelo:'✈',hotel:'🏨',actividad:'🎯',restaurante:'🍽',traslado:'🚕',otro:'📌'};
 const TIPO_CLS={vuelo:'etype-vuelo',hotel:'etype-hotel',actividad:'etype-actividad',restaurante:'etype-restaurante',traslado:'etype-traslado',otro:'etype-otro'};
 
-// ── TEMA ──────────────────────────────────────────────────
-const TM={amsterdam:{dest:'🇳🇱 Amsterdam',title:'Amsterdam<br><em>& los Países Bajos</em>'},grecia:{dest:'🇬🇷 Grecia',title:'Grecia<br><em>& sus islas</em>'},turquia:{dest:'🇹🇷 Turquía',title:'Turquía<br><em>& Estambul</em>'}};
+// CITY COORDS para clima
+const CITY_COORDS={
+  amsterdam:{lat:52.37,lon:4.89},
+  grecia:{lat:37.97,lon:23.73},
+  turquia:{lat:41.01,lon:28.97},
+  transito:{lat:null,lon:null}
+};
 
+// TEMA
+const TM={amsterdam:{dest:'🇳🇱 Amsterdam',title:'Amsterdam<br><em>& los Países Bajos</em>'},grecia:{dest:'🇬🇷 Grecia',title:'Grecia<br><em>& sus islas</em>'},turquia:{dest:'🇹🇷 Turquía',title:'Turquía<br><em>& Estambul</em>'}};
 window.setTheme=(t,el)=>{
   document.body.setAttribute('data-theme',t);
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
@@ -639,142 +650,310 @@ window.setTheme=(t,el)=>{
 };
 try{const s=localStorage.getItem('tp_theme');if(s){const b=document.querySelector(`[data-t="${s}"]`);if(b)setTheme(s,b);}}catch(e){}
 
-// ── SEED ──────────────────────────────────────────────────
+// ── WEATHER ───────────────────────────────────────────────
+async function getWeather(city, dateStr){
+  // dateStr format: "2026-06-22"
+  const coords=CITY_COORDS[city];
+  if(!coords||!coords.lat||!dateStr||!dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) return null;
+  const key=`${city}_${dateStr}`;
+  if(WEATHER_CACHE[key]) return WEATHER_CACHE[key];
+  try{
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weathercode&timezone=auto&start_date=${dateStr}&end_date=${dateStr}`;
+    const r=await fetch(url);
+    const d=await r.json();
+    if(!d.daily||!d.daily.temperature_2m_max||!d.daily.temperature_2m_max[0]) return null;
+    const wc=d.daily.weathercode[0];
+    const tmax=Math.round(d.daily.temperature_2m_max[0]);
+    const tmin=Math.round(d.daily.temperature_2m_min[0]);
+    const rain=d.daily.precipitation_probability_max[0];
+    const ico=wc<=1?'☀️':wc<=3?'⛅':wc<=48?'🌫':wc<=67?'🌧':wc<=77?'🌨':wc<=82?'🌧':wc<=99?'⛈':'☀️';
+    const result={ico,tmax,tmin,rain};
+    WEATHER_CACHE[key]=result;
+    return result;
+  }catch(e){return null;}
+}
+
+function fmtDateISO(dateStr){
+  // Convert "22 jun" or "2026-06-22" to ISO "2026-06-22"
+  if(!dateStr) return null;
+  if(dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) return dateStr;
+  // Try to parse "22 jun" style
+  const months={ene:'01',feb:'02',mar:'03',abr:'04',may:'05',jun:'06',jul:'07',ago:'08',sep:'09',oct:'10',nov:'11',dic:'12'};
+  const m=dateStr.trim().toLowerCase().match(/^(\d{1,2})\s+([a-z]{3})/);
+  if(m){const mo=months[m[2]];if(mo)return `2026-${mo}-${m[1].padStart(2,'0')}`;}
+  return null;
+}
+
+// ── DURATION CALC ─────────────────────────────────────────
+window.calcDuracion=()=>{
+  const s=document.getElementById('v-salida').value;
+  const l=document.getElementById('v-llegada').value;
+  if(!s||!l) return;
+  const [sh,sm]=s.split(':').map(Number);
+  const [lh,lm]=l.split(':').map(Number);
+  let mins=(lh*60+lm)-(sh*60+sm);
+  if(mins<0) mins+=24*60;
+  const h=Math.floor(mins/60);const m=mins%60;
+  const dur=`${h}h ${m>0?m+'m':''}`.trim();
+  document.getElementById('v-duracion').value=dur;
+  document.getElementById('duracion-auto').textContent=`→ ${dur}`;
+  document.getElementById('duracion-auto').className='auto-calc';
+};
+
+window.calcDuracionTraslado=()=>{
+  const s=document.getElementById('ev-hora').value;
+  const l=document.getElementById('tr-llegada').value;
+  if(!s||!l) return;
+  const [sh,sm]=s.split(':').map(Number);
+  const [lh,lm]=l.split(':').map(Number);
+  let mins=(lh*60+lm)-(sh*60+sm);
+  if(mins<0) mins+=24*60;
+  const h=Math.floor(mins/60);const m=mins%60;
+  const dur=h>0?`${h}h ${m>0?m+'m':''}`.trim():`${m} min`;
+  document.getElementById('tr-duracion').value=dur;
+  document.getElementById('duracion-traslado-auto').textContent=`→ ${dur}`;
+  document.getElementById('duracion-traslado-auto').className='auto-calc';
+};
+
+// ── SORT EVENTS BY TIME ───────────────────────────────────
+function sortEvents(events){
+  return [...events].sort((a,b)=>{
+    const ta=a.hora||'99:99';const tb=b.hora||'99:99';
+    return ta.localeCompare(tb);
+  });
+}
+
+function fmtTimeDisplay(hora){
+  if(!hora) return '';
+  // hora can be "HH:MM" from time input
+  return hora;
+}
+
+function fmtDateDisplay(fecha){
+  if(!fecha) return '';
+  if(fecha.match(/^\d{4}-\d{2}-\d{2}$/)){
+    const [y,m,d]=fecha.split('-');
+    const months=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    return `${parseInt(d)} ${months[parseInt(m)-1]}`;
+  }
+  return fecha;
+}
+
+// ── HOTEL SELECTOR IN EVENT FORM ─────────────────────────
+function populateHotelSelector(){
+  const sel=document.getElementById('h-selector');
+  sel.innerHTML='<option value="">— Elegir hotel guardado —</option>';
+  HOTELS.forEach(h=>{
+    const o=document.createElement('option');
+    o.value=h._id;
+    o.textContent=`${h.name} — ${h.city}`;
+    sel.appendChild(o);
+  });
+}
+
+window.fillHotelFromSelector=()=>{
+  const id=document.getElementById('h-selector').value;
+  if(!id) return;
+  const h=HOTELS.find(x=>x._id===id);
+  if(!h) return;
+  if(h.name) document.getElementById('h-nombre').value=h.name;
+  if(h.city) document.getElementById('h-ciudad').value=h.city;
+  if(h.dir) document.getElementById('h-dir').value=h.dir||'';
+  if(h.maps) document.getElementById('h-maps').value=h.maps||'';
+  if(h.cinFecha) document.getElementById('h-cin-fecha').value=h.cinFecha||'';
+  if(h.cinHora) document.getElementById('h-cin-hora').value=h.cinHora||'';
+  if(h.coutFecha) document.getElementById('h-cout-fecha').value=h.coutFecha||'';
+  if(h.coutHora) document.getElementById('h-cout-hora').value=h.coutHora||'';
+  if(h.conf) document.getElementById('h-conf').value=h.conf||'';
+  if(h.tel) document.getElementById('h-tel').value=h.tel||'';
+  if(h.notas||h.obs) document.getElementById('h-notas').value=h.notas||h.obs||'';
+};
+
+// ── SEED DATA ─────────────────────────────────────────────
 const SD=[
-  {id:'d01',date:'21 jun',label:'Buenos Aires → Amsterdam',city:'transito',order:1,events:[
-    {tipo:'vuelo',hora:'14:40',fecha:'21 jun',titulo:'KLM · EZE → AMS',pago:'si',extras:{aerolinea:'KLM',numero:'KL702',origen:'EZE — Ministro Pistarini, Buenos Aires',destino:'AMS — Amsterdam Schiphol',salida:'14:40',llegada:'08:45 (+1)',duracion:'13h 05m',terminal:'',escala:'Sin escala — vuelo directo',pnr:'BWCTB7',clase:'Economy',equipaje:'Confirmar al emitir',notas:'Emitir tickets antes del 22/04/2026'}},
-    {tipo:'traslado',hora:'08:45',fecha:'22 jun',titulo:'Traslado Schiphol → hotel',pago:'na',extras:{origen:'AMS — Schiphol Terminal 3',destino:'Hotel Amsterdam',medio:'Taxi / Uber',duracion:'30 min',precio:'€40 aprox.',conf:'',notas:'Recoger equipaje primero · Terminal 3'}}
+  {id:'d01',date:'21 jun',fecha:'2026-06-21',label:'Buenos Aires → Amsterdam',city:'transito',order:1,events:[
+    {tipo:'vuelo',hora:'14:40',fecha:'2026-06-21',titulo:'KLM · EZE → AMS',pago:'si',extras:{aerolinea:'KLM',numero:'KL702',origen:'EZE — Ministro Pistarini, Buenos Aires',destino:'AMS — Amsterdam Schiphol',salida:'14:40',llegada:'08:45',duracion:'13h 05m',terminal:'',escala:'Sin escala — vuelo directo',pnr:'BWCTB7',clase:'Economy',equipaje:'23Kg Maleta + 10Kg Carry-On',notas:'Emitir tickets antes del 22/04/2026'}},
+    {tipo:'traslado',hora:'08:45',fecha:'2026-06-22',titulo:'Traslado Schiphol → hotel',pago:'na',extras:{origen:'AMS — Schiphol Terminal 3',destino:'Hotel Amsterdam',mapsO:'',mapsD:'',medio:'Taxi / Uber',llegada:'',duracion:'30 min',precio:'€40 aprox.',conf:'',notas:'Recoger equipaje primero · Terminal 3'}}
   ]},
-  {id:'d02',date:'22 jun',label:'Amsterdam — llegada y primer paseo',city:'amsterdam',order:2,events:[
-    {tipo:'hotel',hora:'09:00',fecha:'22 jun',titulo:'Check-in hotel Amsterdam',pago:'no',extras:{nombre:'',dir:'Amsterdam Centro',cin:'22 jun',cout:'24 jun',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:'Early check-in a confirmar · Solicitar habitaciones contiguas'}},
-    {tipo:'actividad',hora:'11:00',fecha:'22 jun',titulo:'Recorrido en bicicleta — canales',pago:'na',extras:{lugar:'Centro histórico, Amsterdam',duracion:'3 horas',precio:'€15/persona',conf:'',proveedor:'',link:'',notas:'Alquilar en el hotel o en MacBike'}},
-    {tipo:'restaurante',hora:'19:00',fecha:'22 jun',titulo:'Cena barrio Jordaan',pago:'no',extras:{nombre:'',dir:'Barrio Jordaan, Amsterdam',cocina:'',precio:'',horario:'19:00',conf:'',link:'',reserva:'Pendiente de reserva',notas:''}}
+  {id:'d02',date:'22 jun',fecha:'2026-06-22',label:'Amsterdam — llegada y primer paseo',city:'amsterdam',order:2,events:[
+    {tipo:'hotel',hora:'09:00',fecha:'2026-06-22',titulo:'Check-in hotel Amsterdam',pago:'no',extras:{nombre:'',ciudad:'Amsterdam',dir:'Amsterdam Centro',maps:'',cinFecha:'2026-06-22',cinHora:'09:00',coutFecha:'2026-06-24',coutHora:'11:00',conf:'',tel:'',notas:'Early check-in a confirmar · Solicitar habitaciones contiguas'}},
+    {tipo:'actividad',hora:'11:00',fecha:'2026-06-22',titulo:'Recorrido en bicicleta — canales',pago:'na',extras:{lugar:'Centro histórico, Amsterdam',maps:'',horafin:'14:00',precio:'€15/persona',conf:'',proveedor:'',link:'',notas:'Alquilar en el hotel o en MacBike'}},
+    {tipo:'restaurante',hora:'19:00',fecha:'2026-06-22',titulo:'Cena barrio Jordaan',pago:'no',extras:{nombre:'',dir:'Barrio Jordaan, Amsterdam',maps:'',cocina:'',precio:'',conf:'',reserva:'Pendiente de reserva',link:'',notas:''}}
   ]},
-  {id:'d03',date:'23 jun',label:'Amsterdam — museos y cultura',city:'amsterdam',order:3,events:[
-    {tipo:'actividad',hora:'09:30',fecha:'23 jun',titulo:'Rijksmuseum',pago:'no',extras:{lugar:'Museumstraat 1, Amsterdam',duracion:'3 horas',precio:'€22.50/persona',conf:'',proveedor:'',link:'https://www.rijksmuseum.nl',notas:'Reservar entradas online con anticipación'}},
-    {tipo:'actividad',hora:'14:00',fecha:'23 jun',titulo:'Vondelpark — tarde libre',pago:'na',extras:{lugar:'Vondelpark, Amsterdam',duracion:'2 horas',precio:'Gratis',conf:'',proveedor:'',link:'',notas:''}},
-    {tipo:'restaurante',hora:'20:00',fecha:'23 jun',titulo:'Cena barrio De Pijp',pago:'no',extras:{nombre:'',dir:'Barrio De Pijp, Amsterdam',cocina:'',precio:'',horario:'20:00',conf:'',link:'',reserva:'Pendiente de reserva',notas:'Cerca del Mercado Albert Cuyp'}}
+  {id:'d03',date:'23 jun',fecha:'2026-06-23',label:'Amsterdam — museos y cultura',city:'amsterdam',order:3,events:[
+    {tipo:'actividad',hora:'09:30',fecha:'2026-06-23',titulo:'Rijksmuseum',pago:'no',extras:{lugar:'Museumstraat 1, Amsterdam',maps:'https://maps.google.com/?q=Rijksmuseum+Amsterdam',horafin:'12:30',precio:'€22.50/persona',conf:'',proveedor:'',link:'https://www.rijksmuseum.nl',notas:'Reservar entradas online con anticipación'}},
+    {tipo:'actividad',hora:'14:00',fecha:'2026-06-23',titulo:'Vondelpark — tarde libre',pago:'na',extras:{lugar:'Vondelpark, Amsterdam',maps:'',horafin:'16:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:''}},
+    {tipo:'restaurante',hora:'20:00',fecha:'2026-06-23',titulo:'Cena barrio De Pijp',pago:'no',extras:{nombre:'',dir:'Barrio De Pijp, Amsterdam',maps:'',cocina:'',precio:'',conf:'',reserva:'Pendiente de reserva',link:'',notas:'Cerca del Mercado Albert Cuyp'}}
   ]},
-  {id:'d04',date:'24 jun',label:'Amsterdam → Atenas',city:'transito',order:4,events:[
-    {tipo:'traslado',hora:'06:00',fecha:'24 jun',titulo:'Traslado aeropuerto Schiphol',pago:'na',extras:{origen:'Hotel Amsterdam',destino:'AMS — Schiphol',medio:'Tren',duracion:'20 min',precio:'€5',conf:'',notas:'Tren desde Amsterdam Centraal · Salir temprano'}},
-    {tipo:'vuelo',hora:'',fecha:'24 jun',titulo:'Vuelo AMS → ATH',pago:'no',extras:{aerolinea:'',numero:'',origen:'AMS — Amsterdam Schiphol',destino:'ATH — El. Venizelos, Atenas',salida:'',llegada:'',duracion:'~3h 30m',terminal:'',escala:'Sin escala',pnr:'',clase:'Economy',equipaje:'',notas:'Vuelo pendiente de reservar'}},
-    {tipo:'traslado',hora:'',fecha:'24 jun',titulo:'Metro aeropuerto → hotel',pago:'na',extras:{origen:'ATH — El. Venizelos',destino:'Hotel Atenas',medio:'Metro',duracion:'40 min',precio:'€10',conf:'',notas:'Línea 3 — Azul hasta Syntagma'}},
-    {tipo:'hotel',hora:'',fecha:'24 jun',titulo:'Check-in Atenas',pago:'no',extras:{nombre:'',dir:'Zona Monastiraki / Syntagma',cin:'24 jun',cout:'27 jun',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:''}}
+  {id:'d04',date:'24 jun',fecha:'2026-06-24',label:'Amsterdam → Atenas',city:'transito',order:4,events:[
+    {tipo:'traslado',hora:'06:00',fecha:'2026-06-24',titulo:'Traslado aeropuerto Schiphol',pago:'na',extras:{origen:'Hotel Amsterdam',destino:'AMS — Schiphol',mapsO:'',mapsD:'',medio:'Tren',llegada:'06:30',duracion:'20 min',precio:'€5',conf:'',notas:'Tren desde Amsterdam Centraal · Salir temprano'}},
+    {tipo:'vuelo',hora:'08:45',fecha:'2026-06-24',titulo:'Vuelo AMS → ATH',pago:'no',extras:{aerolinea:'',numero:'',origen:'AMS — Amsterdam Schiphol',destino:'ATH — El. Venizelos, Atenas',salida:'08:45',llegada:'13:30',duracion:'3h 45m',terminal:'',escala:'Sin escala',pnr:'',clase:'Economy',equipaje:'',notas:'Vuelo pendiente de reservar'}},
+    {tipo:'traslado',hora:'13:30',fecha:'2026-06-24',titulo:'Metro aeropuerto → hotel',pago:'na',extras:{origen:'ATH — El. Venizelos',destino:'Hotel Atenas',mapsO:'',mapsD:'',medio:'Metro',llegada:'14:15',duracion:'40 min',precio:'€10',conf:'',notas:'Línea 3 — Azul hasta Syntagma'}},
+    {tipo:'hotel',hora:'15:00',fecha:'2026-06-24',titulo:'Check-in Atenas',pago:'no',extras:{nombre:'',ciudad:'Atenas',dir:'Zona Monastiraki / Syntagma',maps:'',cinFecha:'2026-06-24',cinHora:'15:00',coutFecha:'2026-06-27',coutHora:'11:00',conf:'',tel:'',notas:''}}
   ]},
-  {id:'d05',date:'25–26 jun',label:'Atenas — Acrópolis, Plaka y museos',city:'grecia',order:5,events:[
-    {tipo:'actividad',hora:'08:00',fecha:'25 jun',titulo:'Acrópolis de Atenas',pago:'no',extras:{lugar:'Acrópolis, Atenas',duracion:'3 horas',precio:'€20/persona',conf:'',proveedor:'',link:'https://etickets.tap.gr',notas:'Entradas comprar online · Llevar agua y sombrero · Ir temprano'}},
-    {tipo:'restaurante',hora:'12:00',fecha:'25 jun',titulo:'Almuerzo en Plaka',pago:'na',extras:{nombre:'',dir:'Barrio Plaka, Atenas',cocina:'Griega tradicional',precio:'€20/persona',horario:'12:00',conf:'',link:'',reserva:'Sin reserva — entrar directo',notas:''}},
-    {tipo:'actividad',hora:'16:00',fecha:'25 jun',titulo:'Museo Arqueológico Nacional',pago:'no',extras:{lugar:'28is Oktovriou 44, Atenas',duracion:'2 horas',precio:'€12/persona',conf:'',proveedor:'',link:'',notas:'Colección de oro micénico · Recomendado'}},
-    {tipo:'actividad',hora:'10:00',fecha:'26 jun',titulo:'Barrio Monastiraki y mercado de pulgas',pago:'na',extras:{lugar:'Monastiraki, Atenas',duracion:'3 horas',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Sábado es el mejor día para el mercado de pulgas'}}
+  {id:'d05',date:'25–26 jun',fecha:'2026-06-25',label:'Atenas — Acrópolis, Plaka y museos',city:'grecia',order:5,events:[
+    {tipo:'actividad',hora:'08:00',fecha:'2026-06-25',titulo:'Acrópolis de Atenas',pago:'no',extras:{lugar:'Acrópolis, Atenas',maps:'https://maps.google.com/?q=Acropolis+Athens',horafin:'11:00',precio:'€20/persona',conf:'',proveedor:'',link:'https://etickets.tap.gr',notas:'Entradas comprar online · Llevar agua y sombrero · Ir temprano'}},
+    {tipo:'restaurante',hora:'12:00',fecha:'2026-06-25',titulo:'Almuerzo en Plaka',pago:'na',extras:{nombre:'',dir:'Barrio Plaka, Atenas',maps:'',cocina:'Griega tradicional',precio:'€20/persona',conf:'',reserva:'Sin reserva — entrar directo',link:'',notas:''}},
+    {tipo:'actividad',hora:'16:00',fecha:'2026-06-25',titulo:'Museo Arqueológico Nacional',pago:'no',extras:{lugar:'28is Oktovriou 44, Atenas',maps:'',horafin:'18:00',precio:'€12/persona',conf:'',proveedor:'',link:'',notas:'Colección de oro micénico'}},
+    {tipo:'actividad',hora:'10:00',fecha:'2026-06-26',titulo:'Barrio Monastiraki y mercado de pulgas',pago:'na',extras:{lugar:'Monastiraki, Atenas',maps:'',horafin:'13:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Sábado es el mejor día para el mercado'}}
   ]},
-  {id:'d06',date:'27 jun',label:'Atenas → Mykonos',city:'grecia',order:6,events:[
-    {tipo:'traslado',hora:'',fecha:'27 jun',titulo:'Ferry o vuelo Atenas → Mykonos',pago:'no',extras:{origen:'Atenas (Pireo o Rafina)',destino:'Mykonos',medio:'Ferry',duracion:'2-5h según opción',precio:'€30–80/persona',conf:'',notas:'Ferry rápido desde Rafina (2h) o lento desde Pireo (5h) · Reservar con anticipación'}},
-    {tipo:'hotel',hora:'',fecha:'27 jun',titulo:'Check-in Mykonos',pago:'no',extras:{nombre:'',dir:'Mykonos Town o Platis Gialos',cin:'27 jun',cout:'29 jun',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:'Temporada alta — reservar ya'}}
+  {id:'d06',date:'27 jun',fecha:'2026-06-27',label:'Atenas → Mykonos',city:'grecia',order:6,events:[
+    {tipo:'traslado',hora:'08:00',fecha:'2026-06-27',titulo:'Ferry o vuelo Atenas → Mykonos',pago:'no',extras:{origen:'Atenas (Pireo o Rafina)',destino:'Mykonos',mapsO:'',mapsD:'',medio:'Ferry',llegada:'10:00',duracion:'2-5h según opción',precio:'€30–80/persona',conf:'',notas:'Ferry rápido desde Rafina (2h) o lento desde Pireo (5h) · Reservar con anticipación'}},
+    {tipo:'hotel',hora:'14:00',fecha:'2026-06-27',titulo:'Check-in Mykonos',pago:'no',extras:{nombre:'',ciudad:'Mykonos',dir:'Mykonos Town o Platis Gialos',maps:'',cinFecha:'2026-06-27',cinHora:'14:00',coutFecha:'2026-06-29',coutHora:'11:00',conf:'',tel:'',notas:'Temporada alta — reservar ya'}}
   ]},
-  {id:'d07',date:'27–28 jun',label:'Mykonos — playas y pueblo',city:'grecia',order:7,events:[
-    {tipo:'actividad',hora:'10:00',fecha:'28 jun',titulo:'Playas de Mykonos',pago:'na',extras:{lugar:'Paradise Beach o Super Paradise',duracion:'Día completo',precio:'Gratis + tumbonas',conf:'',proveedor:'',link:'',notas:'Super Paradise es más tranquila · Llegar temprano en verano'}},
-    {tipo:'actividad',hora:'18:00',fecha:'28 jun',titulo:'Atardecer en Little Venice',pago:'na',extras:{lugar:'Little Venice, Mykonos Town',duracion:'2 horas',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'El atardecer más famoso de Mykonos · Llegar 30 min antes'}},
-    {tipo:'restaurante',hora:'21:00',fecha:'28 jun',titulo:'Cena en Mykonos Town',pago:'no',extras:{nombre:'',dir:'Mykonos Town',cocina:'Griega, mariscos',precio:'€40/persona',horario:'21:00',conf:'',link:'',reserva:'Pendiente de reserva',notas:''}}
+  {id:'d07',date:'28 jun',fecha:'2026-06-28',label:'Mykonos — playas y pueblo',city:'grecia',order:7,events:[
+    {tipo:'actividad',hora:'10:00',fecha:'2026-06-28',titulo:'Playas de Mykonos',pago:'na',extras:{lugar:'Paradise Beach o Super Paradise',maps:'',horafin:'16:00',precio:'Gratis + tumbonas',conf:'',proveedor:'',link:'',notas:'Super Paradise es más tranquila · Llegar temprano en verano'}},
+    {tipo:'actividad',hora:'18:00',fecha:'2026-06-28',titulo:'Atardecer en Little Venice',pago:'na',extras:{lugar:'Little Venice, Mykonos Town',maps:'',horafin:'20:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'El atardecer más famoso de Mykonos · Llegar 30 min antes'}},
+    {tipo:'restaurante',hora:'21:00',fecha:'2026-06-28',titulo:'Cena en Mykonos Town',pago:'no',extras:{nombre:'',dir:'Mykonos Town',maps:'',cocina:'Griega, mariscos',precio:'€40/persona',conf:'',reserva:'Pendiente de reserva',link:'',notas:''}}
   ]},
-  {id:'d08',date:'29 jun',label:'Mykonos → Naxos',city:'grecia',order:8,events:[
-    {tipo:'traslado',hora:'',fecha:'29 jun',titulo:'Ferry Mykonos → Naxos',pago:'no',extras:{origen:'Puerto de Mykonos',destino:'Puerto de Naxos',medio:'Ferry',duracion:'45 min',precio:'€20/persona',conf:'',notas:'Varias salidas al día · SeaJets o Blue Star'}},
-    {tipo:'hotel',hora:'',fecha:'29 jun',titulo:'Check-in Naxos',pago:'no',extras:{nombre:'',dir:'Naxos Town (Chora)',cin:'29 jun',cout:'2 jul',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:'3 noches · La isla más grande de las Cícladas'}}
+  {id:'d08',date:'29 jun',fecha:'2026-06-29',label:'Mykonos → Naxos',city:'grecia',order:8,events:[
+    {tipo:'traslado',hora:'09:00',fecha:'2026-06-29',titulo:'Ferry Mykonos → Naxos',pago:'no',extras:{origen:'Puerto de Mykonos',destino:'Puerto de Naxos',mapsO:'',mapsD:'',medio:'Ferry',llegada:'10:00',duracion:'45 min',precio:'€20/persona',conf:'',notas:'Varias salidas al día · SeaJets o Blue Star'}},
+    {tipo:'hotel',hora:'12:00',fecha:'2026-06-29',titulo:'Check-in Naxos',pago:'no',extras:{nombre:'',ciudad:'Naxos',dir:'Naxos Town (Chora)',maps:'',cinFecha:'2026-06-29',cinHora:'12:00',coutFecha:'2026-07-02',coutHora:'11:00',conf:'',tel:'',notas:'3 noches · La isla más grande de las Cícladas'}}
   ]},
-  {id:'d09',date:'29 jun–1 jul',label:'Naxos — playas y aldeas',city:'grecia',order:9,events:[
-    {tipo:'actividad',hora:'09:00',fecha:'30 jun',titulo:'Playa Agios Prokopios',pago:'na',extras:{lugar:'Agios Prokopios, Naxos',duracion:'Mañana',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Una de las mejores playas de Grecia · Arena blanca y agua turquesa'}},
-    {tipo:'actividad',hora:'15:00',fecha:'30 jun',titulo:'Aldeas de montaña — Halki y Apiranthos',pago:'na',extras:{lugar:'Interior de Naxos',duracion:'4 horas',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Alquilar auto o ATV · Apiranthos es de mármol blanco'}},
-    {tipo:'actividad',hora:'09:00',fecha:'1 jul',titulo:'Portara — Templo de Apolo',pago:'na',extras:{lugar:'Naxos Town',duracion:'1 hora',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Vista increíble del atardecer desde aquí'}}
+  {id:'d09',date:'30 jun–1 jul',fecha:'2026-06-30',label:'Naxos — playas y aldeas',city:'grecia',order:9,events:[
+    {tipo:'actividad',hora:'09:00',fecha:'2026-06-30',titulo:'Playa Agios Prokopios',pago:'na',extras:{lugar:'Agios Prokopios, Naxos',maps:'',horafin:'13:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Una de las mejores playas de Grecia · Arena blanca y agua turquesa'}},
+    {tipo:'actividad',hora:'15:00',fecha:'2026-06-30',titulo:'Aldeas de montaña — Halki y Apiranthos',pago:'na',extras:{lugar:'Interior de Naxos',maps:'',horafin:'19:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Alquilar auto o ATV · Apiranthos es de mármol blanco'}},
+    {tipo:'actividad',hora:'09:00',fecha:'2026-07-01',titulo:'Portara — Templo de Apolo',pago:'na',extras:{lugar:'Naxos Town',maps:'',horafin:'11:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Vista increíble del atardecer desde aquí'}}
   ]},
-  {id:'d10',date:'2 jul',label:'Naxos → Koufonisia',city:'grecia',order:10,events:[
-    {tipo:'traslado',hora:'',fecha:'2 jul',titulo:'Ferry Naxos → Koufonisia',pago:'no',extras:{origen:'Puerto de Naxos',destino:'Koufonisia (Ano Koufonisi)',medio:'Ferry',duracion:'1h',precio:'€15/persona',conf:'',notas:'SeaJets · Isla pequeñísima y muy auténtica'}},
-    {tipo:'hotel',hora:'',fecha:'2 jul',titulo:'Check-in Koufonisia',pago:'no',extras:{nombre:'',dir:'Koufonisia',cin:'2 jul',cout:'3 jul',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:'1 noche · Reservar cuanto antes — poca oferta hotelera'}}
+  {id:'d10',date:'2 jul',fecha:'2026-07-02',label:'Naxos → Koufonisia',city:'grecia',order:10,events:[
+    {tipo:'traslado',hora:'09:00',fecha:'2026-07-02',titulo:'Ferry Naxos → Koufonisia',pago:'no',extras:{origen:'Puerto de Naxos',destino:'Koufonisia (Ano Koufonisi)',mapsO:'',mapsD:'',medio:'Ferry',llegada:'10:00',duracion:'1h',precio:'€15/persona',conf:'',notas:'SeaJets · Isla pequeñísima y muy auténtica'}},
+    {tipo:'hotel',hora:'12:00',fecha:'2026-07-02',titulo:'Check-in Koufonisia',pago:'no',extras:{nombre:'',ciudad:'Koufonisia',dir:'Koufonisia',maps:'',cinFecha:'2026-07-02',cinHora:'12:00',coutFecha:'2026-07-03',coutHora:'10:00',conf:'',tel:'',notas:'1 noche · Reservar cuanto antes — poca oferta hotelera'}}
   ]},
-  {id:'d11',date:'2–3 jul',label:'Koufonisia — la joya secreta',city:'grecia',order:11,events:[
-    {tipo:'actividad',hora:'10:00',fecha:'2 jul',titulo:'Playas de Koufonisia',pago:'na',extras:{lugar:'Pori Beach, Koufonisia',duracion:'Día completo',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Pori es la más linda · 30 min caminando o en bote'}},
-    {tipo:'actividad',hora:'17:00',fecha:'2 jul',titulo:'Paseo en bote por las calas',pago:'no',extras:{lugar:'Koufonisia',duracion:'3 horas',precio:'€20/persona',conf:'',proveedor:'',link:'',notas:'Tour en bote a las calas y aguas cristalinas'}}
+  {id:'d11',date:'2–3 jul',fecha:'2026-07-02',label:'Koufonisia — la joya secreta',city:'grecia',order:11,events:[
+    {tipo:'actividad',hora:'10:00',fecha:'2026-07-02',titulo:'Playas de Koufonisia',pago:'na',extras:{lugar:'Pori Beach, Koufonisia',maps:'',horafin:'17:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Pori es la más linda · 30 min caminando o en bote'}},
+    {tipo:'actividad',hora:'17:00',fecha:'2026-07-02',titulo:'Paseo en bote por las calas',pago:'no',extras:{lugar:'Koufonisia',maps:'',horafin:'20:00',precio:'€20/persona',conf:'',proveedor:'',link:'',notas:'Tour en bote a las calas y aguas cristalinas'}}
   ]},
-  {id:'d12',date:'3 jul',label:'Koufonisia → Paros / Antiparos',city:'grecia',order:12,events:[
-    {tipo:'traslado',hora:'',fecha:'3 jul',titulo:'Ferry Koufonisia → Paros',pago:'no',extras:{origen:'Koufonisia',destino:'Paros (Parikia)',medio:'Ferry',duracion:'2h',precio:'€25/persona',conf:'',notas:''}},
-    {tipo:'hotel',hora:'',fecha:'3 jul',titulo:'Check-in Paros',pago:'no',extras:{nombre:'',dir:'Naoussa o Parikia, Paros',cin:'3 jul',cout:'6 jul',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:'3 noches · Base para explorar también Antiparos'}}
+  {id:'d12',date:'3 jul',fecha:'2026-07-03',label:'Koufonisia → Paros / Antiparos',city:'grecia',order:12,events:[
+    {tipo:'traslado',hora:'09:00',fecha:'2026-07-03',titulo:'Ferry Koufonisia → Paros',pago:'no',extras:{origen:'Koufonisia',destino:'Paros (Parikia)',mapsO:'',mapsD:'',medio:'Ferry',llegada:'11:00',duracion:'2h',precio:'€25/persona',conf:'',notas:''}},
+    {tipo:'hotel',hora:'13:00',fecha:'2026-07-03',titulo:'Check-in Paros',pago:'no',extras:{nombre:'',ciudad:'Paros',dir:'Naoussa o Parikia, Paros',maps:'',cinFecha:'2026-07-03',cinHora:'13:00',coutFecha:'2026-07-06',coutHora:'11:00',conf:'',tel:'',notas:'3 noches · Base para explorar también Antiparos'}}
   ]},
-  {id:'d13',date:'3–5 jul',label:'Paros & Antiparos — islas hermanas',city:'grecia',order:13,events:[
-    {tipo:'actividad',hora:'10:00',fecha:'4 jul',titulo:'Naoussa — pueblo de pescadores',pago:'na',extras:{lugar:'Naoussa, Paros',duracion:'Mañana',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'El pueblo más pintoresco de Paros · Callejuelas de mármol'}},
-    {tipo:'traslado',hora:'10:00',fecha:'5 jul',titulo:'Ferry a Antiparos (ida y vuelta)',pago:'na',extras:{origen:'Parikia, Paros',destino:'Antiparos',medio:'Ferry',duracion:'10 min',precio:'€2',conf:'',notas:'Ferries cada hora · Isla pequeña y tranquila'}},
-    {tipo:'actividad',hora:'11:00',fecha:'5 jul',titulo:'Antiparos — pueblo y playas',pago:'na',extras:{lugar:'Antiparos',duracion:'Todo el día',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Mucho más tranquila que Paros · Ambiente relajado'}}
+  {id:'d13',date:'4–5 jul',fecha:'2026-07-04',label:'Paros & Antiparos — islas hermanas',city:'grecia',order:13,events:[
+    {tipo:'actividad',hora:'10:00',fecha:'2026-07-04',titulo:'Naoussa — pueblo de pescadores',pago:'na',extras:{lugar:'Naoussa, Paros',maps:'',horafin:'13:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'El pueblo más pintoresco de Paros · Callejuelas de mármol'}},
+    {tipo:'traslado',hora:'10:00',fecha:'2026-07-05',titulo:'Ferry a Antiparos (ida y vuelta)',pago:'na',extras:{origen:'Parikia, Paros',destino:'Antiparos',mapsO:'',mapsD:'',medio:'Ferry',llegada:'10:10',duracion:'10 min',precio:'€2',conf:'',notas:'Ferries cada hora · Isla pequeña y tranquila'}},
+    {tipo:'actividad',hora:'11:00',fecha:'2026-07-05',titulo:'Antiparos — pueblo y playas',pago:'na',extras:{lugar:'Antiparos',maps:'',horafin:'17:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Mucho más tranquila que Paros · Ambiente relajado'}}
   ]},
-  {id:'d14',date:'6 jul',label:'Paros → Milos',city:'grecia',order:14,events:[
-    {tipo:'traslado',hora:'',fecha:'6 jul',titulo:'Ferry Paros → Milos',pago:'no',extras:{origen:'Paros (Parikia)',destino:'Milos (Adamas)',medio:'Ferry',duracion:'2–3h',precio:'€30/persona',conf:'',notas:'SeaJets o Blue Star · Reservar con anticipación'}},
-    {tipo:'hotel',hora:'',fecha:'6 jul',titulo:'Check-in Milos',pago:'no',extras:{nombre:'',dir:'Adamas o Plaka, Milos',cin:'6 jul',cout:'9 jul',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:'3 noches · Una de las islas más bellas de Grecia'}}
+  {id:'d14',date:'6 jul',fecha:'2026-07-06',label:'Paros → Milos',city:'grecia',order:14,events:[
+    {tipo:'traslado',hora:'09:00',fecha:'2026-07-06',titulo:'Ferry Paros → Milos',pago:'no',extras:{origen:'Paros (Parikia)',destino:'Milos (Adamas)',mapsO:'',mapsD:'',medio:'Ferry',llegada:'11:00',duracion:'2h',precio:'€30/persona',conf:'',notas:'SeaJets o Blue Star · Reservar con anticipación'}},
+    {tipo:'hotel',hora:'13:00',fecha:'2026-07-06',titulo:'Check-in Milos',pago:'no',extras:{nombre:'',ciudad:'Milos',dir:'Adamas o Plaka, Milos',maps:'',cinFecha:'2026-07-06',cinHora:'13:00',coutFecha:'2026-07-09',coutHora:'11:00',conf:'',tel:'',notas:'3 noches · Una de las islas más bellas de Grecia'}}
   ]},
-  {id:'d15',date:'6–8 jul',label:'Milos — la isla de los colores',city:'grecia',order:15,events:[
-    {tipo:'actividad',hora:'09:00',fecha:'7 jul',titulo:'Sarakiniko — playa de piedra blanca lunar',pago:'na',extras:{lugar:'Sarakiniko, Milos',duracion:'3 horas',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Paisaje único en el mundo · Ir temprano antes del calor'}},
-    {tipo:'actividad',hora:'15:00',fecha:'7 jul',titulo:'Tour en barco — cuevas y playas',pago:'no',extras:{lugar:'Puerto de Adamas, Milos',duracion:'Día completo',precio:'€50/persona',conf:'',proveedor:'',link:'',notas:'Las mejores playas solo se llegan en bote · Kleftiko y Tsigrado'}},
-    {tipo:'actividad',hora:'18:00',fecha:'8 jul',titulo:'Atardecer desde Plaka (pueblo medieval)',pago:'na',extras:{lugar:'Plaka, Milos',duracion:'2 horas',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Vistas 360° de la isla y el mar'}}
+  {id:'d15',date:'7–8 jul',fecha:'2026-07-07',label:'Milos — la isla de los colores',city:'grecia',order:15,events:[
+    {tipo:'actividad',hora:'09:00',fecha:'2026-07-07',titulo:'Sarakiniko — playa de piedra blanca lunar',pago:'na',extras:{lugar:'Sarakiniko, Milos',maps:'',horafin:'12:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Paisaje único en el mundo · Ir temprano antes del calor'}},
+    {tipo:'actividad',hora:'14:00',fecha:'2026-07-07',titulo:'Tour en barco — cuevas y playas',pago:'no',extras:{lugar:'Puerto de Adamas, Milos',maps:'',horafin:'18:00',precio:'€50/persona',conf:'',proveedor:'',link:'',notas:'Las mejores playas solo se llegan en bote · Kleftiko y Tsigrado'}},
+    {tipo:'actividad',hora:'18:00',fecha:'2026-07-08',titulo:'Atardecer desde Plaka',pago:'na',extras:{lugar:'Plaka, Milos',maps:'',horafin:'20:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Vistas 360° de la isla y el mar'}}
   ]},
-  {id:'d16',date:'9 jul',label:'Milos → Santorini',city:'grecia',order:16,events:[
-    {tipo:'traslado',hora:'',fecha:'9 jul',titulo:'Ferry Milos → Santorini',pago:'no',extras:{origen:'Milos (Adamas)',destino:'Santorini (Thira)',medio:'Ferry',duracion:'3h',precio:'€35/persona',conf:'',notas:'SeaJets directo · Reservar con mucha anticipación — alta temporada'}},
-    {tipo:'hotel',hora:'14:00',fecha:'9 jul',titulo:'Check-in Santorini',pago:'no',extras:{nombre:'',dir:'Oia o Fira, Santorini',cin:'9 jul',cout:'11 jul',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:'2 noches · Vista caldera si es posible · Reservar ya'}},
-    {tipo:'actividad',hora:'19:30',fecha:'9 jul',titulo:'Atardecer en Oia',pago:'na',extras:{lugar:'Oia, Santorini',duracion:'1.5 horas',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Llegar 30–45 min antes — muy concurrido en julio'}}
+  {id:'d16',date:'9 jul',fecha:'2026-07-09',label:'Milos → Santorini',city:'grecia',order:16,events:[
+    {tipo:'traslado',hora:'09:00',fecha:'2026-07-09',titulo:'Ferry Milos → Santorini',pago:'no',extras:{origen:'Milos (Adamas)',destino:'Santorini (Thira)',mapsO:'',mapsD:'',medio:'Ferry',llegada:'12:00',duracion:'3h',precio:'€35/persona',conf:'',notas:'SeaJets directo · Reservar con mucha anticipación — alta temporada'}},
+    {tipo:'hotel',hora:'14:00',fecha:'2026-07-09',titulo:'Check-in Santorini',pago:'no',extras:{nombre:'',ciudad:'Santorini',dir:'Oia o Fira, Santorini',maps:'',cinFecha:'2026-07-09',cinHora:'14:00',coutFecha:'2026-07-11',coutHora:'11:00',conf:'',tel:'',notas:'2 noches · Vista caldera si es posible · Reservar ya'}},
+    {tipo:'actividad',hora:'19:30',fecha:'2026-07-09',titulo:'Atardecer en Oia',pago:'na',extras:{lugar:'Oia, Santorini',maps:'',horafin:'21:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Llegar 30–45 min antes — muy concurrido en julio'}}
   ]},
-  {id:'d17',date:'9–10 jul',label:'Santorini — caldera y playas volcánicas',city:'grecia',order:17,events:[
-    {tipo:'actividad',hora:'10:00',fecha:'10 jul',titulo:'Playa Perissa o Kamari',pago:'na',extras:{lugar:'Perissa, Santorini',duracion:'3 horas',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Arena volcánica negra · ATV para ir de Perissa a Kamari'}},
-    {tipo:'actividad',hora:'15:00',fecha:'10 jul',titulo:'Tour en barco — caldera y volcán',pago:'no',extras:{lugar:'Puerto de Santorini',duracion:'4 horas',precio:'€35/persona',conf:'',proveedor:'',link:'',notas:'Aguas termales + volcán activo · Reservar grupalmente'}},
-    {tipo:'restaurante',hora:'20:00',fecha:'10 jul',titulo:'Cena con vista a la caldera',pago:'no',extras:{nombre:'',dir:'Fira o Oia, Santorini',cocina:'Griega, mariscos',precio:'€50/persona',horario:'20:00',conf:'',link:'',reserva:'Pendiente de reserva',notas:'Reservar mesa con anticipación — alta temporada'}}
+  {id:'d17',date:'10 jul',fecha:'2026-07-10',label:'Santorini — caldera y playas volcánicas',city:'grecia',order:17,events:[
+    {tipo:'actividad',hora:'10:00',fecha:'2026-07-10',titulo:'Playa Perissa o Kamari',pago:'na',extras:{lugar:'Perissa, Santorini',maps:'',horafin:'13:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Arena volcánica negra · ATV para ir de Perissa a Kamari'}},
+    {tipo:'actividad',hora:'15:00',fecha:'2026-07-10',titulo:'Tour en barco — caldera y volcán',pago:'no',extras:{lugar:'Puerto de Santorini',maps:'',horafin:'19:00',precio:'€35/persona',conf:'',proveedor:'',link:'',notas:'Aguas termales + volcán activo · Reservar grupalmente'}},
+    {tipo:'restaurante',hora:'20:00',fecha:'2026-07-10',titulo:'Cena con vista a la caldera',pago:'no',extras:{nombre:'',dir:'Fira o Oia, Santorini',maps:'',cocina:'Griega, mariscos',precio:'€50/persona',conf:'',reserva:'Pendiente de reserva',link:'',notas:'Reservar mesa con anticipación — alta temporada'}}
   ]},
-  {id:'d18',date:'11 jul',label:'Santorini → Estambul',city:'transito',order:18,events:[
-    {tipo:'traslado',hora:'',fecha:'11 jul',titulo:'Traslado aeropuerto Santorini',pago:'na',extras:{origen:'Hotel Santorini',destino:'JTR — Aeropuerto Santorini',medio:'Taxi / Bus',duracion:'20 min',precio:'€15',conf:'',notas:''}},
-    {tipo:'vuelo',hora:'15:40',fecha:'11 jul',titulo:'Turkish Airlines · ATH → IST',pago:'si',extras:{aerolinea:'Turkish Airlines',numero:'',origen:'ATH — Atenas El. Venizelos',destino:'IST — Aeropuerto Estambul',salida:'15:40',llegada:'17:20',duracion:'1h 40m',terminal:'',escala:'Sin escala — vuelo directo',pnr:'R4CMMB',clase:'Economy Q',equipaje:'Confirmar allowance',notas:'Puede requerir conexión desde Santorini (JTR) via Atenas · Confirmar ruta'}},
-    {tipo:'hotel',hora:'19:00',fecha:'11 jul',titulo:'Check-in Estambul',pago:'no',extras:{nombre:'',dir:'Sultanahmet, Estambul',cin:'11 jul',cout:'13 jul',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:'Zona histórica — todo a pie'}}
+  {id:'d18',date:'11 jul',fecha:'2026-07-11',label:'Santorini → Estambul',city:'transito',order:18,events:[
+    {tipo:'traslado',hora:'13:00',fecha:'2026-07-11',titulo:'Traslado aeropuerto Santorini',pago:'na',extras:{origen:'Hotel Santorini',destino:'JTR — Aeropuerto Santorini',mapsO:'',mapsD:'',medio:'Taxi / Bus',llegada:'13:30',duracion:'20 min',precio:'€15',conf:'',notas:''}},
+    {tipo:'vuelo',hora:'15:40',fecha:'2026-07-11',titulo:'Turkish Airlines · ATH → IST',pago:'si',extras:{aerolinea:'Turkish Airlines',numero:'',origen:'ATH — Atenas El. Venizelos',destino:'IST — Aeropuerto Estambul',salida:'15:40',llegada:'17:20',duracion:'1h 40m',terminal:'',escala:'Sin escala — vuelo directo',pnr:'R4CMMB',clase:'Economy Q',equipaje:'Confirmar allowance',notas:'Puede requerir conexión desde JTR via Atenas'}},
+    {tipo:'hotel',hora:'19:00',fecha:'2026-07-11',titulo:'Check-in Estambul',pago:'no',extras:{nombre:'',ciudad:'Estambul',dir:'Sultanahmet, Estambul',maps:'',cinFecha:'2026-07-11',cinHora:'19:00',coutFecha:'2026-07-13',coutHora:'11:00',conf:'',tel:'',notas:'Zona histórica — todo a pie'}}
   ]},
-  {id:'d19',date:'11–12 jul',label:'Estambul — entre dos continentes',city:'turquia',order:19,events:[
-    {tipo:'actividad',hora:'09:00',fecha:'12 jul',titulo:'Mezquita Azul + Hagia Sophia',pago:'no',extras:{lugar:'Sultanahmet, Estambul',duracion:'3 horas',precio:'Hagia Sophia: €15 / Mezquita: Gratis',conf:'',proveedor:'',link:'',notas:'Cubrir hombros y cabeza · Reservar Hagia Sophia online'}},
-    {tipo:'actividad',hora:'13:00',fecha:'12 jul',titulo:'Gran Bazar',pago:'na',extras:{lugar:'Kapalıçarşı, Estambul',duracion:'2 horas',precio:'Gratis — negociar!',conf:'',proveedor:'',link:'',notas:'Más de 4000 tiendas · Especias, alfombras, cerámica'}},
-    {tipo:'actividad',hora:'17:00',fecha:'12 jul',titulo:'Crucero atardecer Bósforo',pago:'no',extras:{lugar:'Embarcadero Eminönü',duracion:'2 horas',precio:'€20/persona',conf:'',proveedor:'',link:'',notas:'Entre Europa y Asia · Reservar con anticipación'}},
-    {tipo:'restaurante',hora:'21:00',fecha:'12 jul',titulo:'Cena en Karaköy',pago:'na',extras:{nombre:'',dir:'Barrio Karaköy, Estambul',cocina:'Mariscos y meze turco',precio:'€35/persona',horario:'21:00',conf:'',link:'',reserva:'Pendiente de reserva',notas:''}}
+  {id:'d19',date:'12 jul',fecha:'2026-07-12',label:'Estambul — entre dos continentes',city:'turquia',order:19,events:[
+    {tipo:'actividad',hora:'09:00',fecha:'2026-07-12',titulo:'Mezquita Azul + Hagia Sophia',pago:'no',extras:{lugar:'Sultanahmet, Estambul',maps:'https://maps.google.com/?q=Hagia+Sophia+Istanbul',horafin:'12:00',precio:'Hagia Sophia: €15 / Mezquita: Gratis',conf:'',proveedor:'',link:'',notas:'Cubrir hombros y cabeza · Reservar Hagia Sophia online'}},
+    {tipo:'actividad',hora:'13:00',fecha:'2026-07-12',titulo:'Gran Bazar',pago:'na',extras:{lugar:'Kapalıçarşı, Estambul',maps:'',horafin:'15:00',precio:'Gratis — negociar!',conf:'',proveedor:'',link:'',notas:'Más de 4000 tiendas · Especias, alfombras, cerámica'}},
+    {tipo:'actividad',hora:'17:00',fecha:'2026-07-12',titulo:'Crucero atardecer Bósforo',pago:'no',extras:{lugar:'Embarcadero Eminönü',maps:'',horafin:'19:00',precio:'€20/persona',conf:'',proveedor:'',link:'',notas:'Entre Europa y Asia · Reservar con anticipación'}},
+    {tipo:'restaurante',hora:'21:00',fecha:'2026-07-12',titulo:'Cena en Karaköy',pago:'na',extras:{nombre:'',dir:'Barrio Karaköy, Estambul',maps:'',cocina:'Mariscos y meze turco',precio:'€35/persona',conf:'',reserva:'Pendiente de reserva',link:'',notas:''}}
   ]},
-  {id:'d20',date:'13 jul',label:'Estambul → Capadocia',city:'turquia',order:20,events:[
-    {tipo:'vuelo',hora:'',fecha:'13 jul',titulo:'Vuelo Estambul → Capadocia',pago:'no',extras:{aerolinea:'Turkish Airlines / Pegasus',numero:'',origen:'IST o SAW — Estambul',destino:'NAV o ASR — Capadocia',salida:'',llegada:'',duracion:'1h 30m',terminal:'',escala:'Sin escala',pnr:'',clase:'Economy',equipaje:'',notas:'Vuelo pendiente de reservar · Aeropuerto Nevşehir (NAV) o Kayseri (ASR)'}},
-    {tipo:'hotel',hora:'',fecha:'13 jul',titulo:'Check-in Capadocia',pago:'no',extras:{nombre:'',dir:'Göreme o Üçhisar, Capadocia',cin:'13 jul',cout:'14 jul',conf:'',tel:'',hab:'2 habitaciones',desayuno:'',link:'',notas:'1 noche · Cave hotel recomendado · Reservar ya'}}
+  {id:'d20',date:'13 jul',fecha:'2026-07-13',label:'Estambul → Capadocia',city:'turquia',order:20,events:[
+    {tipo:'vuelo',hora:'08:00',fecha:'2026-07-13',titulo:'Vuelo Estambul → Capadocia',pago:'no',extras:{aerolinea:'Turkish Airlines / Pegasus',numero:'',origen:'IST o SAW — Estambul',destino:'NAV o ASR — Capadocia',salida:'08:00',llegada:'09:30',duracion:'1h 30m',terminal:'',escala:'Sin escala',pnr:'',clase:'Economy',equipaje:'',notas:'Aeropuerto Nevşehir (NAV) o Kayseri (ASR)'}},
+    {tipo:'traslado',hora:'09:30',fecha:'2026-07-13',titulo:'Traslado aeropuerto → hotel Capadocia',pago:'na',extras:{origen:'Aeropuerto Capadocia',destino:'Hotel Göreme',mapsO:'',mapsD:'',medio:'Transfer privado',llegada:'10:15',duracion:'45 min',precio:'€20',conf:'',notas:''}},
+    {tipo:'hotel',hora:'12:00',fecha:'2026-07-13',titulo:'Check-in Capadocia',pago:'no',extras:{nombre:'',ciudad:'Capadocia',dir:'Göreme o Üçhisar, Capadocia',maps:'',cinFecha:'2026-07-13',cinHora:'12:00',coutFecha:'2026-07-14',coutHora:'10:00',conf:'',tel:'',notas:'1 noche · Cave hotel recomendado · Reservar ya'}}
   ]},
-  {id:'d21',date:'13–14 jul',label:'Capadocia — chimeneas de hadas',city:'turquia',order:21,events:[
-    {tipo:'actividad',hora:'05:00',fecha:'14 jul',titulo:'Paseo en globo aerostático',pago:'no',extras:{lugar:'Göreme, Capadocia',duracion:'1 hora de vuelo',precio:'€150–200/persona',conf:'',proveedor:'Butterfly Balloons / Kapadokya Balloons',link:'',notas:'Salida al amanecer 05:00–06:00 · La experiencia más icónica de Capadocia · Reservar con meses de anticipación'}},
-    {tipo:'actividad',hora:'10:00',fecha:'14 jul',titulo:'Göreme Open Air Museum',pago:'no',extras:{lugar:'Göreme, Capadocia',duracion:'2 horas',precio:'€15/persona',conf:'',proveedor:'',link:'',notas:'Iglesias rupestres con frescos bizantinos'}},
-    {tipo:'actividad',hora:'14:00',fecha:'14 jul',titulo:'Valle de Pasabag — chimeneas de hadas',pago:'na',extras:{lugar:'Pasabag, Capadocia',duracion:'2 horas',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Las formaciones rocosas más fotogénicas · Alquilar ATV o tour en jeep'}}
+  {id:'d21',date:'14 jul',fecha:'2026-07-14',label:'Capadocia — chimeneas de hadas',city:'turquia',order:21,events:[
+    {tipo:'actividad',hora:'05:00',fecha:'2026-07-14',titulo:'Paseo en globo aerostático',pago:'no',extras:{lugar:'Göreme, Capadocia',maps:'',horafin:'07:00',precio:'€150–200/persona',conf:'',proveedor:'Butterfly Balloons / Kapadokya Balloons',link:'',notas:'Salida al amanecer 05:00–06:00 · La experiencia más icónica de Capadocia · Reservar con meses de anticipación'}},
+    {tipo:'actividad',hora:'10:00',fecha:'2026-07-14',titulo:'Göreme Open Air Museum',pago:'no',extras:{lugar:'Göreme, Capadocia',maps:'',horafin:'12:00',precio:'€15/persona',conf:'',proveedor:'',link:'',notas:'Iglesias rupestres con frescos bizantinos'}},
+    {tipo:'actividad',hora:'14:00',fecha:'2026-07-14',titulo:'Valle de Pasabag — chimeneas de hadas',pago:'na',extras:{lugar:'Pasabag, Capadocia',maps:'',horafin:'16:00',precio:'Gratis',conf:'',proveedor:'',link:'',notas:'Las formaciones rocosas más fotogénicas · ATV o jeep'}}
   ]},
-  {id:'d22',date:'15 jul',label:'Capadocia → Buenos Aires',city:'transito',order:22,events:[
-    {tipo:'traslado',hora:'',fecha:'15 jul',titulo:'Traslado al aeropuerto',pago:'na',extras:{origen:'Hotel Capadocia',destino:'NAV o ASR — Aeropuerto Capadocia',medio:'Transfer privado',duracion:'30–45 min',precio:'€20',conf:'',notas:'Salir con tiempo suficiente'}},
-    {tipo:'vuelo',hora:'',fecha:'15 jul',titulo:'Vuelo Capadocia → Estambul',pago:'no',extras:{aerolinea:'Turkish Airlines / Pegasus',numero:'',origen:'NAV o ASR — Capadocia',destino:'IST — Aeropuerto Estambul',salida:'',llegada:'',duracion:'1h 30m',terminal:'',escala:'',pnr:'',clase:'Economy',equipaje:'',notas:'Vuelo de conexión hacia EZE'}},
-    {tipo:'vuelo',hora:'10:45',fecha:'15 jul',titulo:'Turkish Airlines · IST → EZE',pago:'si',extras:{aerolinea:'Turkish Airlines',numero:'',origen:'IST — Aeropuerto Estambul',destino:'EZE — Ministro Pistarini, Buenos Aires',salida:'10:45',llegada:'22:25',duracion:'17h 40m',terminal:'',escala:'Directo',pnr:'R4CMMB',clase:'Economy Q',equipaje:'Confirmar allowance',notas:'Llegada Buenos Aires 22:25 del 15 jul'}}
+  {id:'d22',date:'15 jul',fecha:'2026-07-15',label:'Capadocia → Buenos Aires',city:'transito',order:22,events:[
+    {tipo:'traslado',hora:'06:00',fecha:'2026-07-15',titulo:'Traslado al aeropuerto',pago:'na',extras:{origen:'Hotel Capadocia',destino:'NAV o ASR — Aeropuerto Capadocia',mapsO:'',mapsD:'',medio:'Transfer privado',llegada:'06:45',duracion:'45 min',precio:'€20',conf:'',notas:'Salir con tiempo suficiente'}},
+    {tipo:'vuelo',hora:'08:00',fecha:'2026-07-15',titulo:'Vuelo Capadocia → Estambul',pago:'no',extras:{aerolinea:'Turkish Airlines / Pegasus',numero:'',origen:'NAV o ASR — Capadocia',destino:'IST — Aeropuerto Estambul',salida:'08:00',llegada:'09:30',duracion:'1h 30m',terminal:'',escala:'',pnr:'',clase:'Economy',equipaje:'',notas:'Vuelo de conexión hacia EZE'}},
+    {tipo:'vuelo',hora:'10:45',fecha:'2026-07-15',titulo:'Turkish Airlines · IST → EZE',pago:'si',extras:{aerolinea:'Turkish Airlines',numero:'',origen:'IST — Aeropuerto Estambul',destino:'EZE — Ministro Pistarini, Buenos Aires',salida:'10:45',llegada:'22:25',duracion:'17h 40m',terminal:'',escala:'Directo',pnr:'R4CMMB',clase:'Economy Q',equipaje:'Confirmar allowance',notas:'Llegada Buenos Aires 22:25 del 15 jul'}}
   ]}
 ];
+
 const SH=[
-  {id:'h1',name:'Hotel Amsterdam',city:'Amsterdam',cc:'p-amsterdam',cin:'22 jun',cout:'24 jun',conf:'',noch:'2 noches',obs:'Solicitar habitaciones contiguas. Early check-in a confirmar.',order:1},
-  {id:'h2',name:'Hotel Atenas',city:'Atenas',cc:'p-grecia',cin:'24 jun',cout:'27 jun',conf:'',noch:'3 noches',obs:'Zona Monastiraki o Syntagma. Cerca del metro y de Plaka.',order:2},
-  {id:'h3',name:'Hotel / Villa Mykonos',city:'Mykonos',cc:'p-grecia',cin:'27 jun',cout:'29 jun',conf:'',noch:'2 noches',obs:'Temporada alta — reservar ya.',order:3},
-  {id:'h4',name:'Hotel Naxos',city:'Naxos',cc:'p-grecia',cin:'29 jun',cout:'2 jul',conf:'',noch:'3 noches',obs:'Naxos Town (Chora) recomendado.',order:4},
-  {id:'h5',name:'Hotel Koufonisia',city:'Koufonisia',cc:'p-grecia',cin:'2 jul',cout:'3 jul',conf:'',noch:'1 noche',obs:'Poca oferta hotelera — reservar con mucha anticipación.',order:5},
-  {id:'h6',name:'Hotel Paros',city:'Paros / Antiparos',cc:'p-grecia',cin:'3 jul',cout:'6 jul',conf:'',noch:'3 noches',obs:'Naoussa o Parikia recomendado.',order:6},
-  {id:'h7',name:'Hotel Milos',city:'Milos',cc:'p-grecia',cin:'6 jul',cout:'9 jul',conf:'',noch:'3 noches',obs:'Adamas o Plaka. Cave house recomendado.',order:7},
-  {id:'h8',name:'Hotel / Villa Santorini',city:'Santorini',cc:'p-grecia',cin:'9 jul',cout:'11 jul',conf:'',noch:'2 noches',obs:'Vista caldera si es posible. Temporada altísima — reservar ya.',order:8},
-  {id:'h9',name:'Hotel Estambul',city:'Estambul · Sultanahmet',cc:'p-turquia',cin:'11 jul',cout:'13 jul',conf:'',noch:'2 noches',obs:'Zona histórica, todo a pie.',order:9},
-  {id:'h10',name:'Cave Hotel Capadocia',city:'Capadocia · Göreme',cc:'p-turquia',cin:'13 jul',cout:'14 jul',conf:'',noch:'1 noche',obs:'Cave hotel recomendado. Reservar el globo aerostático al mismo tiempo.',order:10}
+  {id:'h1',name:'Hotel Amsterdam',city:'Amsterdam',cc:'p-amsterdam',cinFecha:'2026-06-22',cinHora:'09:00',coutFecha:'2026-06-24',coutHora:'11:00',conf:'',noch:'2 noches',dir:'',maps:'',tel:'',hab:'2 habitaciones dobles',desayuno:'',plat:'',link:'',obs:'Solicitar habitaciones contiguas. Early check-in a confirmar.',pago:'no',order:1},
+  {id:'h2',name:'Hotel Atenas',city:'Atenas · Monastiraki / Syntagma',cc:'p-grecia',cinFecha:'2026-06-24',cinHora:'15:00',coutFecha:'2026-06-27',coutHora:'11:00',conf:'',noch:'3 noches',dir:'',maps:'',tel:'',hab:'2 habitaciones dobles',desayuno:'',plat:'',link:'',obs:'Cerca del metro y de Plaka.',pago:'no',order:2},
+  {id:'h3',name:'Hotel / Villa Mykonos',city:'Mykonos Town o Platis Gialos',cc:'p-grecia',cinFecha:'2026-06-27',cinHora:'14:00',coutFecha:'2026-06-29',coutHora:'11:00',conf:'',noch:'2 noches',dir:'',maps:'',tel:'',hab:'2 habitaciones',desayuno:'',plat:'',link:'',obs:'Temporada alta — reservar ya.',pago:'no',order:3},
+  {id:'h4',name:'Hotel Naxos',city:'Naxos Town (Chora)',cc:'p-grecia',cinFecha:'2026-06-29',cinHora:'12:00',coutFecha:'2026-07-02',coutHora:'11:00',conf:'',noch:'3 noches',dir:'',maps:'',tel:'',hab:'2 habitaciones',desayuno:'',plat:'',link:'',obs:'Naxos Town (Chora) recomendado.',pago:'no',order:4},
+  {id:'h5',name:'Hotel Koufonisia',city:'Koufonisia',cc:'p-grecia',cinFecha:'2026-07-02',cinHora:'12:00',coutFecha:'2026-07-03',coutHora:'10:00',conf:'',noch:'1 noche',dir:'',maps:'',tel:'',hab:'2 habitaciones',desayuno:'',plat:'',link:'',obs:'Poca oferta hotelera — reservar con mucha anticipación.',pago:'no',order:5},
+  {id:'h6',name:'Hotel Paros',city:'Naoussa o Parikia, Paros',cc:'p-grecia',cinFecha:'2026-07-03',cinHora:'13:00',coutFecha:'2026-07-06',coutHora:'11:00',conf:'',noch:'3 noches',dir:'',maps:'',tel:'',hab:'2 habitaciones',desayuno:'',plat:'',link:'',obs:'Naoussa o Parikia recomendado.',pago:'no',order:6},
+  {id:'h7',name:'Hotel Milos',city:'Adamas o Plaka, Milos',cc:'p-grecia',cinFecha:'2026-07-06',cinHora:'13:00',coutFecha:'2026-07-09',coutHora:'11:00',conf:'',noch:'3 noches',dir:'',maps:'',tel:'',hab:'2 habitaciones',desayuno:'',plat:'',link:'',obs:'Adamas o Plaka. Cave house recomendado.',pago:'no',order:7},
+  {id:'h8',name:'Hotel / Villa Santorini',city:'Oia o Fira, Santorini',cc:'p-grecia',cinFecha:'2026-07-09',cinHora:'14:00',coutFecha:'2026-07-11',coutHora:'11:00',conf:'',noch:'2 noches',dir:'',maps:'',tel:'',hab:'2 habitaciones',desayuno:'',plat:'',link:'',obs:'Vista caldera si es posible. Temporada altísima — reservar ya.',pago:'no',order:8},
+  {id:'h9',name:'Hotel Estambul',city:'Sultanahmet, Estambul',cc:'p-turquia',cinFecha:'2026-07-11',cinHora:'19:00',coutFecha:'2026-07-13',coutHora:'11:00',conf:'',noch:'2 noches',dir:'',maps:'',tel:'',hab:'2 habitaciones',desayuno:'',plat:'',link:'',obs:'Zona histórica, todo a pie.',pago:'no',order:9},
+  {id:'h10',name:'Cave Hotel Capadocia',city:'Göreme, Capadocia',cc:'p-turquia',cinFecha:'2026-07-13',cinHora:'12:00',coutFecha:'2026-07-14',coutHora:'10:00',conf:'',noch:'1 noche',dir:'',maps:'',tel:'',hab:'2 habitaciones cave',desayuno:'',plat:'',link:'',obs:'Cave hotel recomendado. Reservar el globo aerostático al mismo tiempo.',pago:'no',order:10}
 ];
-const SC=[{id:'c1',group:'Documentos y visados',text:'Pasaportes vigentes (mín. 6 meses tras el regreso)',order:1},{id:'c2',group:'Documentos y visados',text:'e-Visa de Turquía — evisa.gov.tr (USD 65/persona)',order:2},{id:'c3',group:'Documentos y visados',text:'Confirmaciones de vuelo descargadas en PDF',order:3},{id:'c4',group:'Documentos y visados',text:'Seguro de viaje para los 4',order:4},{id:'c5',group:'Reservas y entradas',text:'Hoteles confirmados en los 4 destinos',order:1},{id:'c6',group:'Reservas y entradas',text:'Entradas Acrópolis compradas online',order:2},{id:'c7',group:'Reservas y entradas',text:'Entradas Rijksmuseum compradas online',order:3},{id:'c8',group:'Reservas y entradas',text:'Ferry Pireo → Santorini reservado',order:4},{id:'c9',group:'Reservas y entradas',text:'Tour barco caldera Santorini reservado',order:5},{id:'c10',group:'Reservas y entradas',text:'Crucero atardecer Bósforo reservado',order:6},{id:'c11',group:'Antes de salir',text:'Check-in online vuelo EZE → AMS (24hs antes)',order:1},{id:'c12',group:'Antes de salir',text:'Mapas offline descargados (Google Maps)',order:2},{id:'c13',group:'Antes de salir',text:'SIM internacional o eSIM activada',order:3},{id:'c14',group:'Antes de salir',text:'Euros y liras turcas en efectivo',order:4},{id:'c15',group:'Antes de salir',text:'Adaptadores de enchufe tipo C',order:5},{id:'c16',group:'Alojamiento',text:'Solicitar early check-in Amsterdam',order:1},{id:'c17',group:'Alojamiento',text:'Confirmar habitaciones contiguas en todos los hoteles',order:2},{id:'c18',group:'Alojamiento',text:'Reservar mesa cena caldera Santorini',order:3}];
-const SN=[{person:'ER',personAv:'av1',personName:'Eugenia Romero',text:'Para Santorini: conviene reservar la villa con anticipación, julio/agosto es altísima temporada ✨',date:'hace 2 días',ts:Date.now()-172800000},{person:'JN',personAv:'av2',personName:'Juan José Noguera',text:'La e-Visa de Turquía la saqué en 5 minutos en evisa.gov.tr. Son USD 65 por persona. Háganla antes de viajar!',date:'ayer',ts:Date.now()-86400000},{person:'VS',personAv:'av3',personName:'Valeria Secchi',text:'Para el ferry a Santorini: Blue Star es más cómodo aunque tarda 5–6h. Hellenic Seaways más rápido (4h). ¿Votamos?',date:'hoy',ts:Date.now()-3600000}];
+
+const SC=[
+  {id:'c1',group:'Documentos y visados',text:'Pasaportes vigentes (mín. 6 meses tras el regreso — vence después del 15 ene 2027)',order:1},
+  {id:'c2',group:'Documentos y visados',text:'e-Visa de Turquía tramitada online — evisa.gov.tr (USD 65/persona)',order:2},
+  {id:'c3',group:'Documentos y visados',text:'Confirmaciones de vuelo descargadas en PDF',order:3},
+  {id:'c4',group:'Documentos y visados',text:'Seguro de viaje contratado para los 4',order:4},
+  {id:'c5',group:'Reservas y entradas',text:'Tickets KLM emitidos antes del 22/04/2026',order:1},
+  {id:'c6',group:'Reservas y entradas',text:'Vuelo AMS → ATH reservado (24 jun)',order:2},
+  {id:'c7',group:'Reservas y entradas',text:'Vuelo IST → Capadocia reservado (13 jul)',order:3},
+  {id:'c8',group:'Reservas y entradas',text:'Vuelo Capadocia → IST reservado (15 jul)',order:4},
+  {id:'c9',group:'Reservas y entradas',text:'Ferry Atenas → Mykonos reservado (27 jun)',order:5},
+  {id:'c10',group:'Reservas y entradas',text:'Entradas Acrópolis compradas online',order:6},
+  {id:'c11',group:'Reservas y entradas',text:'Entradas Rijksmuseum compradas online',order:7},
+  {id:'c12',group:'Reservas y entradas',text:'Tour barco caldera Santorini reservado',order:8},
+  {id:'c13',group:'Reservas y entradas',text:'Globo aerostático Capadocia reservado (con meses de anticipación)',order:9},
+  {id:'c14',group:'Reservas y entradas',text:'Crucero atardecer Bósforo reservado',order:10},
+  {id:'c15',group:'Hoteles',text:'Amsterdam — reservado ✓',order:1},
+  {id:'c16',group:'Hoteles',text:'Atenas — reservado',order:2},
+  {id:'c17',group:'Hoteles',text:'Mykonos — reservado',order:3},
+  {id:'c18',group:'Hoteles',text:'Naxos — reservado',order:4},
+  {id:'c19',group:'Hoteles',text:'Koufonisia — reservado (¡urgente!)',order:5},
+  {id:'c20',group:'Hoteles',text:'Paros — reservado',order:6},
+  {id:'c21',group:'Hoteles',text:'Milos — reservado',order:7},
+  {id:'c22',group:'Hoteles',text:'Santorini — reservado',order:8},
+  {id:'c23',group:'Hoteles',text:'Estambul — reservado',order:9},
+  {id:'c24',group:'Hoteles',text:'Capadocia — reservado',order:10},
+  {id:'c25',group:'Antes de salir',text:'Check-in online vuelo KLM (24hs antes — 20 jun)',order:1},
+  {id:'c26',group:'Antes de salir',text:'Mapas offline descargados (Google Maps)',order:2},
+  {id:'c27',group:'Antes de salir',text:'SIM internacional o eSIM activada (Europa + Turquía)',order:3},
+  {id:'c28',group:'Antes de salir',text:'Euros y liras turcas en efectivo',order:4},
+  {id:'c29',group:'Antes de salir',text:'Adaptadores de enchufe tipo C (Europa) y tipo F (Turquía)',order:5},
+  {id:'c30',group:'Antes de salir',text:'App Uber / Bolt instalada para traslados',order:6}
+];
+
+const SN=[
+  {person:'ER',personAv:'av1',personName:'Eugenia Romero',text:'Para Santorini y las islas: reservar todo con mucha anticipación. Julio es temporada altísima. ✨',date:'hace 2 días',ts:Date.now()-172800000},
+  {person:'JN',personAv:'av2',personName:'Juan José Noguera',text:'La e-Visa de Turquía la saqué en 5 minutos en evisa.gov.tr. Son USD 65 por persona. Háganla antes de viajar!',date:'ayer',ts:Date.now()-86400000},
+  {person:'VS',personAv:'av3',personName:'Valeria Secchi',text:'Para los ferrys entre islas: SeaJets es el más rápido. Reservar con anticipación en verano.',date:'hoy',ts:Date.now()-3600000}
+];
 
 async function seedIfEmpty(){
   const s=await getDocs(collection(db,'days'));
-  if(!s.empty)return;
-  for(const d of SD)await setDoc(doc(db,'days',d.id),d);
-  for(const h of SH)await setDoc(doc(db,'hotels',h.id),h);
-  for(const c of SC)await setDoc(doc(db,'checklist',c.id),c);
-  for(const n of SN)await addDoc(collection(db,'notes'),n);
+  if(!s.empty) return;
+  for(const d of SD) await setDoc(doc(db,'days',d.id),d);
+  for(const h of SH) await setDoc(doc(db,'hotels',h.id),h);
+  for(const c of SC) await setDoc(doc(db,'checklist',c.id),c);
+  for(const n of SN) await addDoc(collection(db,'notes'),n);
 }
 
 function initListeners(){
-  onSnapshot(query(collection(db,'days'),orderBy('order')),s=>{DAYS=s.docs.map(d=>({...d.data(),_id:d.id}));renderDays();updateStats();autoTheme();});
-  onSnapshot(query(collection(db,'hotels'),orderBy('order')),s=>{HOTELS=s.docs.map(d=>({...d.data(),_id:d.id}));renderHotels();updateStats();});
-  onSnapshot(collection(db,'checklist'),s=>{const items=s.docs.map(d=>({...d.data(),_id:d.id})).sort((a,b)=>(a.order||0)-(b.order||0));CHECKLIST={};items.forEach(i=>{if(!CHECKLIST[i.group])CHECKLIST[i.group]=[];CHECKLIST[i.group].push(i);});renderChecklist();});
+  onSnapshot(query(collection(db,'days'),orderBy('order')),s=>{
+    DAYS=s.docs.map(d=>({...d.data(),_id:d.id}));
+    renderDays();updateStats();autoTheme();
+  });
+  onSnapshot(query(collection(db,'hotels'),orderBy('order')),s=>{
+    HOTELS=s.docs.map(d=>({...d.data(),_id:d.id}));
+    renderHotels();updateStats();populateHotelSelector();
+  });
+  onSnapshot(collection(db,'checklist'),s=>{
+    const items=s.docs.map(d=>({...d.data(),_id:d.id})).sort((a,b)=>(a.order||0)-(b.order||0));
+    CHECKLIST={};items.forEach(i=>{if(!CHECKLIST[i.group])CHECKLIST[i.group]=[];CHECKLIST[i.group].push(i);});
+    renderChecklist();
+  });
   onSnapshot(collection(db,'checks'),s=>{CHECKS={};s.docs.forEach(d=>CHECKS[d.id]=d.data().done);renderChecklist();});
   onSnapshot(query(collection(db,'notes'),orderBy('ts','desc')),s=>{NOTES=s.docs.map(d=>({...d.data(),_id:d.id}));renderNotes();});
   onSnapshot(query(collection(db,'photos'),orderBy('ts','desc')),s=>{PHOTOS=s.docs.map(d=>({...d.data(),_id:d.id}));renderPhotos();});
@@ -791,16 +970,16 @@ function autoTheme(){
   if(top&&top[1]>0){const b=document.querySelector(`[data-t="${top[0]}"]`);if(b)window.setTheme(top[0],b);}
 }
 
-try{await seedIfEmpty();initListeners();}catch(e){setSS('err','⚠ Error de conexión');console.error(e);}
+try{await seedIfEmpty();initListeners();}
+catch(e){setSS('err','⚠ Error de conexión');console.error(e);}
 
 // ── AVATARES ──────────────────────────────────────────────
 function avHtml(i,cls='',sz=34){
   const d=AVATARS[i],av=AV[i]||'av1';
-  if(d)return `<div class="av ${av} ${cls}" style="width:${sz}px;height:${sz}px"><img src="${d}" alt="${i}"><div class="av-up" onclick="triggerAv('${i}')">📷</div></div>`;
-  return `<div class="av ${av} np ${cls}" style="width:${sz}px;height:${sz}px">${i}<div class="av-up" onclick="triggerAv('${i}')">📷</div></div>`;
+  if(d)return `<div class="av ${av} ${cls}" style="width:${sz}px;height:${sz}px" onclick="triggerAv('${i}')"><img src="${d}" alt="${i}"><div class="av-up">📷</div></div>`;
+  return `<div class="av ${av} np ${cls}" style="width:${sz}px;height:${sz}px" onclick="triggerAv('${i}')">${i}<div class="av-up">📷</div></div>`;
 }
 window.triggerAv=key=>{const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.onchange=async e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async ev=>{const c=await compressImg(ev.target.result,200,.8);await setDoc(doc(db,'avatars',key),{data:c});};r.readAsDataURL(f);};inp.click();};
-
 function renderTvl(){document.getElementById('tvl-list').innerHTML=TVL.map(t=>`<div class="traveler">${avHtml(t.i,'',34)}<span>${t.fn}</span></div>`).join('');}
 function renderNotesPbtns(){document.getElementById('note-pbtns').innerHTML=TVL.map(t=>`<div onclick="selP('${t.i}','${t.a}','${t.fn}',this)">${avHtml(t.i,'pbtn'+(AP.i===t.i?' sel':''),36)}</div>`).join('');}
 function renderPhotoPbtns(){document.getElementById('photo-pbtns').innerHTML=TVL.map(t=>`<div onclick="selPhotoP('${t.i}','${t.a}','${t.fn}',this)">${avHtml(t.i,'pbtn'+(PAP.i===t.i?' sel':''),36)}</div>`).join('');}
@@ -812,33 +991,45 @@ window.showTab=(n,el)=>{document.querySelectorAll('.section').forEach(s=>s.class
 window.toggleEdit=el=>{EM=!EM;el.textContent=EM?'✓ Listo':'✏ Editar';el.style.color=EM?'#4CAF50':'';document.getElementById('ebanner').classList.toggle('show',EM);document.querySelectorAll('.eo').forEach(e=>e.style.display=EM?'flex':'none');renderDays();renderHotels();renderChecklist();renderNotes();renderProfiles();};
 window.selP=(i,a,n,el)=>{AP={i,a,n};document.querySelectorAll('#note-pbtns .pbtn').forEach(b=>b.classList.remove('sel'));el.querySelector('.pbtn')?.classList.add('sel');};
 window.selPhotoP=(i,a,n,el)=>{PAP={i,a,n};document.querySelectorAll('#photo-pbtns .pbtn').forEach(b=>b.classList.remove('sel'));el.querySelector('.pbtn')?.classList.add('sel');};
-window.togDay=id=>{document.getElementById('db'+id).classList.toggle('open');document.getElementById('ch'+id).classList.toggle('open');const d=DAYS.find(x=>x._id===id);if(d&&d.city&&d.city!=='transito'&&document.getElementById('db'+id).classList.contains('open')){const b=document.querySelector(`[data-t="${d.city}"]`);if(b)window.setTheme(d.city,b);}};
+window.togDay=id=>{
+  document.getElementById('db'+id).classList.toggle('open');
+  document.getElementById('ch'+id).classList.toggle('open');
+  const d=DAYS.find(x=>x._id===id);
+  if(d&&d.city&&d.city!=='transito'&&document.getElementById('db'+id).classList.contains('open')){
+    const b=document.querySelector(`[data-t="${d.city}"]`);
+    if(b)window.setTheme(d.city,b);
+  }
+};
 
-// ── EVENTO TIPO & PAGO ────────────────────────────────────
+// ── TIPO & PAGO ───────────────────────────────────────────
 window.selTipo=(t,el)=>{
   EVTIPO=t;
   document.querySelectorAll('.etype-btn').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
   ['vuelo','hotel','actividad','restaurante','traslado','otro'].forEach(tp=>{
-    const el=document.getElementById('campos-'+tp);
-    if(el)el.style.display=tp===t?'block':'none';
+    const e=document.getElementById('campos-'+tp);if(e)e.style.display=tp===t?'block':'none';
   });
   const labels={vuelo:'Ruta del vuelo',hotel:'Nombre del hotel',actividad:'Nombre de la actividad',restaurante:'Nombre del restaurante',traslado:'Descripción del traslado',otro:'Título'};
   document.getElementById('ev-titulo-lbl').textContent=labels[t]||'Título';
+  if(t==='hotel') populateHotelSelector();
 };
-window.setPago=(v)=>{
-  PAGADO=v;
-  ['si','no','na'].forEach(x=>{const b=document.getElementById('pago-'+x);b.className='ptbtn'+(x===v?' '+x:'');});
-};
+window.setPago=(v)=>{PAGADO=v;['si','no','na'].forEach(x=>{const b=document.getElementById('pago-'+x);b.className='ptbtn'+(x===v?' '+x:'');});};
+window.setHotelPago=(v)=>{HOTEL_PAGO=v;['si','no','na'].forEach(x=>{const b=document.getElementById('ht-pago-'+x);if(b)b.className='ptbtn'+(x===v?' '+x:'');});};
 
 // ── EVENTS ────────────────────────────────────────────────
 window.openNewEv=dayId=>{
   document.getElementById('m-ev-t').textContent='Nuevo evento';
   document.getElementById('ev-di').value=dayId;document.getElementById('ev-ei').value='';
-  ['ev-hora','ev-fecha','ev-titulo'].forEach(id=>document.getElementById(id).value='');
-  // Reset campos
-  ['v-aerolinea','v-numero','v-origen','v-destino','v-salida','v-llegada','v-duracion','v-terminal','v-escala','v-pnr','v-clase','v-equipaje','v-notas','h-nombre','h-dir','h-cin','h-cout','h-conf','h-tel','h-hab','h-desayuno','h-link','h-notas','a-lugar','a-duracion','a-precio','a-conf','a-proveedor','a-link','a-notas','r-nombre','r-dir','r-cocina','r-precio','r-horario','r-conf','r-link','r-notas','tr-origen','tr-destino','tr-duracion','tr-precio','tr-conf','tr-notas','o-notas','o-lugar'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('ev-hora').value='';document.getElementById('ev-fecha').value='';
+  document.getElementById('ev-titulo').value='';
+  ['v-aerolinea','v-numero','v-origen','v-destino','v-salida','v-llegada','v-duracion','v-terminal','v-escala','v-pnr','v-clase','v-equipaje','v-asientos','v-notas',
+   'h-nombre','h-ciudad','h-dir','h-maps','h-cin-fecha','h-cin-hora','h-cout-fecha','h-cout-hora','h-conf','h-tel','h-notas',
+   'a-lugar','a-maps','a-horafin','a-precio','a-conf','a-proveedor','a-link','a-notas',
+   'r-nombre','r-dir','r-maps','r-cocina','r-precio','r-conf','r-link','r-notas',
+   'tr-origen','tr-destino','tr-maps-o','tr-maps-d','tr-llegada','tr-duracion','tr-precio','tr-conf','tr-notas',
+   'o-lugar','o-maps','o-notas'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('r-reserva').value='';document.getElementById('tr-medio').value='';
+  document.getElementById('duracion-auto').textContent='';document.getElementById('duracion-traslado-auto').textContent='';
   selTipo('vuelo',document.querySelector('[data-tipo="vuelo"]'));
   setPago('na');
   document.getElementById('b-edel').style.display='none';
@@ -849,18 +1040,39 @@ window.openEditEv=(dayId,ei)=>{
   const d=DAYS.find(x=>x._id===dayId);if(!d)return;const ev=d.events[ei];
   document.getElementById('m-ev-t').textContent='Editar evento';
   document.getElementById('ev-di').value=dayId;document.getElementById('ev-ei').value=ei;
-  document.getElementById('ev-hora').value=ev.hora||ev.t||'';
+  document.getElementById('ev-hora').value=ev.hora||'';
   document.getElementById('ev-fecha').value=ev.fecha||'';
   document.getElementById('ev-titulo').value=ev.titulo||ev.tt||'';
   const tipo=ev.tipo||'otro';
   const btn=document.querySelector(`[data-tipo="${tipo}"]`);
   if(btn)selTipo(tipo,btn);
-  // Llenar extras
   const x=ev.extras||{};
-  Object.entries(x).forEach(([k,v])=>{
-    const prefixes=['v-','h-','a-','r-','tr-','o-'];
-    for(const p of prefixes){const el=document.getElementById(p+k);if(el){el.value=v;break;}}
+  // Fill fields
+  const fieldMap={
+    vuelo:['aerolinea','numero','origen','destino','salida','llegada','duracion','terminal','escala','pnr','clase','equipaje','asientos','notas'],
+    hotel:['nombre','ciudad','dir','maps','cin-fecha','cin-hora','cout-fecha','cout-hora','conf','tel','notas'],
+    actividad:['lugar','maps','horafin','precio','conf','proveedor','link','notas'],
+    restaurante:['nombre','dir','maps','cocina','precio','conf','reserva','link','notas'],
+    traslado:['origen','destino','maps-o','maps-d','llegada','duracion','precio','conf','notas'],
+    otro:['lugar','maps','notas']
+  };
+  const prefix={vuelo:'v-',hotel:'h-',actividad:'a-',restaurante:'r-',traslado:'tr-',otro:'o-'};
+  (fieldMap[tipo]||[]).forEach(f=>{
+    const el=document.getElementById((prefix[tipo]||'')+f);
+    if(el&&x[f.replace('-','')]!==undefined) el.value=x[f.replace('-','')]||'';
+    else if(el&&x[f]!==undefined) el.value=x[f]||'';
   });
+  // Special: cinFecha etc
+  if(tipo==='hotel'){
+    if(x.cinFecha) document.getElementById('h-cin-fecha').value=x.cinFecha;
+    if(x.cinHora) document.getElementById('h-cin-hora').value=x.cinHora;
+    if(x.coutFecha) document.getElementById('h-cout-fecha').value=x.coutFecha;
+    if(x.coutHora) document.getElementById('h-cout-hora').value=x.coutHora;
+  }
+  if(tipo==='traslado'){
+    if(x.mapsO) document.getElementById('tr-maps-o').value=x.mapsO;
+    if(x.mapsD) document.getElementById('tr-maps-d').value=x.mapsD;
+  }
   setPago(ev.pago||'na');
   document.getElementById('b-edel').style.display='inline-block';
   om('m-ev');
@@ -868,40 +1080,120 @@ window.openEditEv=(dayId,ei)=>{
 
 function collectExtras(){
   const x={};
-  const maps={
-    vuelo:['aerolinea','numero','origen','destino','salida','llegada','duracion','terminal','escala','pnr','clase','equipaje','notas'],
-    hotel:['nombre','dir','cin','cout','conf','tel','hab','desayuno','link','notas'],
-    actividad:['lugar','duracion','precio','conf','proveedor','link','notas'],
-    restaurante:['nombre','dir','cocina','precio','horario','conf','link','reserva','notas'],
-    traslado:['origen','destino','medio','duracion','precio','conf','notas'],
-    otro:['notas','lugar']
-  };
-  const prefix={vuelo:'v-',hotel:'h-',actividad:'a-',restaurante:'r-',traslado:'tr-',otro:'o-'};
-  const fields=maps[EVTIPO]||[];
-  fields.forEach(f=>{const el=document.getElementById((prefix[EVTIPO]||'')+f);if(el)x[f]=el.value;});
+  if(EVTIPO==='vuelo'){
+    ['aerolinea','numero','origen','destino','salida','llegada','duracion','terminal','escala','pnr','clase','equipaje','notas'].forEach(f=>{const el=document.getElementById('v-'+f);if(el)x[f]=el.value;});
+  }else if(EVTIPO==='hotel'){
+    ['nombre','ciudad','dir','maps'].forEach(f=>{const el=document.getElementById('h-'+f);if(el)x[f]=el.value;});
+    x.cinFecha=document.getElementById('h-cin-fecha').value;
+    x.cinHora=document.getElementById('h-cin-hora').value;
+    x.coutFecha=document.getElementById('h-cout-fecha').value;
+    x.coutHora=document.getElementById('h-cout-hora').value;
+    ['conf','tel','notas'].forEach(f=>{const el=document.getElementById('h-'+f);if(el)x[f]=el.value;});
+  }else if(EVTIPO==='actividad'){
+    ['lugar','maps','horafin','precio','conf','proveedor','link','notas'].forEach(f=>{const el=document.getElementById('a-'+f);if(el)x[f]=el.value;});
+  }else if(EVTIPO==='restaurante'){
+    ['nombre','dir','maps','cocina','precio','conf','reserva','link','notas'].forEach(f=>{const el=document.getElementById('r-'+f);if(el)x[f]=el.value;});
+  }else if(EVTIPO==='traslado'){
+    ['origen','destino','llegada','duracion','precio','conf','notas'].forEach(f=>{const el=document.getElementById('tr-'+f);if(el)x[f]=el.value;});
+    x.mapsO=document.getElementById('tr-maps-o').value;
+    x.mapsD=document.getElementById('tr-maps-d').value;
+    x.medio=document.getElementById('tr-medio').value;
+  }else{
+    ['lugar','maps','notas'].forEach(f=>{const el=document.getElementById('o-'+f);if(el)x[f]=el.value;});
+  }
   return x;
 }
 
 window.savEv=async()=>{
   const di=document.getElementById('ev-di').value;const ei=document.getElementById('ev-ei').value;
-  const o={tipo:EVTIPO,hora:document.getElementById('ev-hora').value||'—',fecha:document.getElementById('ev-fecha').value||'',titulo:document.getElementById('ev-titulo').value||'Sin título',pago:PAGADO,extras:collectExtras()};
+  const o={tipo:EVTIPO,hora:document.getElementById('ev-hora').value||'',fecha:document.getElementById('ev-fecha').value||'',titulo:document.getElementById('ev-titulo').value||'Sin título',pago:PAGADO,extras:collectExtras()};
   const d=DAYS.find(x=>x._id===di);if(!d)return;
   const evs=[...(d.events||[])];
   if(ei!=='')evs[parseInt(ei)]=o;else evs.push(o);
-  await updateDoc(doc(db,'days',di),{events:evs});cm('m-ev');
+  // SORT BY TIME
+  const sorted=sortEvents(evs);
+  await updateDoc(doc(db,'days',di),{events:sorted});
+  cm('m-ev');
 };
 window.delEv=async()=>{const di=document.getElementById('ev-di').value;const ei=parseInt(document.getElementById('ev-ei').value);const d=DAYS.find(x=>x._id===di);if(!d)return;const evs=[...(d.events||[])];evs.splice(ei,1);await updateDoc(doc(db,'days',di),{events:evs});cm('m-ev');};
 
 // ── DAYS ──────────────────────────────────────────────────
-window.openNewDay=()=>{document.getElementById('m-day-t').textContent='Nuevo día';document.getElementById('d-idx').value='';document.getElementById('d-label').value='';document.getElementById('d-date').value='';document.getElementById('d-city').value='amsterdam';document.getElementById('b-ddel').style.display='none';om('m-day');};
-window.openEditDay=id=>{const d=DAYS.find(x=>x._id===id);if(!d)return;document.getElementById('m-day-t').textContent='Editar día';document.getElementById('d-idx').value=id;document.getElementById('d-label').value=d.label;document.getElementById('d-date').value=d.date;document.getElementById('d-city').value=d.city;document.getElementById('b-ddel').style.display='inline-block';om('m-day');};
-window.savDay=async()=>{const idx=document.getElementById('d-idx').value;const o={date:document.getElementById('d-date').value||'Día ?',label:document.getElementById('d-label').value||'Sin título',city:document.getElementById('d-city').value,order:idx?(DAYS.find(x=>x._id===idx)?.order||99):DAYS.length+1,events:idx?(DAYS.find(x=>x._id===idx)?.events||[]):[]};if(idx)await setDoc(doc(db,'days',idx),o);else await addDoc(collection(db,'days'),o);cm('m-day');};
+window.openNewDay=()=>{document.getElementById('m-day-t').textContent='Nuevo día';document.getElementById('d-idx').value='';document.getElementById('d-label').value='';document.getElementById('d-fecha').value='';document.getElementById('d-city').value='amsterdam';document.getElementById('b-ddel').style.display='none';om('m-day');};
+window.openEditDay=id=>{const d=DAYS.find(x=>x._id===id);if(!d)return;document.getElementById('m-day-t').textContent='Editar día';document.getElementById('d-idx').value=id;document.getElementById('d-label').value=d.label;document.getElementById('d-fecha').value=d.fecha||'';document.getElementById('d-city').value=d.city;document.getElementById('b-ddel').style.display='inline-block';om('m-day');};
+window.savDay=async()=>{
+  const idx=document.getElementById('d-idx').value;
+  const fechaISO=document.getElementById('d-fecha').value;
+  const dateDisp=fechaISO?fmtDateDisplay(fechaISO):(document.getElementById('d-fecha').value||'');
+  const o={date:dateDisp||'—',fecha:fechaISO||'',label:document.getElementById('d-label').value||'Sin título',city:document.getElementById('d-city').value,order:idx?(DAYS.find(x=>x._id===idx)?.order||99):DAYS.length+1,events:idx?(DAYS.find(x=>x._id===idx)?.events||[]):[]};
+  if(idx)await setDoc(doc(db,'days',idx),o);else await addDoc(collection(db,'days'),o);
+  cm('m-day');
+};
 window.delDay=async()=>{const idx=document.getElementById('d-idx').value;if(idx&&confirm('¿Eliminar este día y todos sus eventos?')){await deleteDoc(doc(db,'days',idx));cm('m-day');}};
 
 // ── HOTELS ────────────────────────────────────────────────
-window.openNewHotel=()=>{document.getElementById('m-hotel-t').textContent='Nuevo alojamiento';document.getElementById('ht-idx').value='';['ht-name','ht-city','ht-cin','ht-cout','ht-noch','ht-conf','ht-obs'].forEach(id=>document.getElementById(id).value='');document.getElementById('b-hdel').style.display='none';om('m-hotel');};
-window.openEditHotel=id=>{const h=HOTELS.find(x=>x._id===id);if(!h)return;document.getElementById('m-hotel-t').textContent='Editar alojamiento';document.getElementById('ht-idx').value=id;document.getElementById('ht-name').value=h.name;document.getElementById('ht-city').value=h.city;document.getElementById('ht-cin').value=h.cin;document.getElementById('ht-cout').value=h.cout;document.getElementById('ht-noch').value=h.noch;document.getElementById('ht-conf').value=h.conf;document.getElementById('ht-obs').value=h.obs;document.getElementById('b-hdel').style.display='inline-block';om('m-hotel');};
-window.savHotel=async()=>{const idx=document.getElementById('ht-idx').value;const c=document.getElementById('ht-city').value.toLowerCase();const cc=c.includes('amster')?'p-amsterdam':c.includes('santa')||c.includes('aten')?'p-grecia':c.includes('estam')||c.includes('turq')?'p-turquia':'p-transito';const o={name:document.getElementById('ht-name').value||'Hotel',city:document.getElementById('ht-city').value,cc,cin:document.getElementById('ht-cin').value,cout:document.getElementById('ht-cout').value,noch:document.getElementById('ht-noch').value,conf:document.getElementById('ht-conf').value,obs:document.getElementById('ht-obs').value,order:idx?(HOTELS.find(x=>x._id===idx)?.order||99):HOTELS.length+1};if(idx)await setDoc(doc(db,'hotels',idx),o);else await addDoc(collection(db,'hotels'),o);cm('m-hotel');};
+let HOTEL_PAGO_STATE='no';
+window.openNewHotel=()=>{
+  document.getElementById('m-hotel-t').textContent='Nuevo alojamiento';
+  document.getElementById('ht-idx').value='';
+  ['ht-name','ht-city','ht-dir','ht-maps','ht-cin-fecha','ht-cin-hora','ht-cout-fecha','ht-cout-hora','ht-conf','ht-tel','ht-hab','ht-desayuno','ht-link','ht-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('ht-plat').value='';
+  document.getElementById('b-hdel').style.display='none';
+  setHotelPago('no');
+  om('m-hotel');
+};
+window.openEditHotel=id=>{
+  const h=HOTELS.find(x=>x._id===id);if(!h)return;
+  document.getElementById('m-hotel-t').textContent='Editar alojamiento';
+  document.getElementById('ht-idx').value=id;
+  document.getElementById('ht-name').value=h.name||'';
+  document.getElementById('ht-city').value=h.city||'';
+  document.getElementById('ht-dir').value=h.dir||'';
+  document.getElementById('ht-maps').value=h.maps||'';
+  document.getElementById('ht-cin-fecha').value=h.cinFecha||'';
+  document.getElementById('ht-cin-hora').value=h.cinHora||'';
+  document.getElementById('ht-cout-fecha').value=h.coutFecha||'';
+  document.getElementById('ht-cout-hora').value=h.coutHora||'';
+  document.getElementById('ht-conf').value=h.conf||'';
+  document.getElementById('ht-plat').value=h.plat||'';
+  document.getElementById('ht-tel').value=h.tel||'';
+  document.getElementById('ht-hab').value=h.hab||'';
+  document.getElementById('ht-desayuno').value=h.desayuno||'';
+  document.getElementById('ht-link').value=h.link||'';
+  document.getElementById('ht-obs').value=h.obs||'';
+  document.getElementById('b-hdel').style.display='inline-block';
+  setHotelPago(h.pago||'no');
+  om('m-hotel');
+};
+window.savHotel=async()=>{
+  const idx=document.getElementById('ht-idx').value;
+  const c=document.getElementById('ht-city').value.toLowerCase();
+  const cc=c.includes('amster')?'p-amsterdam':c.includes('santa')||c.includes('aten')||c.includes('mykon')||c.includes('naxo')||c.includes('koufo')||c.includes('paros')||c.includes('milos')||c.includes('grecia')?'p-grecia':c.includes('estam')||c.includes('turq')||c.includes('capado')?'p-turquia':'p-transito';
+  const cinF=document.getElementById('ht-cin-fecha').value;const cinH=document.getElementById('ht-cin-hora').value;
+  const coutF=document.getElementById('ht-cout-fecha').value;const coutH=document.getElementById('ht-cout-hora').value;
+  // Calc nights
+  let noch='';
+  if(cinF&&coutF){const d1=new Date(cinF);const d2=new Date(coutF);const diff=Math.round((d2-d1)/(1000*60*60*24));noch=diff>0?`${diff} noche${diff>1?'s':''}`:'1 noche';}
+  const o={
+    name:document.getElementById('ht-name').value||'Hotel',
+    city:document.getElementById('ht-city').value,cc,
+    dir:document.getElementById('ht-dir').value,
+    maps:document.getElementById('ht-maps').value,
+    cinFecha:cinF,cinHora:cinH,
+    coutFecha:coutF,coutHora:coutH,
+    noch,
+    conf:document.getElementById('ht-conf').value,
+    plat:document.getElementById('ht-plat').value,
+    tel:document.getElementById('ht-tel').value,
+    hab:document.getElementById('ht-hab').value,
+    desayuno:document.getElementById('ht-desayuno').value,
+    link:document.getElementById('ht-link').value,
+    obs:document.getElementById('ht-obs').value,
+    pago:HOTEL_PAGO,
+    order:idx?(HOTELS.find(x=>x._id===idx)?.order||99):HOTELS.length+1
+  };
+  if(idx)await setDoc(doc(db,'hotels',idx),o);else await addDoc(collection(db,'hotels'),o);
+  cm('m-hotel');
+};
 window.delHotel=async()=>{const idx=document.getElementById('ht-idx').value;if(idx&&confirm('¿Eliminar?')){await deleteDoc(doc(db,'hotels',idx));cm('m-hotel');}};
 
 // ── CHECKLIST ─────────────────────────────────────────────
@@ -918,7 +1210,7 @@ window.delNote=async id=>{if(confirm('¿Eliminar nota?'))await deleteDoc(doc(db,
 // ── PHOTOS ────────────────────────────────────────────────
 window.handlePhotos=async event=>{
   const files=[...event.target.files];const caption=document.getElementById('photo-caption').value.trim();const prog=document.getElementById('upload-prog');prog.style.display='block';
-  for(let i=0;i<files.length;i++){prog.textContent=`Subiendo ${i+1} de ${files.length}...`;try{const dataUrl=await new Promise(res=>{const r=new FileReader();r.onload=e=>res(e.target.result);r.readAsDataURL(files[i]);});let c=await compressImg(dataUrl,600,.65);if(c.length>900000)c=await compressImg(dataUrl,400,.55);await addDoc(collection(db,'photos'),{data:c,caption,person:PAP.i,personAv:PAP.a,personName:PAP.n,ts:Date.now(),date:new Date().toLocaleString('es-AR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})});}catch(e){prog.textContent='Error al subir.';console.error(e);}}
+  for(let i=0;i<files.length;i++){prog.textContent=`Subiendo ${i+1} de ${files.length}...`;try{const dataUrl=await new Promise(res=>{const r=new FileReader();r.onload=e=>res(e.target.result);r.readAsDataURL(files[i]);});let c=await compressImg(dataUrl,600,.65);if(c.length>900000)c=await compressImg(dataUrl,400,.55);await addDoc(collection(db,'photos'),{data:c,caption,person:PAP.i,personAv:PAP.a,personName:PAP.n,ts:Date.now(),date:new Date().toLocaleString('es-AR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})});}catch(e){console.error(e);}}
   prog.style.display='none';document.getElementById('photo-caption').value='';event.target.value='';
 };
 async function compressImg(dataUrl,maxPx,q){return new Promise(res=>{const img=new Image();img.onload=()=>{let w=img.width,h=img.height;if(w>maxPx||h>maxPx){if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}else{w=Math.round(w*maxPx/h);h=maxPx;}}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',q));};img.src=dataUrl;});}
@@ -927,72 +1219,96 @@ window.openViewer=(data,cap)=>{document.getElementById('vimg').src=data;document
 window.closeViewer=()=>document.getElementById('vbg').classList.remove('open');
 
 // ── PROFILES ──────────────────────────────────────────────
-window.openEditProfile=key=>{const p=PROFILES[key]||{};document.getElementById('m-profile-t').textContent='Perfil de '+(FN[key]||key);document.getElementById('prof-key').value=key;document.getElementById('prof-comida').value=p.comida||'';document.getElementById('prof-shopping').value=p.shopping||'';document.getElementById('prof-actividades').value=p.actividades||'';document.getElementById('prof-ritmo').value=p.ritmo||'';document.getElementById('prof-nota').value=p.nota||'';om('m-profile');};
+window.openEditProfile=key=>{const p=PROFILES[key]||{};document.getElementById('m-profile-t').textContent='Perfil de '+(FN[key]||key);document.getElementById('prof-key').value=key;['comida','shopping','actividades','ritmo','nota'].forEach(f=>document.getElementById('prof-'+f).value=p[f]||'');om('m-profile');};
 window.savProfile=async()=>{const key=document.getElementById('prof-key').value;await setDoc(doc(db,'profiles',key),{comida:document.getElementById('prof-comida').value,shopping:document.getElementById('prof-shopping').value,actividades:document.getElementById('prof-actividades').value,ritmo:document.getElementById('prof-ritmo').value,nota:document.getElementById('prof-nota').value});cm('m-profile');};
 
 // ── RENDERS ───────────────────────────────────────────────
-function pagoBadge(p){const map={si:'✓ Pago',no:'⏳ Pendiente',na:''};const cls={si:'si',no:'no',na:'na'};if(!p||p==='na')return'';return`<span class="badge-pago ${cls[p]}">${map[p]}</span>`;}
+function pagoBadge(p){if(!p||p==='na')return'';return`<span class="badge-pago ${p==='si'?'si':'no'}">${p==='si'?'✓ Pago':'⏳ Pendiente'}</span>`;}
+
+function buildActionBtns(ev){
+  const x=ev.extras||{};let btns='';
+  // Flight tracker
+  if(ev.tipo==='vuelo'&&x.numero){
+    const date=ev.fecha?ev.fecha.replace(/-/g,''):'';
+    const url=`https://www.flightradar24.com/${x.numero}/${date}`;
+    btns+=`<a href="${url}" target="_blank" class="action-btn flight">✈ Estado del vuelo</a>`;
+  }
+  // Maps buttons
+  const mapsLink=x.maps||x.mapsO||x.mapsD||x.lugar||x.dir||x.nombre;
+  if(x.maps&&x.maps.startsWith('http')){
+    btns+=`<a href="${x.maps}" target="_blank" class="action-btn maps">📍 Ver en Maps</a>`;
+  }else if(x.lugar||x.dir||x.nombre){
+    const q=encodeURIComponent(x.lugar||x.dir||x.nombre||'');
+    if(q) btns+=`<a href="https://maps.google.com/maps?q=${q}" target="_blank" class="action-btn maps">📍 Ver en Maps</a>`;
+  }
+  // Route for traslados
+  if(ev.tipo==='traslado'&&x.origen&&x.destino){
+    const o=encodeURIComponent(x.origen);const d=encodeURIComponent(x.destino);
+    btns+=`<a href="https://www.google.com/maps/dir/${o}/${d}" target="_blank" class="action-btn route">🗺 Cómo llegar</a>`;
+  }
+  return btns?`<div class="ecard-btns">${btns}</div>`:'';
+}
 
 function renderEventCard(ev,dayId,j){
   const tipo=ev.tipo||'otro';
   const ico=TIPO_ICO[tipo]||'📌';
   const cls=TIPO_CLS[tipo]||'etype-otro';
   const titulo=ev.titulo||ev.tt||'Sin título';
-  const hora=ev.hora||ev.t||'';
+  const hora=fmtTimeDisplay(ev.hora||ev.t||'');
+  const fechaDisp=ev.fecha?fmtDateDisplay(ev.fecha):'';
   const x=ev.extras||{};
-
-  // Construir detalles según tipo
   let details='';
+
   if(tipo==='vuelo'){
-    if(x.aerolinea||x.numero)details+=`<div class="edetail"><label>Aerolínea & vuelo</label><p>${[x.aerolinea,x.numero].filter(Boolean).join(' · ')}</p></div>`;
-    if(x.origen||x.destino)details+=`<div class="edetail full"><label>Ruta</label><p>${x.origen||'—'} → ${x.destino||'—'}</p></div>`;
-    if(x.salida||x.llegada)details+=`<div class="edetail"><label>Salida → Llegada</label><p>${x.salida||'—'} → ${x.llegada||'—'}${x.duracion?' ('+x.duracion+')':''}</p></div>`;
-    if(x.terminal)details+=`<div class="edetail"><label>Terminal</label><p>${x.terminal}</p></div>`;
-    if(x.escala)details+=`<div class="edetail"><label>Escala</label><p>${x.escala}</p></div>`;
-    if(x.pnr)details+=`<div class="edetail"><label>Código PNR</label><p>${x.pnr}</p></div>`;
-    if(x.clase)details+=`<div class="edetail"><label>Clase</label><p>${x.clase}</p></div>`;
-    if(x.equipaje)details+=`<div class="edetail full"><label>Equipaje</label><p>${x.equipaje}</p></div>`;
-    if(x.notas)details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
-  } else if(tipo==='hotel'){
-    if(x.nombre)details+=`<div class="edetail full"><label>Hotel</label><p>${x.nombre}</p></div>`;
-    if(x.dir)details+=`<div class="edetail full"><label>Dirección</label><p>${x.dir}</p></div>`;
-    if(x.cin||x.cout)details+=`<div class="edetail"><label>Check-in / out</label><p>${x.cin||'—'} → ${x.cout||'—'}</p></div>`;
-    if(x.conf)details+=`<div class="edetail"><label>N° confirmación</label><p>${x.conf}</p></div>`;
-    if(x.tel)details+=`<div class="edetail"><label>Teléfono</label><p>${x.tel}</p></div>`;
-    if(x.hab)details+=`<div class="edetail"><label>Habitaciones</label><p>${x.hab}</p></div>`;
-    if(x.desayuno)details+=`<div class="edetail"><label>Desayuno</label><p>${x.desayuno}</p></div>`;
-    if(x.link)details+=`<div class="edetail full"><label>Link reserva</label><p><a href="${x.link}" target="_blank">${x.link}</a></p></div>`;
-    if(x.notas)details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
-  } else if(tipo==='actividad'){
-    if(x.lugar)details+=`<div class="edetail full"><label>Lugar</label><p>${x.lugar}</p></div>`;
-    if(x.duracion)details+=`<div class="edetail"><label>Duración</label><p>${x.duracion}</p></div>`;
-    if(x.precio)details+=`<div class="edetail"><label>Precio</label><p>${x.precio}</p></div>`;
-    if(x.conf)details+=`<div class="edetail"><label>N° confirmación</label><p>${x.conf}</p></div>`;
-    if(x.proveedor)details+=`<div class="edetail"><label>Proveedor</label><p>${x.proveedor}</p></div>`;
-    if(x.link)details+=`<div class="edetail full"><label>Link</label><p><a href="${x.link}" target="_blank">${x.link}</a></p></div>`;
-    if(x.notas)details+=`<div class="edetail full"><label>Notas / tips</label><p>${x.notas}</p></div>`;
-  } else if(tipo==='restaurante'){
-    if(x.nombre)details+=`<div class="edetail full"><label>Restaurante</label><p>${x.nombre}</p></div>`;
-    if(x.dir)details+=`<div class="edetail full"><label>Dirección</label><p>${x.dir}</p></div>`;
-    if(x.cocina)details+=`<div class="edetail"><label>Cocina</label><p>${x.cocina}</p></div>`;
-    if(x.precio)details+=`<div class="edetail"><label>Precio est.</label><p>${x.precio}</p></div>`;
-    if(x.horario)details+=`<div class="edetail"><label>Horario reserva</label><p>${x.horario}</p></div>`;
-    if(x.conf)details+=`<div class="edetail"><label>N° reserva</label><p>${x.conf}</p></div>`;
-    if(x.reserva)details+=`<div class="edetail"><label>Estado reserva</label><p>${x.reserva}</p></div>`;
-    if(x.link)details+=`<div class="edetail full"><label>Link</label><p><a href="${x.link}" target="_blank">${x.link}</a></p></div>`;
-    if(x.notas)details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
-  } else if(tipo==='traslado'){
-    if(x.origen||x.destino)details+=`<div class="edetail full"><label>Trayecto</label><p>${x.origen||'—'} → ${x.destino||'—'}</p></div>`;
-    if(x.medio)details+=`<div class="edetail"><label>Medio</label><p>${x.medio}</p></div>`;
-    if(x.duracion)details+=`<div class="edetail"><label>Duración</label><p>${x.duracion}</p></div>`;
-    if(x.precio)details+=`<div class="edetail"><label>Precio est.</label><p>${x.precio}</p></div>`;
-    if(x.conf)details+=`<div class="edetail"><label>N° / línea</label><p>${x.conf}</p></div>`;
-    if(x.notas)details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
-  } else {
+    if(x.aerolinea||x.numero) details+=`<div class="edetail"><label>Aerolínea & vuelo</label><p>${[x.aerolinea,x.numero].filter(Boolean).join(' · ')}</p></div>`;
+    if(x.origen||x.destino) details+=`<div class="edetail full"><label>Ruta</label><p>${x.origen||'—'} → ${x.destino||'—'}</p></div>`;
+    if(x.salida||x.llegada) details+=`<div class="edetail"><label>Salida → Llegada</label><p>${x.salida||'—'} → ${x.llegada||'—'}${x.duracion?' · '+x.duracion:''}</p></div>`;
+    if(x.terminal) details+=`<div class="edetail"><label>Terminal</label><p>${x.terminal}</p></div>`;
+    if(x.escala) details+=`<div class="edetail"><label>Escala</label><p>${x.escala}</p></div>`;
+    if(x.pnr) details+=`<div class="edetail"><label>Código PNR</label><p>${x.pnr}</p></div>`;
+    if(x.clase) details+=`<div class="edetail"><label>Clase</label><p>${x.clase}</p></div>`;
+    if(x.equipaje) details+=`<div class="edetail full"><label>Equipaje</label><p>${x.equipaje}</p></div>`;
+    if(x.asientos) details+=`<div class="edetail full"><label>Asientos</label><p>${x.asientos}</p></div>`;
+    if(x.notas) details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
+  }else if(tipo==='hotel'){
+    if(x.nombre) details+=`<div class="edetail full"><label>Hotel</label><p>${x.nombre}</p></div>`;
+    if(x.dir) details+=`<div class="edetail full"><label>Dirección</label><p>${x.dir}${x.maps&&x.maps.startsWith('http')?` <a href="${x.maps}" target="_blank">📍</a>`:''}</p></div>`;
+    if(x.cinFecha||x.cinHora) details+=`<div class="edetail"><label>Check-in</label><p>${x.cinFecha?fmtDateDisplay(x.cinFecha):''} ${x.cinHora||''}</p></div>`;
+    if(x.coutFecha||x.coutHora) details+=`<div class="edetail"><label>Check-out</label><p>${x.coutFecha?fmtDateDisplay(x.coutFecha):''} ${x.coutHora||''}</p></div>`;
+    if(x.conf) details+=`<div class="edetail"><label>N° confirmación</label><p>${x.conf}</p></div>`;
+    if(x.tel) details+=`<div class="edetail"><label>Teléfono</label><p>${x.tel}</p></div>`;
+    if(x.notas) details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
+  }else if(tipo==='actividad'){
+    if(x.lugar) details+=`<div class="edetail full"><label>Lugar</label><p>${x.lugar}</p></div>`;
+    if(x.horafin) details+=`<div class="edetail"><label>Hasta</label><p>${x.horafin}</p></div>`;
+    if(x.precio) details+=`<div class="edetail"><label>Precio</label><p>${x.precio}</p></div>`;
+    if(x.conf) details+=`<div class="edetail"><label>N° confirmación</label><p>${x.conf}</p></div>`;
+    if(x.proveedor) details+=`<div class="edetail"><label>Proveedor</label><p>${x.proveedor}</p></div>`;
+    if(x.link) details+=`<div class="edetail full"><label>Link</label><p><a href="${x.link}" target="_blank">${x.link}</a></p></div>`;
+    if(x.notas) details+=`<div class="edetail full"><label>Notas / tips</label><p>${x.notas}</p></div>`;
+  }else if(tipo==='restaurante'){
+    if(x.nombre) details+=`<div class="edetail full"><label>Restaurante</label><p>${x.nombre}</p></div>`;
+    if(x.dir) details+=`<div class="edetail full"><label>Dirección</label><p>${x.dir}</p></div>`;
+    if(x.cocina) details+=`<div class="edetail"><label>Cocina</label><p>${x.cocina}</p></div>`;
+    if(x.precio) details+=`<div class="edetail"><label>Precio est.</label><p>${x.precio}</p></div>`;
+    if(x.conf) details+=`<div class="edetail"><label>N° reserva</label><p>${x.conf}</p></div>`;
+    if(x.reserva) details+=`<div class="edetail"><label>Estado</label><p>${x.reserva}</p></div>`;
+    if(x.link) details+=`<div class="edetail full"><label>Link</label><p><a href="${x.link}" target="_blank">${x.link}</a></p></div>`;
+    if(x.notas) details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
+  }else if(tipo==='traslado'){
+    if(x.origen||x.destino) details+=`<div class="edetail full"><label>Trayecto</label><p>${x.origen||'—'} → ${x.destino||'—'}</p></div>`;
+    if(x.medio) details+=`<div class="edetail"><label>Medio</label><p>${x.medio}</p></div>`;
+    if(x.duracion) details+=`<div class="edetail"><label>Duración</label><p>${x.duracion}</p></div>`;
+    if(x.precio) details+=`<div class="edetail"><label>Precio est.</label><p>${x.precio}</p></div>`;
+    if(x.conf) details+=`<div class="edetail"><label>N° / línea</label><p>${x.conf}</p></div>`;
+    if(x.notas) details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
+  }else{
     const det=ev.det||x.notas||'';
-    if(det)details+=`<div class="edetail full"><label>Detalle</label><p>${det}</p></div>`;
-    if(x.lugar)details+=`<div class="edetail full"><label>Lugar</label><p>${x.lugar}</p></div>`;
+    if(det) details+=`<div class="edetail full"><label>Detalle</label><p>${det}</p></div>`;
+    if(x.lugar) details+=`<div class="edetail full"><label>Lugar</label><p>${x.lugar}</p></div>`;
   }
+
+  const actionBtns=buildActionBtns(ev);
 
   return `
   <div class="ecard">
@@ -1000,31 +1316,64 @@ function renderEventCard(ev,dayId,j){
       <div class="etype-icon ${cls}">${ico}</div>
       <div class="ecard-main">
         <div class="ecard-title">
-          ${hora?`<span class="ecard-time">${hora}${ev.fecha?' · '+ev.fecha:''}</span>`:''}
+          ${hora?`<span class="ecard-time">${hora}${fechaDisp?' · '+fechaDisp:''}</span>`:''}
           ${titulo}
           ${pagoBadge(ev.pago)}
         </div>
-        ${tipo==='vuelo'&&x.origen&&x.destino?`<div class="ecard-sub">${x.aerolinea||''} ${x.numero||''} · ${x.origen} → ${x.destino}</div>`:''}
+        ${tipo==='vuelo'&&x.origen&&x.destino?`<div class="ecard-sub">${x.aerolinea||''} ${x.numero||''} · ${x.origen.split('—')[0]} → ${x.destino.split('—')[0]}</div>`:''}
         ${tipo==='traslado'&&x.medio?`<div class="ecard-sub">${x.medio}${x.duracion?' · '+x.duracion:''}</div>`:''}
         ${tipo==='restaurante'&&x.cocina?`<div class="ecard-sub">${x.cocina}${x.precio?' · '+x.precio:''}</div>`:''}
-        ${tipo==='actividad'&&x.lugar?`<div class="ecard-sub">${x.lugar}</div>`:''}
+        ${tipo==='actividad'&&x.lugar?`<div class="ecard-sub">${x.lugar}${x.horafin?' · hasta '+x.horafin:''}</div>`:''}
+        ${tipo==='hotel'&&x.nombre?`<div class="ecard-sub">${x.nombre}</div>`:''}
       </div>
       ${EM?`<div class="ecard-actions"><button class="ibtn" onclick="openEditEv('${dayId}',${j})">✏</button></div>`:''}
     </div>
     ${details?`<div class="edetails">${details}</div>`:''}
+    ${actionBtns}
   </div>`;
 }
 
-window.renderDays=()=>{
+// Route connector between consecutive events with addresses
+function routeConnector(ev1, ev2){
+  if(!ev1||!ev2) return '';
+  const getAddr=ev=>{const x=ev.extras||{};return x.destino||x.dir||x.lugar||x.nombre||'';};
+  const getAddrStart=ev=>{const x=ev.extras||{};return x.origen||x.dir||x.lugar||x.nombre||'';};
+  const from=getAddr(ev1);const to=getAddrStart(ev2);
+  if(!from||!to||from===to) return '';
+  const url=`https://www.google.com/maps/dir/${encodeURIComponent(from)}/${encodeURIComponent(to)}`;
+  return `<div class="route-connector"><div class="route-line"></div><a href="${url}" target="_blank" class="route-btn">🗺 Cómo ir de ${from.split(',')[0]} a ${to.split(',')[0]}</a></div>`;
+}
+
+window.renderDays=async()=>{
   const c=document.getElementById('days-wrap');
   if(!DAYS.length){c.innerHTML='<div class="loading">Sin días aún.</div>';return;}
-  c.innerHTML=DAYS.map(d=>`
+
+  // Fetch weather for all days async (non-blocking)
+  const weatherPromises={};
+  DAYS.forEach(d=>{
+    if(d.city!=='transito'&&d.fecha){
+      const isoDate=fmtDateISO(d.fecha)||d.fecha;
+      if(isoDate&&isoDate.match(/^\d{4}-\d{2}-\d{2}$/)){
+        weatherPromises[d._id]=getWeather(d.city,isoDate);
+      }
+    }
+  });
+
+  c.innerHTML=DAYS.map(d=>{
+    const evsSorted=sortEvents(d.events||[]);
+    const evCount=evsSorted.length;
+    const dateDisp=d.fecha?fmtDateDisplay(d.fecha):d.date;
+    return `
     <div class="day-card">
       <div class="day-hd">
         <span class="cpill p-${d.city}">${CL[d.city]||d.city}</span>
         <div class="day-info" onclick="togDay('${d._id}')">
           <strong>${d.label}</strong>
-          <span>${d.date} · ${(d.events||[]).length} eventos</span>
+          <div class="day-meta">
+            <span>${dateDisp||d.date}</span>
+            <span>·</span><span>${evCount} eventos</span>
+            <span id="wc-${d._id}"></span>
+          </div>
         </div>
         <div class="day-actions">
           ${EM?`<button class="ibtn" onclick="openEditDay('${d._id}')">✏ día</button><button class="ibtn" onclick="openNewEv('${d._id}')">+ evento</button>`:''}
@@ -1033,32 +1382,60 @@ window.renderDays=()=>{
       </div>
       <div class="day-body" id="db${d._id}">
         <div class="elist">
-          ${(d.events||[]).map((ev,j)=>renderEventCard(ev,d._id,j)).join('')}
+          ${evsSorted.map((ev,j)=>{
+            const connector=j<evsSorted.length-1?routeConnector(ev,evsSorted[j+1]):'';
+            return renderEventCard(ev,d._id,j)+connector;
+          }).join('')}
+          ${EM?`<div style="padding:.5rem 1rem"><button class="ibtn" style="width:100%;justify-content:center" onclick="openNewEv('${d._id}')">+ Agregar evento</button></div>`:''}
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+
+  // Load weather badges async
+  for(const [dayId,promise] of Object.entries(weatherPromises)){
+    promise.then(w=>{
+      if(!w) return;
+      const el=document.getElementById('wc-'+dayId);
+      if(el) el.innerHTML=`<span class="weather-chip-day">${w.ico} ${w.tmax}° / ${w.tmin}°</span>`;
+    }).catch(()=>{});
+  }
 };
 
 window.renderHotels=()=>{
   const c=document.getElementById('htl-wrap');
   if(!HOTELS.length){c.innerHTML='<div class="loading">Sin hoteles aún.</div>';return;}
-  c.innerHTML=HOTELS.map(h=>`
+  c.innerHTML=HOTELS.map(h=>{
+    const cinDisp=h.cinFecha?fmtDateDisplay(h.cinFecha)+(h.cinHora?' · '+h.cinHora:''):(h.cin||'—');
+    const coutDisp=h.coutFecha?fmtDateDisplay(h.coutFecha)+(h.coutHora?' · '+h.coutHora:''):(h.cout||'—');
+    return `
     <div class="hotel-card">
       <div class="hotel-head">
-        <div><div class="hotel-name">${h.name}</div><span style="font-size:13px;color:var(--muted);font-weight:700">${h.city}</span></div>
-        <div style="display:flex;gap:8px;align-items:center">
+        <div>
+          <div class="hotel-name">${h.name}</div>
+          <span style="font-size:13px;color:var(--muted);font-weight:700">${h.city}</span>
+          ${h.plat?`<span style="font-size:12px;color:var(--accent);font-weight:700;margin-left:8px">${h.plat}</span>`:''}
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <span class="cpill ${h.cc}">${h.city.split('·')[0].trim()}</span>
+          ${pagoBadge(h.pago||'no')}
           ${EM?`<button class="ibtn" onclick="openEditHotel('${h._id}')">✏ Editar</button>`:''}
         </div>
       </div>
       <div class="hfields">
-        <div class="hfield"><label>Check-in</label><p>${h.cin||'—'}</p></div>
-        <div class="hfield"><label>Check-out</label><p>${h.cout||'—'}</p></div>
+        <div class="hfield"><label>Check-in</label><p>${cinDisp}</p></div>
+        <div class="hfield"><label>Check-out</label><p>${coutDisp}</p></div>
         <div class="hfield"><label>Duración</label><p>${h.noch||'—'}</p></div>
         <div class="hfield"><label>N° confirmación</label><p>${h.conf||'Pendiente'}</p></div>
+        ${h.tel?`<div class="hfield"><label>Teléfono</label><p>${h.tel}</p></div>`:''}
+        ${h.hab?`<div class="hfield"><label>Habitaciones</label><p>${h.hab}</p></div>`:''}
+        ${h.desayuno?`<div class="hfield"><label>Desayuno</label><p>${h.desayuno}</p></div>`:''}
+        ${h.dir?`<div class="hfield" style="grid-column:1/-1"><label>Dirección</label><p>${h.dir}${h.maps&&h.maps.startsWith('http')?` <a href="${h.maps}" target="_blank" class="action-btn maps" style="display:inline-flex;padding:2px 8px;margin-left:6px;font-size:11px">📍 Maps</a>`:''}</p></div>`:''}
       </div>
+      ${h.link?`<div style="margin-bottom:8px"><a href="${h.link}" target="_blank" class="action-btn" style="display:inline-flex">🔗 Ver reserva</a></div>`:''}
       ${h.obs?`<div class="hotel-obs">📌 ${h.obs}</div>`:''}
-    </div>`).join('');
+    </div>`;
+  }).join('');
 };
 
 window.renderChecklist=()=>{
