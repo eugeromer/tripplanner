@@ -1559,8 +1559,16 @@ window.renderProfiles=()=>{
 window.updateStats=()=>{
   const evs=DAYS.flatMap(d=>d.events||[]);
   const v=evs.filter(e=>e.tipo==='vuelo').length;
-  const ci=[...new Set(DAYS.map(d=>d.city).filter(c=>c!=='transito'))].length;
   const a=evs.filter(e=>e.tipo==='actividad').length;
+  // Count real cities from hotel events (ciudad field) + hotel collection
+  const citiesFromEvents=evs
+    .filter(e=>e.tipo==='hotel'&&e.extras?.ciudad)
+    .map(e=>e.extras.ciudad.trim().toLowerCase());
+  const citiesFromHotels=HOTELS
+    .filter(h=>h.city)
+    .map(h=>h.city.split('·')[0].trim().toLowerCase().split('/')[0].trim());
+  const allCities=[...new Set([...citiesFromEvents,...citiesFromHotels])].filter(Boolean);
+  const ci=allCities.length||[...new Set(DAYS.map(d=>d.city).filter(c=>c!=='transito'))].length;
   ['hs-d','sc-d'].forEach(id=>document.getElementById(id).textContent=DAYS.length);
   ['hs-v','sc-v'].forEach(id=>document.getElementById(id).textContent=v);
   ['hs-c','sc-c'].forEach(id=>document.getElementById(id).textContent=ci);
