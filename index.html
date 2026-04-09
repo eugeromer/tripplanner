@@ -767,8 +767,11 @@ window.calcDuracionTraslado=()=>{
 function sortEvents(events){
   // Tag each event with its original index before sorting
   return events.map((e,i)=>({...e,_origIdx:i})).sort((a,b)=>{
+    // Sort by fecha+hora combined so cross-day events sort correctly
+    const fa=a.fecha||'9999-99-99';const fb=b.fecha||'9999-99-99';
     const ta=a.hora||'99:99';const tb=b.hora||'99:99';
-    return ta.localeCompare(tb);
+    const ka=`${fa} ${ta}`;const kb=`${fb} ${tb}`;
+    return ka.localeCompare(kb);
   });
 }
 
