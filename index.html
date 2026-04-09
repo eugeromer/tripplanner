@@ -246,6 +246,35 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
   .route-connector{padding-left:1rem}
   .etype-grid{grid-template-columns:repeat(3,1fr)}
 }
+
+/* PARTICIPANTES */
+.participantes-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:4px}
+.part-btn{display:flex;align-items:center;gap:8px;padding:8px 10px;border:2px solid var(--border);border-radius:9px;cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);background:var(--sand);transition:all .15s;user-select:none}
+.part-btn.sel{border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
+.costo-pp{font-size:13px;color:var(--success);font-weight:700;margin-top:6px;padding:6px 10px;background:#E5F4EB;border-radius:8px;display:none}
+.costo-pp.show{display:block}
+
+/* RESUMEN DE GASTOS */
+.gasto-total-bar{background:var(--nav-bg);color:#fff;border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
+.gasto-total-bar h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:1rem;color:rgba(255,255,255,.9)}
+.gasto-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.gasto-card{background:rgba(255,255,255,.1);border-radius:10px;padding:10px 12px;border:1px solid rgba(255,255,255,.15)}
+.gasto-card label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);display:block;margin-bottom:3px;font-weight:700}
+.gasto-card p{font-size:1.3rem;font-family:'Playfair Display',serif;font-weight:700;color:#fff}
+.gasto-card p small{font-size:11px;font-family:'Lato',sans-serif;color:rgba(255,255,255,.6);font-weight:400}
+.gasto-by-cat{margin-bottom:1.25rem}
+.gasto-by-cat h4{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--stat);font-weight:700;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--border)}
+.gasto-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-s);font-size:14px}
+.gasto-row:last-child{border-bottom:none}
+.gasto-row span:first-child{color:var(--ink2);font-weight:400}
+.gasto-row span:last-child{font-weight:700;color:var(--ink)}
+.gasto-person-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:8px}
+.gasto-person-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.gasto-person-hd strong{font-size:15px;font-weight:700;color:var(--ink)}
+.gasto-person-hd span{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--stat);margin-left:auto}
+.gasto-person-items{font-size:13px;color:var(--muted)}
+.gasto-refresh{width:100%;padding:10px;border:1.5px solid var(--border);border-radius:9px;background:var(--accent-light);color:var(--accent);font-family:'Lato',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:1.25rem}
+.badge-moneda{font-size:11px;font-weight:700;padding:2px 7px;border-radius:8px;background:var(--sand);color:var(--muted);border:1px solid var(--border-s);margin-left:4px}
 </style>
 </head>
 <body data-theme="amsterdam">
@@ -403,9 +432,22 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
     <div class="frow"><label>Detalle</label><textarea id="o-notas" placeholder="Descripción, info útil..."></textarea></div>
   </div>
 
+  <div class="sep">💰 Precio y participantes</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
+    <div class="frow" style="grid-column:1/2"><label>Monto</label><input type="number" id="ev-monto" placeholder="0" min="0" step="0.01" oninput="calcCostoPP()"></div>
+    <div class="frow"><label>Moneda</label><select id="ev-moneda" onchange="calcCostoPP()"><option value="USD">USD $</option><option value="EUR" selected>EUR €</option><option value="TRY">TRY ₺</option><option value="ARS">ARS $</option><option value="GBP">GBP £</option></select></div>
+  </div>
+  <div class="frow"><label>¿Quiénes participan?</label>
+    <div class="participantes-grid" id="part-grid">
+      <label class="part-btn sel" data-p="ER" onclick="togglePart(event,this)"><div class="av av1 np" style="width:28px;height:28px;font-size:10px;flex-shrink:0">ER</div>Eugenia</label>
+      <label class="part-btn sel" data-p="JN" onclick="togglePart(event,this)"><div class="av av2 np" style="width:28px;height:28px;font-size:10px;flex-shrink:0">JN</div>Juan José</label>
+      <label class="part-btn sel" data-p="VS" onclick="togglePart(event,this)"><div class="av av3 np" style="width:28px;height:28px;font-size:10px;flex-shrink:0">VS</div>Valeria</label>
+      <label class="part-btn sel" data-p="GG" onclick="togglePart(event,this)"><div class="av av4 np" style="width:28px;height:28px;font-size:10px;flex-shrink:0">GG</div>Gustavo</label>
+    </div>
+    <div id="costo-pp" class="costo-pp"></div>
+  </div>
   <div class="sep">Estado de pago</div>
-  <div class="pago-row">
-    <label>¿Está pago?</label>
+  <div class="pago-row"><label>¿Está pago?</label>
     <div class="pago-toggle">
       <button class="ptbtn" id="pago-si" onclick="setPago('si')">✓ Sí, pago</button>
       <button class="ptbtn" id="pago-no" onclick="setPago('no')">⏳ Pendiente</button>
@@ -544,6 +586,7 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
     <div class="ntab" onclick="showTab('nt',this)">💬 Notas</div>
     <div class="ntab" onclick="showTab('ft',this)">📸 Fotos</div>
     <div class="ntab" onclick="showTab('pr',this)">👤 Perfiles</div>
+    <div class="ntab" onclick="showTab('gs',this)">💰 Gastos</div>
     <div class="ntab ntab-edit" id="etab" onclick="toggleEdit(this)">✏ Editar</div>
   </nav>
 </div>
@@ -601,6 +644,11 @@ body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);fo
     <p style="font-size:15px;color:var(--ink2);margin-bottom:1.5rem;line-height:1.6">Tocá la foto para cambiarla. Completá tu perfil para que el grupo te conozca mejor.</p>
     <div id="profiles-wrap"><div class="loading">Cargando perfiles...</div></div>
   </section>
+  <section id="tab-gs" class="section">
+    <button class="gasto-refresh" onclick="calcGastos()">🔄 Actualizar resumen de gastos</button>
+    <div id="gastos-wrap"><div class="loading">Tocá "Actualizar" para calcular los gastos del viaje.</div></div>
+  </section>
+
 </main>
 
 <script type="module">
@@ -1320,6 +1368,7 @@ function renderEventCard(ev,dayId,j){
           ${hora?`<span class="ecard-time">${hora}${fechaDisp?' · '+fechaDisp:''}</span>`:''}
           ${titulo}
           ${pagoBadge(ev.pago)}
+          ${ev.monto>0?`<span class="badge-moneda">${CURRENCY_SYMBOLS[ev.moneda||'EUR']||''}${ev.monto} ${ev.moneda||'EUR'}${ev.participantes&&ev.participantes.length<4?' · '+ev.participantes.length+' pax':''}</span>`:''}
         </div>
         ${tipo==='vuelo'&&x.origen&&x.destino?`<div class="ecard-sub">${x.aerolinea||''} ${x.numero||''} · ${x.origen.split('—')[0]} → ${x.destino.split('—')[0]}</div>`:''}
         ${tipo==='traslado'&&x.medio?`<div class="ecard-sub">${x.medio}${x.duracion?' · '+x.duracion:''}</div>`:''}
@@ -1515,6 +1564,240 @@ window.updateStats=()=>{
   document.getElementById('hs-h').textContent=HOTELS.length;
   document.getElementById('sc-a').textContent=a;
 };
+
+// ── PRECIO & PARTICIPANTES ────────────────────────────────
+const CURRENCY_SYMBOLS = {USD:'$',EUR:'€',TRY:'₺',ARS:'$',GBP:'£'};
+let EXCHANGE_RATES = {USD:1,EUR:1.08,TRY:0.031,ARS:0.001,GBP:1.27}; // fallback
+
+async function loadExchangeRates(){
+  try{
+    const r = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const d = await r.json();
+    if(d.rates){
+      EXCHANGE_RATES = {
+        USD: 1,
+        EUR: 1/(d.rates.EUR||0.93),
+        TRY: 1/(d.rates.TRY||32),
+        ARS: 1/(d.rates.ARS||900),
+        GBP: 1/(d.rates.GBP||0.79)
+      };
+    }
+  }catch(e){ /* use fallback */ }
+}
+loadExchangeRates();
+
+function toUSD(amount, currency){
+  const rate = EXCHANGE_RATES[currency] || 1;
+  return amount / rate;
+}
+
+function formatMoney(amount, currency){
+  const sym = CURRENCY_SYMBOLS[currency]||'';
+  return `${sym}${parseFloat(amount).toFixed(2)}`;
+}
+
+function getParticipantes(){
+  const btns = document.querySelectorAll('#part-grid .part-btn');
+  return [...btns].filter(b=>b.classList.contains('sel')).map(b=>b.dataset.p);
+}
+
+window.togglePart = (evt, el) => {
+  evt.preventDefault();
+  el.classList.toggle('sel');
+  calcCostoPP();
+};
+
+window.calcCostoPP = () => {
+  const monto = parseFloat(document.getElementById('ev-monto').value) || 0;
+  const moneda = document.getElementById('ev-moneda').value;
+  const parts = getParticipantes();
+  const el = document.getElementById('costo-pp');
+  if(!monto || parts.length === 0){ el.classList.remove('show'); el.textContent=''; return; }
+  const pp = monto / parts.length;
+  const names = {ER:'Eugenia',JN:'Juan José',VS:'Valeria',GG:'Gustavo'};
+  el.classList.add('show');
+  el.textContent = `${formatMoney(pp, moneda)} por persona (${parts.map(p=>names[p]).join(', ')})`;
+};
+
+// Reset participantes to all selected
+function resetParticipantes(){
+  document.querySelectorAll('#part-grid .part-btn').forEach(b=>b.classList.add('sel'));
+}
+
+// Set participantes from saved data
+function setParticipantes(arr){
+  document.querySelectorAll('#part-grid .part-btn').forEach(b=>{
+    b.classList.toggle('sel', !arr || arr.length===0 || arr.includes(b.dataset.p));
+  });
+}
+
+// ── SAVE EV - update to include precio ───────────────────
+// Patch savEv to include precio fields
+const _origSavEv = window.savEv;
+window.savEv = async () => {
+  const di = document.getElementById('ev-di').value;
+  const ei = document.getElementById('ev-ei').value;
+  const monto = parseFloat(document.getElementById('ev-monto').value) || 0;
+  const moneda = document.getElementById('ev-moneda').value;
+  const participantes = getParticipantes();
+
+  // Build extras
+  const extras = collectExtras();
+  const o = {
+    tipo: EVTIPO,
+    hora: document.getElementById('ev-hora').value||'',
+    fecha: document.getElementById('ev-fecha').value||'',
+    titulo: document.getElementById('ev-titulo').value||'Sin título',
+    pago: PAGADO,
+    extras,
+    monto, moneda, participantes
+  };
+  const d = DAYS.find(x=>x._id===di); if(!d) return;
+  const evs = [...(d.events||[])];
+  if(ei!=='') evs[parseInt(ei)] = o; else evs.push(o);
+  const sorted = sortEvents(evs);
+  await updateDoc(doc(db,'days',di), {events:sorted});
+  cm('m-ev');
+};
+
+// ── OPEN EDIT EV - restore precio ────────────────────────
+const _origOpenEditEv = window.openEditEv;
+window.openEditEv = (dayId, ei) => {
+  _origOpenEditEv(dayId, ei);
+  // Restore precio fields
+  const d = DAYS.find(x=>x._id===dayId); if(!d) return;
+  const ev = d.events[ei];
+  document.getElementById('ev-monto').value = ev.monto||'';
+  document.getElementById('ev-moneda').value = ev.moneda||'EUR';
+  setParticipantes(ev.participantes||[]);
+  calcCostoPP();
+};
+
+// ── OPEN NEW EV - reset precio ────────────────────────────
+const _origOpenNewEv = window.openNewEv;
+window.openNewEv = dayId => {
+  _origOpenNewEv(dayId);
+  document.getElementById('ev-monto').value = '';
+  document.getElementById('ev-moneda').value = 'EUR';
+  resetParticipantes();
+  document.getElementById('costo-pp').classList.remove('show');
+  document.getElementById('costo-pp').textContent = '';
+};
+
+// ── GASTOS RENDER ─────────────────────────────────────────
+const TIPO_LABELS = {vuelo:'✈ Vuelos',hotel:'🏨 Hoteles',actividad:'🎯 Actividades',restaurante:'🍽 Comida',traslado:'🚕 Traslados',otro:'📌 Otros'};
+const CITY_LABELS = {amsterdam:'🇳🇱 Amsterdam',grecia:'🇬🇷 Grecia',turquia:'🇹🇷 Turquía',transito:'Tránsito'};
+const NAMES = {ER:'Eugenia',JN:'Juan José',VS:'Valeria',GG:'Gustavo'};
+const AV_CLASS = {ER:'av1',JN:'av2',VS:'av3',GG:'av4'};
+
+window.calcGastos = async () => {
+  await loadExchangeRates();
+  const allEvents = DAYS.flatMap(d => (d.events||[]).map(e=>({...e, _city:d.city, _dayLabel:d.label})));
+  const eventsWithPrice = allEvents.filter(e=>e.monto>0);
+
+  // Totals by category (in USD)
+  const byCat = {};
+  const byCity = {};
+  const byPerson = {ER:0,JN:0,VS:0,GG:0};
+  const byPersonItems = {ER:[],JN:[],VS:[],GG:[]};
+  let grandTotal = 0;
+
+  eventsWithPrice.forEach(ev => {
+    const usd = toUSD(ev.monto, ev.moneda||'EUR');
+    const parts = ev.participantes?.length > 0 ? ev.participantes : ['ER','JN','VS','GG'];
+    const ppUSD = usd / parts.length;
+
+    // By category
+    const cat = ev.tipo||'otro';
+    byCat[cat] = (byCat[cat]||0) + usd;
+
+    // By city
+    const city = ev._city||'transito';
+    byCity[city] = (byCity[city]||0) + usd;
+
+    // By person
+    parts.forEach(p => {
+      byPerson[p] = (byPerson[p]||0) + ppUSD;
+      byPersonItems[p].push({
+        titulo: ev.titulo||'',
+        monto: ev.monto,
+        moneda: ev.moneda||'EUR',
+        pp: ppUSD,
+        city: ev._city
+      });
+    });
+
+    grandTotal += usd;
+  });
+
+  const fmt = usd => `$${usd.toFixed(0)}`;
+
+  let html = '';
+
+  // Grand total card
+  html += `<div class="gasto-total-bar">
+    <h3>💰 Resumen total del viaje</h3>
+    <div class="gasto-grid">
+      <div class="gasto-card"><label>Total del grupo</label><p>${fmt(grandTotal)} <small>USD</small></p></div>
+      <div class="gasto-card"><label>Promedio por persona</label><p>${fmt(grandTotal/4)} <small>USD</small></p></div>
+      <div class="gasto-card"><label>Eventos con precio</label><p>${eventsWithPrice.length} <small>de ${allEvents.length}</small></p></div>
+      <div class="gasto-card"><label>Tipo de cambio</label><p style="font-size:0.9rem">€1 = $${(EXCHANGE_RATES.EUR).toFixed(2)}</p></div>
+    </div>
+  </div>`;
+
+  // By category
+  html += `<div class="gasto-by-cat"><h4>Por categoría</h4>`;
+  Object.entries(byCat).sort((a,b)=>b[1]-a[1]).forEach(([cat,usd])=>{
+    const pct = grandTotal > 0 ? Math.round(usd/grandTotal*100) : 0;
+    html += `<div class="gasto-row">
+      <span>${TIPO_LABELS[cat]||cat}</span>
+      <span>${fmt(usd)} <span class="badge-moneda">${pct}%</span></span>
+    </div>`;
+  });
+  html += '</div>';
+
+  // By destination
+  html += `<div class="gasto-by-cat"><h4>Por destino</h4>`;
+  Object.entries(byCity).sort((a,b)=>b[1]-a[1]).forEach(([city,usd])=>{
+    html += `<div class="gasto-row">
+      <span>${CITY_LABELS[city]||city}</span>
+      <span>${fmt(usd)}</span>
+    </div>`;
+  });
+  html += '</div>';
+
+  // By person
+  html += `<div class="gasto-by-cat"><h4>Por viajero</h4>`;
+  ['ER','JN','VS','GG'].forEach(p => {
+    const total = byPerson[p];
+    const items = byPersonItems[p];
+    html += `<div class="gasto-person-card">
+      <div class="gasto-person-hd">
+        ${avHtml(p,'',32)}
+        <strong>${FN[p]}</strong>
+        <span>${fmt(total)}</span>
+      </div>
+      <div class="gasto-person-items">
+        ${items.slice(0,5).map(i=>`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border-s)"><span>${i.titulo}</span><span style="font-weight:700">$${i.pp.toFixed(0)}</span></div>`).join('')}
+        ${items.length > 5 ? `<div style="color:var(--muted);font-size:12px;margin-top:4px">+ ${items.length-5} eventos más</div>` : ''}
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+
+  // Warning if events without price
+  const sinPrecio = allEvents.length - eventsWithPrice.length;
+  if(sinPrecio > 0){
+    html += `<div style="background:#FFF8E7;border:1.5px solid #E8A020;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;color:#7A4A00">
+      ⚠ ${sinPrecio} evento${sinPrecio>1?'s':''} sin precio cargado — el resumen puede estar incompleto.
+    </div>`;
+  }
+
+  document.getElementById('gastos-wrap').innerHTML = html;
+};
+
+// Add precio display to renderEventCard - patch
+const _origRenderEventCard = renderEventCard;
 
 renderTvl();
 </script>
