@@ -851,17 +851,49 @@ window.acceptInvite = async (tripId, btn) => {
   btn.disabled=true; btn.textContent='Uniéndome...';
   try{
     const userName = currentUser.displayName||currentUser.email?.split('@')[0]||'Viajero';
-    await updateDoc(doc(db,'trips',tripId),{
-      memberIds: [...(await getDoc(doc(db,'trips',tripId))).data().memberIds||[], currentUser.uid],
-      members: [...(await getDoc(doc(db,'trips',tripId))).data().members||[], {
+    const tripSnap = await getDoc(doc(db,'trips',tripId));
+    const trip = tripSnap.data();
+    const existingMembers = trip.members||[];
+    const existingMemberIds = trip.memberIds||[];
+
+    // Try to find a placeholder with same name (case-insensitive, no uid)
+    const nameLower = userName.toLowerCase();
+    const placeholderIdx = existingMembers.findIndex(m =>
+      !m.uid && m.name?.toLowerCase().includes(nameLower.split(' ')[0])
+    );
+
+    let updatedMembers;
+    let updatedMemberIds;
+
+    if(placeholderIdx >= 0){
+      // Replace placeholder with real account — no duplicate
+      updatedMembers = [...existingMembers];
+      updatedMembers[placeholderIdx] = {
+        ...updatedMembers[placeholderIdx],
+        name: currentUser.displayName || updatedMembers[placeholderIdx].name,
+        uid: currentUser.uid,
+        initial: (currentUser.displayName||userName)[0].toUpperCase(),
+      };
+      updatedMemberIds = [...new Set([...existingMemberIds, currentUser.uid])];
+    } else {
+      // No placeholder found — add as new member
+      updatedMembers = [...existingMembers, {
         name: userName,
         initial: userName[0].toUpperCase(),
         uid: currentUser.uid,
-        color: AV_COLORS[Math.floor(Math.random()*AV_COLORS.length)]
-      }]
+        color: AV_COLORS[Math.floor(Math.random()*AV_COLORS.length)],
+        role: 'editor'
+      }];
+      updatedMemberIds = [...new Set([...existingMemberIds, currentUser.uid])];
+    }
+
+    await updateDoc(doc(db,'trips',tripId),{
+      members: updatedMembers,
+      memberIds: updatedMemberIds
     });
     window.openTrip(tripId);
   }catch(e){
+    console.error(e);
     btn.disabled=false; btn.textContent='Unirme';
     alert('Error al unirte. Intentá de nuevo.');
   }

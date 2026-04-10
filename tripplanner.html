@@ -944,16 +944,52 @@ async function loadTripConfig(){
     const snap = await getDoc(doc(db,'trips',TRIP_ID));
     if(!snap.exists()) return;
     const t = snap.data();
-    // Update hero with trip info
+
+    // ── Hero title: poetic multi-line from trip name ──
     const titleEl = document.getElementById('hero-title');
+    const destEl = document.getElementById('hero-dest');
     const subEl = document.querySelector('.hero-sub');
-    if(t.nombre && titleEl) titleEl.innerHTML = t.nombre.replace(' · ','<br><em>') + (t.nombre.includes('·')?'</em>':'');
-    if(t.destinos?.length && subEl){
-      subEl.textContent = t.destinos.slice(0,4).join(' · ') + ' · ' + (t.fechaSalida?fmtDateDisplay(t.fechaSalida):'');
+    if(t.nombre && titleEl){
+      // Split on · to make it poetic: first part bold, rest italic
+      const parts = t.nombre.split('·').map(p=>p.trim()).filter(Boolean);
+      if(parts.length >= 2){
+        titleEl.innerHTML = `${parts[0]}<br><em>${parts.slice(1).join(' · ')}</em>`;
+      } else {
+        titleEl.innerHTML = t.nombre;
+      }
     }
+    // Hero dest: show country/region label
+    if(t.destinos?.length && destEl){
+      destEl.textContent = '🌍 ' + t.destinos.slice(0,3).join(' · ') + (t.destinos.length > 3 ? ' & más' : '');
+    }
+    // Subtitle: dates + traveler count (not destinations — avoid repetition)
+    if(subEl){
+      const from = t.fechaSalida ? fmtDateDisplay(t.fechaSalida) : '';
+      const to = t.fechaRegreso ? fmtDateDisplay(t.fechaRegreso) : '';
+      const memberCount = (t.members||[]).length;
+      const dateStr = from && to ? `${from} → ${to}` : from || '';
+      subEl.textContent = [dateStr, memberCount ? `${memberCount} viajeros` : ''].filter(Boolean).join(' · ');
+    }
+
+    // ── Dedupe members: prefer entries with uid ──
     if(t.members?.length){
-      // Override TVL with trip members
-      window.TVL_OVERRIDE = t.members.map((m,i)=>({
+      // Group by name (case-insensitive), keep the one with uid if exists
+      const seen = new Map();
+      const deduped = [];
+      t.members.forEach(m => {
+        const key = (m.name||'').toLowerCase().trim();
+        if(!seen.has(key)){
+          seen.set(key, deduped.length);
+          deduped.push({...m});
+        } else {
+          // If new entry has uid and existing doesn't, replace
+          const existingIdx = seen.get(key);
+          if(m.uid && !deduped[existingIdx].uid){
+            deduped[existingIdx] = {...m};
+          }
+        }
+      });
+      window.TVL_OVERRIDE = deduped.map((m,i)=>({
         i: m.uid||`T${i}`,
         n: m.name?.split(' ')[0]||`V${i+1}`,
         fn: m.name||`Viajero ${i+1}`,
