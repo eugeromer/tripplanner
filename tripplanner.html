@@ -48,7 +48,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .av img{width:100%;height:100%;object-fit:cover;display:block}
 .av.np{background:var(--avbg,#1B5E8E);color:#fff}
 .av1{--avbg:#1B5E8E}.av2{--avbg:#A03020}.av3{--avbg:#155A30}.av4{--avbg:#5E2E8E}
-.av-up{position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;background:var(--nav-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;border:2px solid #fff;pointer-events:none;cursor:pointer}
+.av-up{position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;background:var(--nav-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;border:1.5px solid #fff;pointer-events:none;cursor:pointer;opacity:.85}
 .traveler span{font-size:13px;color:rgba(255,255,255,.88);font-weight:700}
 .theme-row{display:flex;align-items:center;gap:6px;margin-top:1.25rem;background:rgba(0,0,0,.2);border-radius:10px;padding:7px 12px;flex-wrap:wrap}
 .theme-row span{font-size:11px;color:rgba(255,255,255,.45);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
@@ -88,8 +88,8 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .p-turquia{background:#EAD8F5;color:#3A0870;border:1px solid #B888D8}
 .p-transito{background:#EEF0F3;color:#3A4A5A;border:1px solid #C5CEDA}
 .day-info{flex:1;min-width:0;cursor:pointer}
-.day-info strong{font-size:15px;font-weight:700;display:block;color:var(--ink)}
-.day-info .day-meta{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
+.day-info strong{font-size:17px;font-weight:700;display:block;color:var(--ink)}
+.day-info .day-meta{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:3px}
 .day-actions{display:flex;gap:6px;align-items:center}
 .ibtn{background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:13px;font-weight:700;color:var(--ink2);white-space:nowrap}
 .ibtn:hover{background:var(--accent-light);border-color:var(--accent)}
@@ -100,7 +100,9 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 
 /* EVENT CARDS */
 .ecard{background:var(--card);border:1.5px solid var(--border-s);border-radius:12px;margin:.4rem 0;overflow:hidden}
-.ecard-hd{display:flex;gap:10px;align-items:flex-start;padding:.7rem 1rem}
+.ecard-hd{display:flex;gap:10px;align-items:center;padding:.85rem 1rem}
+.ecard-opts-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:var(--sand);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--muted);flex-shrink:0;transition:background .15s;font-weight:700}
+.ecard-opts-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
 .etype-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .etype-vuelo{background:#DDEEFF}.etype-hotel{background:#DDEEE5}.etype-actividad{background:#FFF0D8}
 .etype-restaurante{background:#FDDEE8}.etype-traslado{background:#EDEEF0}.etype-otro{background:#F0EDF8}
@@ -761,13 +763,11 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 
 <main class="main">
   <section id="tab-it" class="section active">
-    <div class="stats-grid">
-      <div class="scard"><p>Días</p><p id="sc-d">—</p></div>
-      <div class="scard"><p>Vuelos</p><p id="sc-v">—</p></div>
-      <div class="scard"><p>Ciudades</p><p id="sc-c">—</p></div>
-      <div class="scard"><p>Actividades</p><p id="sc-a">—</p></div>
-    </div>
-    <div id="days-wrap">
+    <span id="sc-d" style="display:none"></span>
+    <span id="sc-v" style="display:none"></span>
+    <span id="sc-c" style="display:none"></span>
+    <span id="sc-a" style="display:none"></span>
+    <div id="days-wrap" style="margin-top:0">
   <div class="skeleton-card"><div class="skeleton" style="width:60%;margin-bottom:8px"></div><div class="skeleton" style="width:40%"></div></div>
   <div class="skeleton-card"><div class="skeleton" style="width:70%;margin-bottom:8px"></div><div class="skeleton" style="width:45%"></div></div>
   <div class="skeleton-card"><div class="skeleton" style="width:55%;margin-bottom:8px"></div><div class="skeleton" style="width:35%"></div></div>
@@ -1165,17 +1165,22 @@ window.fillHotelFromSelector=()=>{
   if(!id) return;
   const h=HOTELS.find(x=>x._id===id);
   if(!h) return;
+  // Auto-fill title with hotel name + city
+  const titleEl=document.getElementById('ev-titulo');
+  if(h.name && (!titleEl.value || titleEl.value==='Sin título')) titleEl.value=h.name;
+  else if(h.name) titleEl.value=h.name;
   if(h.name) document.getElementById('h-nombre').value=h.name;
   if(h.city) document.getElementById('h-ciudad').value=h.city;
   if(h.dir) document.getElementById('h-dir').value=h.dir||'';
   if(h.maps) document.getElementById('h-maps').value=h.maps||'';
-  if(h.cinFecha) document.getElementById('h-cin-fecha').value=h.cinFecha||'';
-  if(h.cinHora) document.getElementById('h-cin-hora').value=h.cinHora||'';
+  if(h.cinFecha){ document.getElementById('h-cin-fecha').value=h.cinFecha||''; document.getElementById('ev-fecha').value=h.cinFecha||'';}
+  if(h.cinHora){ document.getElementById('h-cin-hora').value=h.cinHora||''; document.getElementById('ev-hora').value=h.cinHora||'';}
   if(h.coutFecha) document.getElementById('h-cout-fecha').value=h.coutFecha||'';
   if(h.coutHora) document.getElementById('h-cout-hora').value=h.coutHora||'';
   if(h.conf) document.getElementById('h-conf').value=h.conf||'';
   if(h.tel) document.getElementById('h-tel').value=h.tel||'';
   if(h.notas||h.obs) document.getElementById('h-notas').value=h.notas||h.obs||'';
+  if(h.plat) {} // platform not in event form but stored in hotel
 };
 
 // ── SEED DATA ─────────────────────────────────────────────
@@ -1447,14 +1452,37 @@ window.toggleEdit=el=>{
 window.selP=(i,a,n,el)=>{AP={i,a,n};document.querySelectorAll('#note-pbtns .pbtn').forEach(b=>b.classList.remove('sel'));el.querySelector('.pbtn')?.classList.add('sel');};
 window.selPhotoP=(i,a,n,el)=>{PAP={i,a,n};document.querySelectorAll('#photo-pbtns .pbtn').forEach(b=>b.classList.remove('sel'));el.querySelector('.pbtn')?.classList.add('sel');};
 window.togDay=id=>{
-  document.getElementById('db'+id).classList.toggle('open');
-  document.getElementById('ch'+id).classList.toggle('open');
+  const body=document.getElementById('db'+id);
+  const chev=document.getElementById('ch'+id);
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
   const d=DAYS.find(x=>x._id===id);
-  if(d&&d.city&&d.city!=='transito'&&document.getElementById('db'+id).classList.contains('open')){
+  if(d&&d.city&&d.city!=='transito'&&body.classList.contains('open')){
     const b=document.querySelector(`[data-t="${d.city}"]`);
     if(b)window.setTheme(d.city,b);
   }
 };
+
+// Auto-open today's day card
+function autoOpenToday(){
+  const todayISO=new Date().toISOString().slice(0,10);
+  const todayDay=DAYS.find(d=>d.fecha===todayISO);
+  if(todayDay){
+    const body=document.getElementById('db'+todayDay._id);
+    const chev=document.getElementById('ch'+todayDay._id);
+    if(body&&!body.classList.contains('open')){
+      body.classList.add('open');
+      if(chev)chev.classList.add('open');
+      // Also set theme
+      if(todayDay.city&&todayDay.city!=='transito'){
+        const b=document.querySelector(`[data-t="${todayDay.city}"]`);
+        if(b)window.setTheme(todayDay.city,b);
+      }
+      // Scroll to it
+      setTimeout(()=>body.closest('.day-card')?.scrollIntoView({behavior:'smooth',block:'start'}),300);
+    }
+  }
+}
 
 // ── TIPO & PAGO ───────────────────────────────────────────
 window.selTipo=(t,el)=>{
@@ -1756,6 +1784,68 @@ function buildActionBtns(ev){
   return btns?`<div class="ecard-btns">${btns}</div>`:'';
 }
 
+// Generate a unique card ID for expand/collapse
+function ecardId(dayId,j){ return `ec-${dayId}-${j}`; }
+
+function buildDetails(ev){
+  const tipo=ev.tipo||'otro';
+  const x=ev.extras||{};
+  let d='';
+  if(tipo==='vuelo'){
+    if(x.origen||x.destino) d+=`<div class="edetail full"><label>Ruta</label><p>${x.origen||'—'} → ${x.destino||'—'}</p></div>`;
+    if(x.salida||x.llegada) d+=`<div class="edetail"><label>Salida → Llegada</label><p>${x.salida||'—'} → ${x.llegada||'—'}${x.duracion?' ('+x.duracion+')':''}</p></div>`;
+    if(x.escala) d+=`<div class="edetail"><label>Escala</label><p>${x.escala}</p></div>`;
+    if(x.pnr) d+=`<div class="edetail"><label>Código PNR</label><p style="font-size:15px;letter-spacing:.05em">${x.pnr}</p></div>`;
+    if(x.clase) d+=`<div class="edetail"><label>Clase</label><p>${x.clase}</p></div>`;
+    if(x.terminal) d+=`<div class="edetail"><label>Terminal</label><p>${x.terminal}</p></div>`;
+    if(x.equipaje) d+=`<div class="edetail full"><label>Equipaje</label><p>${x.equipaje}</p></div>`;
+    if(x.asientos) d+=`<div class="edetail full"><label>Asientos</label><p>${x.asientos}</p></div>`;
+    if(x.notas) d+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
+  }else if(tipo==='hotel'){
+    if(x.dir) d+=`<div class="edetail full"><label>Dirección</label><p>${x.dir}${x.maps&&x.maps.startsWith('http')?` <a href="${x.maps}" target="_blank">📍 Maps</a>`:''}</p></div>`;
+    if(x.cinFecha||x.cinHora) d+=`<div class="edetail"><label>Check-in</label><p>${x.cinFecha?fmtDateDisplay(x.cinFecha):''} ${x.cinHora||''}</p></div>`;
+    if(x.coutFecha||x.coutHora) d+=`<div class="edetail"><label>Check-out</label><p>${x.coutFecha?fmtDateDisplay(x.coutFecha):''} ${x.coutHora||''}</p></div>`;
+    if(x.conf) d+=`<div class="edetail"><label>N° confirmación</label><p>${x.conf}</p></div>`;
+    if(x.tel) d+=`<div class="edetail"><label>Teléfono</label><p>${x.tel}</p></div>`;
+    if(x.notas) d+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
+  }else if(tipo==='actividad'){
+    if(x.lugar) d+=`<div class="edetail full"><label>Lugar</label><p>${x.lugar}${x.maps&&x.maps.startsWith('http')?` <a href="${x.maps}" target="_blank">📍</a>`:''}</p></div>`;
+    if(x.horafin) d+=`<div class="edetail"><label>Hasta</label><p>${x.horafin}</p></div>`;
+    if(x.precio) d+=`<div class="edetail"><label>Precio</label><p>${x.precio}</p></div>`;
+    if(x.conf) d+=`<div class="edetail"><label>Confirmación</label><p>${x.conf}</p></div>`;
+    if(x.proveedor) d+=`<div class="edetail"><label>Proveedor</label><p>${x.proveedor}</p></div>`;
+    if(x.link) d+=`<div class="edetail full"><label>Link</label><p><a href="${x.link}" target="_blank">${x.link}</a></p></div>`;
+    if(x.notas) d+=`<div class="edetail full"><label>Notas / tips</label><p>${x.notas}</p></div>`;
+  }else if(tipo==='restaurante'){
+    if(x.dir||x.nombre) d+=`<div class="edetail full"><label>Dirección</label><p>${x.dir||x.nombre}${x.maps&&x.maps.startsWith('http')?` <a href="${x.maps}" target="_blank">📍</a>`:''}</p></div>`;
+    if(x.cocina) d+=`<div class="edetail"><label>Cocina</label><p>${x.cocina}</p></div>`;
+    if(x.precio) d+=`<div class="edetail"><label>Precio est.</label><p>${x.precio}</p></div>`;
+    if(x.conf) d+=`<div class="edetail"><label>N° reserva</label><p>${x.conf}</p></div>`;
+    if(x.reserva) d+=`<div class="edetail"><label>Estado</label><p>${x.reserva}</p></div>`;
+    if(x.link) d+=`<div class="edetail full"><label>Link</label><p><a href="${x.link}" target="_blank">${x.link}</a></p></div>`;
+    if(x.notas) d+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
+  }else if(tipo==='traslado'){
+    if(x.origen||x.destino) d+=`<div class="edetail full"><label>Trayecto</label><p>${x.origen||'—'} → ${x.destino||'—'}</p></div>`;
+    if(x.precio) d+=`<div class="edetail"><label>Precio est.</label><p>${x.precio}</p></div>`;
+    if(x.conf) d+=`<div class="edetail"><label>N° / línea</label><p>${x.conf}</p></div>`;
+    if(x.notas) d+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
+  }else{
+    const det=ev.det||x.notas||'';
+    if(det) d+=`<div class="edetail full"><label>Detalle</label><p>${det}</p></div>`;
+    if(x.lugar) d+=`<div class="edetail full"><label>Lugar</label><p>${x.lugar}</p></div>`;
+  }
+  return d;
+}
+
+window.toggleEcard = id => {
+  const body = document.getElementById('ecb-'+id);
+  const chev = document.getElementById('ecc-'+id);
+  if(!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  if(chev) chev.style.transform = open ? '' : 'rotate(180deg)';
+};
+
 function renderEventCard(ev,dayId,j){
   const tipo=ev.tipo||'otro';
   const ico=TIPO_ICO[tipo]||'📌';
@@ -1764,80 +1854,43 @@ function renderEventCard(ev,dayId,j){
   const hora=fmtTimeDisplay(ev.hora||ev.t||'');
   const fechaDisp=ev.fecha?fmtDateDisplay(ev.fecha):'';
   const x=ev.extras||{};
-  let details='';
+  const cid=ecardId(dayId,j);
 
-  if(tipo==='vuelo'){
-    if(x.aerolinea||x.numero) details+=`<div class="edetail"><label>Aerolínea & vuelo</label><p>${[x.aerolinea,x.numero].filter(Boolean).join(' · ')}</p></div>`;
-    if(x.origen||x.destino) details+=`<div class="edetail full"><label>Ruta</label><p>${x.origen||'—'} → ${x.destino||'—'}</p></div>`;
-    if(x.salida||x.llegada) details+=`<div class="edetail"><label>Salida → Llegada</label><p>${x.salida||'—'} → ${x.llegada||'—'}${x.duracion?' · '+x.duracion:''}</p></div>`;
-    if(x.terminal) details+=`<div class="edetail"><label>Terminal</label><p>${x.terminal}</p></div>`;
-    if(x.escala) details+=`<div class="edetail"><label>Escala</label><p>${x.escala}</p></div>`;
-    if(x.pnr) details+=`<div class="edetail"><label>Código PNR</label><p>${x.pnr}</p></div>`;
-    if(x.clase) details+=`<div class="edetail"><label>Clase</label><p>${x.clase}</p></div>`;
-    if(x.equipaje) details+=`<div class="edetail full"><label>Equipaje</label><p>${x.equipaje}</p></div>`;
-    if(x.asientos) details+=`<div class="edetail full"><label>Asientos</label><p>${x.asientos}</p></div>`;
-    if(x.notas) details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
-  }else if(tipo==='hotel'){
-    if(x.nombre) details+=`<div class="edetail full"><label>Hotel</label><p>${x.nombre}</p></div>`;
-    if(x.dir) details+=`<div class="edetail full"><label>Dirección</label><p>${x.dir}${x.maps&&x.maps.startsWith('http')?` <a href="${x.maps}" target="_blank">📍</a>`:''}</p></div>`;
-    if(x.cinFecha||x.cinHora) details+=`<div class="edetail"><label>Check-in</label><p>${x.cinFecha?fmtDateDisplay(x.cinFecha):''} ${x.cinHora||''}</p></div>`;
-    if(x.coutFecha||x.coutHora) details+=`<div class="edetail"><label>Check-out</label><p>${x.coutFecha?fmtDateDisplay(x.coutFecha):''} ${x.coutHora||''}</p></div>`;
-    if(x.conf) details+=`<div class="edetail"><label>N° confirmación</label><p>${x.conf}</p></div>`;
-    if(x.tel) details+=`<div class="edetail"><label>Teléfono</label><p>${x.tel}</p></div>`;
-    if(x.notas) details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
-  }else if(tipo==='actividad'){
-    if(x.lugar) details+=`<div class="edetail full"><label>Lugar</label><p>${x.lugar}</p></div>`;
-    if(x.horafin) details+=`<div class="edetail"><label>Hasta</label><p>${x.horafin}</p></div>`;
-    if(x.precio) details+=`<div class="edetail"><label>Precio</label><p>${x.precio}</p></div>`;
-    if(x.conf) details+=`<div class="edetail"><label>N° confirmación</label><p>${x.conf}</p></div>`;
-    if(x.proveedor) details+=`<div class="edetail"><label>Proveedor</label><p>${x.proveedor}</p></div>`;
-    if(x.link) details+=`<div class="edetail full"><label>Link</label><p><a href="${x.link}" target="_blank">${x.link}</a></p></div>`;
-    if(x.notas) details+=`<div class="edetail full"><label>Notas / tips</label><p>${x.notas}</p></div>`;
-  }else if(tipo==='restaurante'){
-    if(x.nombre) details+=`<div class="edetail full"><label>Restaurante</label><p>${x.nombre}</p></div>`;
-    if(x.dir) details+=`<div class="edetail full"><label>Dirección</label><p>${x.dir}</p></div>`;
-    if(x.cocina) details+=`<div class="edetail"><label>Cocina</label><p>${x.cocina}</p></div>`;
-    if(x.precio) details+=`<div class="edetail"><label>Precio est.</label><p>${x.precio}</p></div>`;
-    if(x.conf) details+=`<div class="edetail"><label>N° reserva</label><p>${x.conf}</p></div>`;
-    if(x.reserva) details+=`<div class="edetail"><label>Estado</label><p>${x.reserva}</p></div>`;
-    if(x.link) details+=`<div class="edetail full"><label>Link</label><p><a href="${x.link}" target="_blank">${x.link}</a></p></div>`;
-    if(x.notas) details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
-  }else if(tipo==='traslado'){
-    if(x.origen||x.destino) details+=`<div class="edetail full"><label>Trayecto</label><p>${x.origen||'—'} → ${x.destino||'—'}</p></div>`;
-    if(x.medio) details+=`<div class="edetail"><label>Medio</label><p>${x.medio}</p></div>`;
-    if(x.duracion) details+=`<div class="edetail"><label>Duración</label><p>${x.duracion}</p></div>`;
-    if(x.precio) details+=`<div class="edetail"><label>Precio est.</label><p>${x.precio}</p></div>`;
-    if(x.conf) details+=`<div class="edetail"><label>N° / línea</label><p>${x.conf}</p></div>`;
-    if(x.notas) details+=`<div class="edetail full"><label>Notas</label><p>${x.notas}</p></div>`;
-  }else{
-    const det=ev.det||x.notas||'';
-    if(det) details+=`<div class="edetail full"><label>Detalle</label><p>${det}</p></div>`;
-    if(x.lugar) details+=`<div class="edetail full"><label>Lugar</label><p>${x.lugar}</p></div>`;
-  }
+  // ── 1 LINE KEY INFO per type
+  let keyInfo='';
+  if(tipo==='vuelo'&&x.origen&&x.destino) keyInfo=`${x.origen.split('—')[0].trim()} → ${x.destino.split('—')[0].trim()}${x.pnr?' · '+x.pnr:''}`;
+  else if(tipo==='hotel'&&(x.nombre||x.ciudad)) keyInfo=`${x.nombre||''}${x.cinHora?' · Check-in '+x.cinHora:''}${x.conf?' · '+x.conf:''}`;
+  else if(tipo==='traslado'&&x.medio) keyInfo=`${x.medio}${x.duracion?' · '+x.duracion:''}${x.origen?' · '+x.origen.split('—')[0]:''} → ${(x.destino||'').split('—')[0]}`;
+  else if(tipo==='restaurante') keyInfo=`${x.nombre||x.dir||''}${x.cocina?' · '+x.cocina:''}${x.reserva?' · '+x.reserva:''}`;
+  else if(tipo==='actividad') keyInfo=`${x.lugar||''}${x.precio?' · '+x.precio:''}`;
+  else if(tipo==='otro') keyInfo=x.lugar||x.notas?.slice(0,60)||'';
 
-  const actionBtns=buildActionBtns(ev);
+  const details = buildDetails(ev);
+  const actionBtns = buildActionBtns(ev);
+  const hasDetails = details || actionBtns;
 
   return `
   <div class="ecard">
-    <div class="ecard-hd">
+    <div class="ecard-hd" onclick="${hasDetails?`toggleEcard('${cid}')`:''}" style="${hasDetails?'cursor:pointer':''}">
       <div class="etype-icon ${cls}">${ico}</div>
       <div class="ecard-main">
         <div class="ecard-title">
-          ${hora?`<span class="ecard-time">${hora}${fechaDisp?' · '+fechaDisp:''}</span>`:''}
-          ${titulo}
+          ${hora?`<span class="ecard-time">${hora}${fechaDisp&&fechaDisp!==fmtDateDisplay(ev.fecha)?'':''}</span>`:''}
+          <span style="font-size:16px;font-weight:700">${titulo}</span>
           ${pagoBadge(ev.pago)}
-          ${ev.monto>0?`<span class="badge-moneda">${CURRENCY_SYMBOLS[ev.moneda||'EUR']||''}${ev.monto} ${ev.moneda||'EUR'}${ev.participantes&&ev.participantes.length<4?' · '+ev.participantes.length+' pax':''}</span>`:''}
+          ${ev.monto>0?`<span class="badge-moneda">${CURRENCY_SYMBOLS[ev.moneda||'EUR']||''}${ev.monto}</span>`:''}
         </div>
-        ${tipo==='vuelo'&&x.origen&&x.destino?`<div class="ecard-sub">${x.aerolinea||''} ${x.numero||''} · ${x.origen.split('—')[0]} → ${x.destino.split('—')[0]}</div>`:''}
-        ${tipo==='traslado'&&x.medio?`<div class="ecard-sub">${x.medio}${x.duracion?' · '+x.duracion:''}</div>`:''}
-        ${tipo==='restaurante'&&x.cocina?`<div class="ecard-sub">${x.cocina}${x.precio?' · '+x.precio:''}</div>`:''}
-        ${tipo==='actividad'&&x.lugar?`<div class="ecard-sub">${x.lugar}${x.horafin?' · hasta '+x.horafin:''}</div>`:''}
-        ${tipo==='hotel'&&x.nombre?`<div class="ecard-sub">${x.nombre}</div>`:''}
+        ${keyInfo?`<div class="ecard-sub" style="font-size:13px;margin-top:3px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${keyInfo}</div>`:''}
       </div>
-      ${EM?`<div class="ecard-actions"><button class="ibtn" onclick="openEditEv('${dayId}',${j})">✏</button></div>`:''}
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:4px">
+        ${EM?`<button class="ecard-opts-btn" onclick="event.stopPropagation();openEditEv('${dayId}',${j})">⋯</button>`:''}
+        ${hasDetails?`<span id="ecc-${cid}" style="color:var(--muted);font-size:12px;transition:transform .2s;display:inline-block">▾</span>`:''}
+      </div>
     </div>
-    ${details?`<div class="edetails">${details}</div>`:''}
-    ${actionBtns}
+    <div id="ecb-${cid}" style="display:none">
+      ${details?`<div class="edetails">${details}</div>`:''}
+      ${actionBtns}
+    </div>
   </div>`;
 }
 
@@ -1847,7 +1900,9 @@ function routeConnector(ev1, ev2){
   const getAddr=ev=>{const x=ev.extras||{};return x.destino||x.dir||x.lugar||x.nombre||'';};
   const getAddrStart=ev=>{const x=ev.extras||{};return x.origen||x.dir||x.lugar||x.nombre||'';};
   const from=getAddr(ev1);const to=getAddrStart(ev2);
-  if(!from||!to||from===to) return '';
+  if(!from||!to) return '';
+  if(from===to) return '';
+  if(from.length>4&&to.length>4&&(from.includes(to.slice(0,6))||to.includes(from.slice(0,6)))) return '';
   const url=`https://www.google.com/maps/dir/${encodeURIComponent(from)}/${encodeURIComponent(to)}`;
   return `<div class="route-connector"><div class="route-line"></div><a href="${url}" target="_blank" class="route-btn">🗺 Cómo ir de ${from.split(',')[0]} a ${to.split(',')[0]}</a></div>`;
 }
@@ -1901,6 +1956,9 @@ window.renderDays=async()=>{
       </div>
     </div>`;
   }).join('');
+
+  // Auto-open today
+  autoOpenToday();
 
   // Load weather badges async
   for(const [dayId,promise] of Object.entries(weatherPromises)){
