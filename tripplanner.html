@@ -6,70 +6,72 @@
 <title>Trip Planner — Países Bajos · Grecia · Turquía</title>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Trip Planner">
-<meta name="theme-color" content="#0D2B4E">
+<meta name="theme-color" content="#F2F2F7">
 <meta name="description" content="Países Bajos · Grecia · Turquía 2026 — Itinerario compartido">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --hero-bg:#0D2B4E;--hero-bg2:#1A3F6B;--hero-accent:#C4925A;
-  --hero-s1:#C0522A;--hero-s2:#1B6CA8;--hero-s3:#2ECC71;
-  --nav-bg:#0D2B4E;--nav-border:#1B6CA8;--nav-active:#F5C842;
-  --page-bg:#EEF3F8;--card:#FFFFFF;--sand:#E8EFF5;--sand2:#D5E2EE;
-  --ink:#0A1628;--ink2:#1C2E40;--muted:#4A5F72;
-  --border:#B8CCE0;--border-s:#D0DFE8;
-  --accent:#2874A6;--accent-light:#D5E8F5;
-  --success:#1A6B3A;--warn:#A0410D;--terra:#C0522A;--terra-light:#FAEEE9;
-  --stat:#1A2F4A;--tr:0.7s;
+  --bg:#F2F2F7;--card:#FFFFFF;--sand:#F2F2F7;--sand2:#E5E5EA;
+  --ink:#000;--ink2:#1C1C1E;--muted:rgba(60,60,67,.6);--muted2:rgba(60,60,67,.35);
+  --border:rgba(60,60,67,.12);--border-s:rgba(60,60,67,.08);
+  --accent:#007AFF;--accent-light:rgba(0,122,255,.08);
+  --success:#34C759;--warn:#FF9500;--terra:#FF3B30;--terra-light:#FFF5F5;
+  --stat:#000;--tr:0.2s;--page-bg:#F2F2F7;
+  --hero-bg:#F2F2F7;--hero-bg2:#F2F2F7;--hero-accent:#007AFF;
+  --hero-s1:#007AFF;--hero-s2:#34C759;--hero-s3:#FF9500;
+  --nav-bg:#F2F2F7;--nav-border:rgba(60,60,67,.12);--nav-active:#000;
 }
-[data-theme="grecia"]{--hero-bg:#0A3D62;--hero-bg2:#1A5276;--hero-accent:#F0C040;--hero-s1:#D4AC0D;--hero-s2:#1A8FCA;--hero-s3:#27AE60;--nav-bg:#0A3D62;--nav-border:#1A8FCA;--nav-active:#F0C040;--page-bg:#F0F7FF;--sand:#E8F2FA;--sand2:#D0E5F5;--ink:#051525;--ink2:#0D2B42;--muted:#3A5570;--border:#90C0E0;--border-s:#C0DCF0;--accent:#1A8FCA;--accent-light:#D0EAF8;--stat:#0A3D62;}
-[data-theme="turquia"]{--hero-bg:#2C1654;--hero-bg2:#3D2070;--hero-accent:#00BCD4;--hero-s1:#8B0000;--hero-s2:#00838F;--hero-s3:#E65100;--nav-bg:#2C1654;--nav-border:#00838F;--nav-active:#00BCD4;--page-bg:#F5F0FF;--sand:#EDE8F8;--sand2:#DDD5F0;--ink:#1A0A30;--ink2:#2D1A48;--muted:#5A4878;--border:#C0A8E0;--border-s:#D8C8F0;--accent:#00838F;--accent-light:#E0F5F8;--stat:#2C1654;}
-body,div,button,input,select,textarea,span,p{transition:background-color var(--tr) ease,border-color var(--tr) ease,color var(--tr) ease;}
+[data-theme="grecia"]{--page-bg:#F2F2F7}
+[data-theme="turquia"]{--page-bg:#F2F2F7}
+body,div,button,input,select,textarea,span,p{transition:none;}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:'Lato',sans-serif;background:var(--page-bg);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 .nav{-webkit-overflow-scrolling:touch}
 button,a,[onclick]{-webkit-tap-highlight-color:transparent}
 input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
-.sync-bar{background:var(--hero-bg2);color:rgba(255,255,255,.85);font-size:13px;font-weight:700;text-align:center;padding:6px;display:flex;align-items:center;justify-content:center;gap:8px;position:sticky;top:0;z-index:101}
-.sdot{width:9px;height:9px;border-radius:50%;background:#4CAF50;flex-shrink:0;transition:background .3s}
-.sdot.warn{background:#FF9800}.sdot.err{background:#F44336}
-.hero{background:var(--hero-bg);color:#fff;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--hero-s1),var(--hero-s2),var(--hero-s3),var(--hero-s1))}
-.hi{max-width:860px;margin:0 auto;position:relative}
-.hero-dest{font-family:'Playfair Display',serif;font-size:11px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.5rem}
-.hero h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.9rem,5vw,2.9rem);line-height:1.08;margin-bottom:.3rem}
-.hero h1 em{font-style:italic;font-weight:400;color:rgba(255,255,255,.65)}
-.hero-sub{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:1.75rem}
-.travelers{display:flex;gap:10px;flex-wrap:wrap}
-.traveler{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:4px 14px 4px 4px}
-.av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;border:2px solid rgba(255,255,255,.35);overflow:hidden;cursor:pointer;position:relative}
+.sync-bar{background:var(--bg);color:var(--muted);font-size:12px;font-weight:500;text-align:center;padding:4px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:101}
+.sdot{width:7px;height:7px;border-radius:50%;background:#34C759;flex-shrink:0;transition:background .3s}
+.sdot.warn{background:#FF9500}.sdot.err{background:#FF3B30}
+.hero{background:var(--bg);color:var(--ink);padding:6px 20px 14px;position:relative}
+.hero::after{display:none}
+.hi{max-width:860px;margin:0 auto}
+.hero-dest{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.hero h1{font-weight:700;font-size:clamp(2rem,7vw,3rem);line-height:1.05;letter-spacing:-.5px;color:#000}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--muted);font-size:88%}
+.hero-sub{font-size:13px;color:var(--muted);margin-top:4px;margin-bottom:12px;font-weight:400}
+.travelers{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin-bottom:0}
+.traveler{display:flex;align-items:center;gap:0}
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;border:2.5px solid var(--bg);overflow:hidden;cursor:pointer;position:relative;margin-left:-8px}
 .av img{width:100%;height:100%;object-fit:cover;display:block}
 .av.np{background:var(--avbg,#1B5E8E);color:#fff}
 .av1{--avbg:#1B5E8E}.av2{--avbg:#A03020}.av3{--avbg:#155A30}.av4{--avbg:#5E2E8E}
 .av-up{position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;background:var(--nav-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;border:1.5px solid #fff;pointer-events:none;cursor:pointer;opacity:.85}
-.traveler span{font-size:13px;color:rgba(255,255,255,.88);font-weight:700}
-.theme-row{display:flex;align-items:center;gap:6px;margin-top:1.25rem;background:rgba(0,0,0,.2);border-radius:10px;padding:7px 12px;flex-wrap:wrap}
+.traveler span{display:none}
+.traveler:first-child .av{margin-left:0}
+.traveler-names{font-size:12px;color:var(--muted);margin-left:10px;font-weight:400}
+.theme-row{display:none;align-items:center;gap:6px;margin-top:1.25rem;background:rgba(0,0,0,.2);border-radius:10px;padding:7px 12px;flex-wrap:wrap}
 .theme-row span{font-size:11px;color:rgba(255,255,255,.45);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .tbtn{border:2px solid transparent;border-radius:16px;padding:4px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;opacity:.7;transition:all .3s}
 .tbtn:hover{opacity:1}.tbtn.on{opacity:1;border-color:rgba(255,255,255,.7);color:#fff}
 .tbtn[data-t="amsterdam"]{background:rgba(40,116,166,.6);color:#A8D4F5}
 .tbtn[data-t="grecia"]{background:rgba(26,143,202,.6);color:#AADDF5}
 .tbtn[data-t="turquia"]{background:rgba(0,131,143,.6);color:#A0EEF5}
-.hero-stats{display:flex;gap:2rem;margin-top:1.5rem;padding-top:1.25rem;padding-bottom:.5rem;border-top:1px solid rgba(255,255,255,.12);flex-wrap:wrap}
+.hero-stats{display:none}
 .hstat p:first-child{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:2px;font-weight:700}
 .hstat p:last-child{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700}
 .ebanner{background:#FFF8E7;border-bottom:2px solid #E8A020;padding:.6rem 2rem;font-size:14px;font-weight:700;color:#7A4A00;text-align:center;display:none}
 .ebanner.show{display:block}
-.nav-wrap{background:var(--nav-bg);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--nav-border);position:relative}
-.nav-wrap::after{content:'';position:absolute;right:0;top:0;bottom:3px;width:32px;background:linear-gradient(to right,transparent,var(--nav-bg));pointer-events:none;z-index:1}
-.nav{max-width:860px;margin:0 auto;display:flex;padding:0 1rem;overflow-x:auto;scrollbar-width:none}
+.nav-wrap{background:var(--bg);position:sticky;top:0;z-index:100;border-bottom:0.5px solid var(--border);padding:8px 16px}
+.nav-wrap::after{display:none}
+.nav{max-width:860px;margin:0 auto;display:flex;background:rgba(118,118,128,.12);border-radius:9px;padding:2px;gap:2px;overflow:hidden;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
-.ntab{padding:.85rem .9rem;font-size:13px;font-weight:700;color:rgba(255,255,255,.6);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;margin-bottom:-3px}
-.ntab:hover{color:rgba(255,255,255,.9)}.ntab.active{color:#fff;border-color:var(--nav-active);background:rgba(255,255,255,.06)}
-.ntab-edit{color:var(--hero-accent) !important}
-.main{max-width:860px;margin:0 auto;padding:1.75rem 2rem}
+.ntab{flex:1;padding:6px 4px;font-size:12px;font-weight:500;color:rgba(60,60,67,.6);cursor:pointer;white-space:nowrap;border-bottom:none;border-radius:7px;text-align:center;transition:all .15s;margin-bottom:0;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.ntab:hover{color:#000}.ntab.active{color:#000;font-weight:600;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ntab-edit{color:var(--accent) !important;font-size:11px}
+.main{max-width:860px;margin:0 auto;padding:1rem}
 .section{display:none}.section.active{display:block}
 .stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.75rem}
 .scard{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center}
@@ -81,34 +83,34 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .weather-chip-day{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;background:var(--accent-light);color:var(--accent);border:1px solid var(--border-s)}
 
 /* DAY CARDS */
-.day-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
-.day-hd{display:flex;align-items:center;gap:10px;padding:.9rem 1.25rem}
+.day-card{background:var(--card);border-radius:12px;margin-bottom:8px;overflow:hidden;scroll-margin-top:100px}
+.day-hd{display:flex;align-items:center;gap:10px;padding:.8rem 1rem;cursor:pointer}
 .cpill{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:20px;white-space:nowrap;flex-shrink:0}
-.p-amsterdam{background:#D5E8F5;color:#0D3A60;border:1px solid #90BCDA}
-.p-grecia{background:#D5EEE0;color:#0D4020;border:1px solid #90C8A8}
-.p-turquia{background:#EAD8F5;color:#3A0870;border:1px solid #B888D8}
-.p-transito{background:#EEF0F3;color:#3A4A5A;border:1px solid #C5CEDA}
+.p-amsterdam{background:rgba(0,122,255,.1);color:#004DB3}
+.p-grecia{background:rgba(52,199,89,.1);color:#1A7A35}
+.p-turquia{background:rgba(175,82,222,.1);color:#7B2FA8}
+.p-transito{background:rgba(142,142,147,.12);color:#48484A}
 .day-info{flex:1;min-width:0;cursor:pointer}
-.day-info strong{font-size:17px;font-weight:700;display:block;color:var(--ink)}
-.day-info .day-meta{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:3px}
+.day-info strong{font-size:15px;font-weight:600;display:block;color:#000;line-height:1.3}
+.day-info .day-meta{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px}
 .day-actions{display:flex;gap:6px;align-items:center}
-.ibtn{background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:13px;font-weight:700;color:var(--ink2);white-space:nowrap}
+.ibtn{background:var(--card);border:0.5px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:13px;font-weight:500;color:var(--ink2);white-space:nowrap}
 .ibtn:hover{background:var(--accent-light);border-color:var(--accent)}
-.chev{font-size:13px;color:var(--muted);transition:transform .2s;cursor:pointer;flex-shrink:0;font-weight:700;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;margin:-4px}
+.chev{font-size:13px;color:#C7C7CC;transition:transform .2s;cursor:pointer;flex-shrink:0;font-weight:300;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;margin:-4px}
 .chev.open{transform:rotate(90deg)}
-.day-body{display:none;border-top:1.5px solid var(--border-s)}.day-body.open{display:block}
+.day-body{display:none;border-top:0.5px solid var(--border-s)}.day-body.open{display:block}
 .elist{padding:.2rem .6rem .4rem}
 
 /* EVENT CARDS */
-.ecard{background:var(--card);border:1.5px solid var(--border-s);border-radius:12px;margin:.3rem 0;overflow:hidden}
+.ecard{background:var(--card);border:none;border-radius:0;margin:0;overflow:hidden;border-bottom:0.5px solid var(--border-s)}
 .ecard-hd{display:flex;gap:10px;align-items:center;padding:.7rem .9rem}
-.ecard-opts-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:var(--sand);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--muted);flex-shrink:0;transition:background .15s;font-weight:700}
-.ecard-opts-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
-.etype-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.etype-vuelo{background:#DDEEFF}.etype-hotel{background:#DDEEE5}.etype-actividad{background:#FFF0D8}
-.etype-restaurante{background:#FDDEE8}.etype-traslado{background:#EDEEF0}.etype-otro{background:#F0EDF8}
+.ecard-opts-btn{width:28px;height:28px;border-radius:6px;border:none;background:rgba(60,60,67,.06);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted);flex-shrink:0;transition:background .15s}
+.ecard-opts-btn:hover{background:var(--accent-light);color:var(--accent)}
+.etype-icon{width:10px;height:10px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0;flex-shrink:0}
+.etype-vuelo{background:#007AFF}.etype-hotel{background:#34C759}.etype-actividad{background:#FF9500}
+.etype-restaurante{background:#FF2D55}.etype-traslado{background:#8E8E93}.etype-otro{background:#AF52DE}
 .ecard-main{flex:1;min-width:0}
-.ecard-title{font-size:15px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}
+.ecard-title{font-size:15px;font-weight:500;color:#000;display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
 .ecard-sub{font-size:13px;color:var(--muted);margin-top:2px}
 .ecard-time{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:8px;white-space:nowrap;flex-shrink:0}
 .ecard-actions{display:flex;gap:4px;align-items:flex-start;flex-shrink:0}
@@ -144,9 +146,9 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .route-btn:hover{background:var(--accent);color:#fff}
 
 /* HOTELS */
-.hotel-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1.35rem;margin-bottom:10px}
+.hotel-card{background:var(--card);border:none;border-radius:12px;padding:1.25rem;margin-bottom:8px}
 .hotel-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:10px}
-.hotel-name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--stat)}
+.hotel-name{font-size:1.1rem;font-weight:700;color:#000}
 .hfields{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:10px}
 .hfield{background:var(--sand);border:1px solid var(--sand2);border-radius:8px;padding:9px 11px}
 .hfield label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:3px;font-weight:700}
@@ -436,7 +438,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .skeleton-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1.1rem;margin-bottom:10px}
 
 /* DATE NAV BAR */
-.date-nav{position:sticky;top:56px;z-index:90;background:var(--card);border-bottom:1.5px solid var(--border);padding:0;overflow-x:auto;scrollbar-width:none;display:flex;gap:0;-webkit-overflow-scrolling:touch}
+.date-nav{position:sticky;top:49px;z-index:90;background:var(--card);border-bottom:1.5px solid var(--border);padding:0;overflow-x:auto;scrollbar-width:none;display:flex;gap:0;-webkit-overflow-scrolling:touch}
 .date-nav::-webkit-scrollbar{display:none}
 .date-pill{flex-shrink:0;padding:10px 14px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;flex-direction:column;align-items:center;gap:1px}
 .date-pill:hover{color:var(--ink)}
@@ -460,14 +462,14 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .day-date-badge.today-badge .ddb-day{color:var(--success)}
 .day-info{flex:1;min-width:0}
 .day-info strong{font-size:17px;font-weight:700;display:block;color:var(--ink);line-height:1.3}
-.day-info .day-meta{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:3px}
+.day-info .day-meta{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px}
 
 /* CONTRAST IMPROVEMENTS */
 /* Small text (labels, meta, muted) — high contrast */
-.edetail label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#3A4F62;display:block;margin-bottom:3px;font-weight:700}
-.edetail p{font-size:14px;font-weight:700;color:#0A1628;word-break:break-word}
-.ecard-sub{font-size:13px;color:#3A5068;margin-top:3px;font-weight:600}
-.ecard-time{font-size:12px;font-weight:700;color:#1A5A8C;background:#C8E0F5;padding:3px 9px;border-radius:8px;white-space:nowrap;flex-shrink:0;border:1px solid #90BCDA}
+.edetail label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:block;margin-bottom:2px;font-weight:600}
+.edetail p{font-size:13px;font-weight:500;color:#000;word-break:break-word}
+.ecard-sub{font-size:12px;color:var(--muted);margin-top:1px;font-weight:400}
+.ecard-time{font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap;flex-shrink:0}
 /* Medium text */
 .day-info .day-meta{color:#3A5068}
 .cpill{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:20px;white-space:nowrap;flex-shrink:0}
@@ -479,8 +481,8 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .ntab{color:rgba(255,255,255,.75)}
 .ntab.active{color:#fff}
 /* Badge contrast */
-.badge-pago.si{background:#C8EED8;color:#0D4A20;border:1px solid #6BBD90}
-.badge-pago.no{background:#FFE8C0;color:#6A3200;border:1px solid #D4900A}
+.badge-pago.si{background:rgba(52,199,89,.15);color:#1A7A35}
+.badge-pago.no{background:rgba(255,149,0,.15);color:#A05000}
 /* Checklist */
 .citem label{font-size:15px;color:#0A1628;font-weight:600}
 .cg-title{color:#0A2A45}
@@ -810,30 +812,18 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 </div></div>
 
 <!-- APP -->
-<div class="sync-bar" id="sbar" style="justify-content:space-between;padding:6px 12px">
-  <a href="index.html" style="color:rgba(255,255,255,.7);text-decoration:none;font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px">‹ Mis viajes</a>
-  <div style="display:flex;align-items:center;gap:8px"><div class="sdot warn" id="sdot"></div><span id="stxt">Conectando...</span></div>
+<div class="sync-bar" id="sbar" style="justify-content:space-between;padding:4px 16px">
+  <a href="index.html" style="color:var(--accent);text-decoration:none;font-size:13px;font-weight:500;display:flex;align-items:center;gap:3px">‹ Mis viajes</a>
+  <div style="display:flex;align-items:center;gap:6px"><div class="sdot warn" id="sdot"></div><span id="stxt" style="font-size:12px;font-weight:500">Conectando...</span></div>
   <div style="width:80px"></div>
 </div>
 
 <div class="hero">
   <div class="hi">
-    <p class="hero-dest" id="hero-dest">🌍 El Gran Viaje Mediterráneo</p>
-    <h1 id="hero-title">Países Bajos · Grecia<br><em>& Turquía</em></h1>
-    <p class="hero-sub">Verano 2026 · Itinerario compartido · 4 viajeros</p>
+    <p class="hero-dest" id="hero-dest">PAÍSES BAJOS · GRECIA · TURQUÍA</p>
+    <h1 id="hero-title">Países Bajos<br><em>Grecia · Turquía</em></h1>
+    <p class="hero-sub" id="hero-sub-txt">21 jun – 15 jul · 22 días · 4 viajeros</p>
     <div class="travelers" id="tvl-list"></div>
-    <div class="theme-row">
-      <span>Destino:</span>
-      <button class="tbtn on" data-t="amsterdam" onclick="setTheme('amsterdam',this)">🇳🇱 Países Bajos</button>
-      <button class="tbtn" data-t="grecia" onclick="setTheme('grecia',this)">🇬🇷 Grecia</button>
-      <button class="tbtn" data-t="turquia" onclick="setTheme('turquia',this)">🇹🇷 Turquía</button>
-    </div>
-    <div class="hero-stats">
-      <div class="hstat"><p>Días</p><p id="hs-d">—</p></div>
-      <div class="hstat"><p>Vuelos</p><p id="hs-v">—</p></div>
-      <div class="hstat"><p>Ciudades</p><p id="hs-c">—</p></div>
-      <div class="hstat"><p>Hoteles</p><p id="hs-h">—</p></div>
-    </div>
   </div>
 </div>
 
@@ -841,15 +831,15 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 
 <div class="nav-wrap">
   <nav class="nav">
-    <div class="ntab active" onclick="showTab('it',this)">📅 Itinerario</div>
-    <div class="ntab" onclick="showTab('ht',this)">🏨 Hoteles</div>
-    <div class="ntab" onclick="showTab('gs',this)">💰 Gastos</div>
-    <div class="ntab" onclick="showTab('ck',this)">✓ Checklist</div>
-    <div class="ntab" onclick="showTab('nt',this)">💬 Notas</div>
-    <div class="ntab" onclick="showTab('ft',this)">📸 Fotos</div>
-    <div class="ntab" onclick="showTab('pr',this)">👤 Perfiles</div>
-    <div class="ntab" onclick="showTab('rs',this);initResumen()">🗺 Resumen</div>
-    <div class="ntab ntab-edit" id="etab" onclick="toggleEdit(this)">✏ Editar</div>
+    <div class="ntab active" onclick="showTab('it',this)">Itinerario</div>
+    <div class="ntab" onclick="showTab('ht',this)">Hoteles</div>
+    <div class="ntab" onclick="showTab('gs',this)">Gastos</div>
+    <div class="ntab" onclick="showTab('ck',this)">Checklist</div>
+    <div class="ntab" onclick="showTab('nt',this)">Notas</div>
+    <div class="ntab" onclick="showTab('ft',this)">Fotos</div>
+    <div class="ntab" onclick="showTab('pr',this)">Perfiles</div>
+    <div class="ntab" onclick="showTab('rs',this);initResumen()">Resumen</div>
+    <div class="ntab ntab-edit" id="etab" onclick="toggleEdit(this)">Editar</div>
   </nav>
 </div>
 
@@ -1556,7 +1546,10 @@ if(idx>=0&&idx<legacyKeys.length&&legacyKeys[idx]!==key){await setDoc(dref('avat
 };r.readAsDataURL(f);};inp.click();};
 function renderTvl(){
   const tvl = window.TVL_OVERRIDE || TVL;
-  document.getElementById('tvl-list').innerHTML=tvl.map(t=>`<div class="traveler">${avHtml(t.i,'',34)}<span>${t.fn}</span></div>`).join('');}
+  const names = tvl.map(t=>t.fn.split(' ')[0]).join(', ');
+  document.getElementById('tvl-list').innerHTML=
+    tvl.map((t,i)=>`<div class="traveler">${avHtml(t.i,'',30)}</div>`).join('')+
+    `<span class="traveler-names">${names}</span>`;}
 function renderNotesPbtns(){const tvlList=window.TVL_OVERRIDE||TVL;document.getElementById('note-pbtns').innerHTML=tvlList.map(t=>`<div onclick="selP('${t.i}','${t.a||'av1'}','${t.fn}',this)">${avHtml(t.i,'pbtn'+(AP.i===t.i?' sel':''),36)}</div>`).join('');}
 function renderPhotoPbtns(){const tvlList=window.TVL_OVERRIDE||TVL;document.getElementById('photo-pbtns').innerHTML=tvlList.map(t=>`<div onclick="selPhotoP('${t.i}','${t.a||'av1'}','${t.fn}',this)">${avHtml(t.i,'pbtn'+(PAP.i===t.i?' sel':''),36)}</div>`).join('');}
 
