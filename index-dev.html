@@ -634,6 +634,11 @@ function getUserRole(trip){
 function renderTrips(){
   const wrap = document.getElementById('my-trips-list');
   if(!myTrips.length){
+    // Show migration banner for any user with no trips
+    setTimeout(()=>{
+      const banner = document.getElementById('migration-banner');
+      if(banner) banner.style.display='block';
+    }, 500);
     wrap.innerHTML = `
     <div style="padding:1.5rem 0">
       <div style="text-align:center;margin-bottom:1.75rem">
