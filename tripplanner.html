@@ -124,8 +124,15 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 
 /* ACTION BUTTONS on events */
 .ecard-btns{display:flex;gap:6px;flex-wrap:wrap;padding:0 1rem .75rem 3.5rem}
-.action-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);color:var(--ink2);cursor:pointer;text-decoration:none;transition:background .15s;min-height:32px;white-space:nowrap}
+.action-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);color:var(--ink2);cursor:pointer;text-decoration:none;transition:all .15s;min-height:36px;white-space:nowrap}
 .action-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+/* PRIMARY — full color, prominent */
+.action-btn.action-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-size:13px;padding:8px 16px}
+.action-btn.action-primary:hover{opacity:.88;background:var(--accent)}
+/* SECONDARY — outlined, subtle */
+.action-btn.action-secondary{background:var(--card);color:var(--accent);border-color:var(--accent);font-size:12px}
+.action-btn.action-secondary:hover{background:var(--accent-light)}
+/* Legacy classes kept for compat */
 .action-btn.flight{border-color:#B5CCEE;color:#1E4F8C;background:#DDEEFF}
 .action-btn.maps{border-color:#A5CCB5;color:#1A6B3A;background:#DDEEE5}
 .action-btn.route{border-color:#E0C090;color:#6A3500;background:#FFF0D8}
@@ -824,6 +831,14 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
     <span id="sc-c" style="display:none"></span>
     <span id="sc-a" style="display:none"></span>
     <div id="date-nav" class="date-nav"></div>
+    <div id="onboarding-banner" style="display:none;background:linear-gradient(135deg,var(--hero-bg),var(--hero-bg2));border-radius:14px;padding:1.25rem;margin-bottom:1rem;color:#fff">
+      <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.5rem">¡Bienvenidos al viaje! 🎉</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.75);margin-bottom:1rem;line-height:1.6">Empezá cargando el primer día. Podés agregar vuelos, hoteles, traslados y actividades.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="document.getElementById('onboarding-banner').style.display='none';openNewDay()" style="padding:8px 16px;background:#fff;color:var(--hero-bg);border:none;border-radius:8px;font-family:'Lato',sans-serif;font-size:14px;font-weight:700;cursor:pointer">+ Agregar primer día</button>
+        <button onclick="document.getElementById('onboarding-banner').style.display='none'" style="padding:8px 14px;background:none;border:1px solid rgba(255,255,255,.3);border-radius:8px;font-family:'Lato',sans-serif;font-size:13px;color:rgba(255,255,255,.7);cursor:pointer">Cerrar</button>
+      </div>
+    </div>
     <div id="days-wrap" style="margin-top:0">
   <div class="skeleton-card"><div class="skeleton" style="width:60%;margin-bottom:8px"></div><div class="skeleton" style="width:40%"></div></div>
   <div class="skeleton-card"><div class="skeleton" style="width:70%;margin-bottom:8px"></div><div class="skeleton" style="width:45%"></div></div>
@@ -1818,27 +1833,45 @@ window.savProfile = async () => {
 function pagoBadge(p){if(!p||p==='na')return'';return`<span class="badge-pago ${p==='si'?'si':'no'}">${p==='si'?'✓ Pago':'⏳ Pendiente'}</span>`;}
 
 function buildActionBtns(ev){
-  const x=ev.extras||{};let btns='';
-  // Flight tracker
+  const x=ev.extras||{};
+  let primary=''; let secondary='';
+
+  // ── PRIMARY: most important single action per type ──
   if(ev.tipo==='vuelo'&&x.numero){
     const date=ev.fecha?ev.fecha.replace(/-/g,''):'';
     const url=`https://www.flightradar24.com/${x.numero}/${date}`;
-    btns+=`<a href="${url}" target="_blank" class="action-btn flight">✈ Estado del vuelo</a>`;
-  }
-  // Maps buttons
-  const mapsLink=x.maps||x.mapsO||x.mapsD||x.lugar||x.dir||x.nombre;
-  if(x.maps&&x.maps.startsWith('http')){
-    btns+=`<a href="${x.maps}" target="_blank" class="action-btn maps">📍 Ver en Maps</a>`;
-  }else if(x.lugar||x.dir||x.nombre){
-    const q=encodeURIComponent(x.lugar||x.dir||x.nombre||'');
-    if(q) btns+=`<a href="https://maps.google.com/maps?q=${q}" target="_blank" class="action-btn maps">📍 Ver en Maps</a>`;
-  }
-  // Route for traslados
-  if(ev.tipo==='traslado'&&x.origen&&x.destino){
+    primary=`<a href="${url}" target="_blank" class="action-btn action-primary">✈ Ver estado del vuelo</a>`;
+  } else if((ev.tipo==='actividad'||ev.tipo==='restaurante'||ev.tipo==='hotel')&&(x.maps||x.lugar||x.dir||x.nombre)){
+    const href=x.maps&&x.maps.startsWith('http')?x.maps:`https://maps.google.com/maps?q=${encodeURIComponent(x.lugar||x.dir||x.nombre||'')}`;
+    primary=`<a href="${href}" target="_blank" class="action-btn action-primary">📍 Ver en Maps</a>`;
+  } else if(ev.tipo==='traslado'&&x.origen&&x.destino){
     const o=encodeURIComponent(x.origen);const d=encodeURIComponent(x.destino);
-    btns+=`<a href="https://www.google.com/maps/dir/${o}/${d}" target="_blank" class="action-btn route">🗺 Cómo llegar</a>`;
+    primary=`<a href="https://www.google.com/maps/dir/${o}/${d}" target="_blank" class="action-btn action-primary">🗺 Cómo llegar</a>`;
   }
-  return btns?`<div class="ecard-btns">${btns}</div>`:'';
+
+  // ── SECONDARY: extra actions when relevant ──
+  if(ev.tipo==='vuelo'&&(x.maps||(x.origen&&x.destino))){
+    // Flight already has primary, add maps as secondary if available
+  }
+  if(ev.tipo==='actividad'&&x.link&&x.link.startsWith('http')){
+    secondary+=`<a href="${x.link}" target="_blank" class="action-btn action-secondary">🔗 Ver reserva</a>`;
+  }
+  if(ev.tipo==='restaurante'&&x.link&&x.link.startsWith('http')){
+    secondary+=`<a href="${x.link}" target="_blank" class="action-btn action-secondary">🔗 Web del restaurante</a>`;
+  }
+  if(ev.tipo==='hotel'&&x.maps&&x.maps.startsWith('http')&&primary){
+    // Already showing maps as primary
+  }
+  if(ev.tipo==='traslado'&&x.mapsO&&x.mapsD){
+    secondary+=`<a href="${x.mapsO}" target="_blank" class="action-btn action-secondary">📍 Origen</a>`;
+    secondary+=`<a href="${x.mapsD}" target="_blank" class="action-btn action-secondary">📍 Destino</a>`;
+  }
+
+  if(!primary&&!secondary) return '';
+  return `<div class="ecard-btns">
+    ${primary}
+    ${secondary}
+  </div>`;
 }
 
 // Generate a unique card ID for expand/collapse
@@ -1974,7 +2007,13 @@ function routeConnector(ev1, ev2){
 window.renderDays=async()=>{
   const todayISO = new Date().toISOString().slice(0,10);
   const c=document.getElementById('days-wrap');
-  if(!DAYS.length){c.innerHTML='<div class="loading">Sin días aún.</div>';return;}
+  if(!DAYS.length){
+    c.innerHTML='<div style="text-align:center;padding:2rem 1rem;color:var(--muted)"><div style="font-size:40px;margin-bottom:10px">📅</div><div style="font-size:15px;font-weight:700;margin-bottom:4px">El itinerario está vacío</div><div style="font-size:13px">Agregá el primer día para empezar</div></div>';
+    const ob=document.getElementById('onboarding-banner');
+    if(ob&&!TRIP_ID) ob.style.display='block'; // only for legacy trip
+    return;
+  }
+  const ob=document.getElementById('onboarding-banner');if(ob)ob.style.display='none';
 
   // Fetch weather for all days async (non-blocking)
   const weatherPromises={};
