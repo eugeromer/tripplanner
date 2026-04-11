@@ -973,13 +973,10 @@ window.acceptInvite = async (tripId, btn) => {
 
 // ── MIGRATION ─────────────────────────────────────────────
 // Show migration banner only for the original owner
-function checkShowMigrationBanner(){ return; // disabled in DEV
-  /*
+function checkShowMigrationBanner(){
   if(!currentUser) return;
-  // Show if this is the original eugeromer account
   const email = currentUser.email||'';
   if(email.toLowerCase().includes('eugeromer') || email.toLowerCase().includes('eugen')){
-    // Check if already migrated
     const q2 = query(collection(db,'trips'), where('ownerId','==',currentUser.uid), where('migrated','==',true));
     getDocs(q2).then(snap=>{
       if(snap.empty) document.getElementById('migration-banner').style.display='block';
