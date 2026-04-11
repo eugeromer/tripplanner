@@ -266,18 +266,16 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 /* ── RESPONSIVE: all phones ── */
 @media(max-width:640px){
   /* Layout */
-  .hero{padding:1.5rem 1rem 1.25rem}
+  .hero{padding:4px 16px 12px}
   .main{padding:1rem}
-  .nav{padding:0 .25rem}
-  .ntab{padding:.75rem .65rem;font-size:12px}
+  .nav{padding:2px}
+  .ntab{padding:5px 3px;font-size:11px}
 
   /* Hero: hide theme row on tiny screens, show compact stats */
   .hero-sub{font-size:13px;margin-bottom:1.25rem}
   .hero-stats{gap:1.25rem;margin-top:1rem;padding-top:1rem}
   .hstat p:last-child{font-size:1.4rem}
-  .travelers{gap:7px}
-  .traveler{padding:3px 10px 3px 3px}
-  .traveler span{font-size:12px}
+  .travelers{gap:0}
 
   /* Stats grid 2 cols */
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px}
@@ -355,7 +353,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 
 /* ── iPhone SE / very small (375px and under) ── */
 @media(max-width:375px){
-  .ntab{padding:.7rem .5rem;font-size:11px}
+  .ntab{padding:4px 2px;font-size:10px}
   .hero h1{font-size:1.7rem}
   .counter-grid{grid-template-columns:repeat(3,1fr)}
   .counter-card .num{font-size:1.3rem}
@@ -376,7 +374,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 @supports(padding:max(0px)){
   .nav-wrap{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
   .main{padding-left:max(1rem,env(safe-area-inset-left));padding-right:max(1rem,env(safe-area-inset-right))}
-  .hero{padding-left:max(1.5rem,env(safe-area-inset-left));padding-right:max(1.5rem,env(safe-area-inset-right))}
+  .hero{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 }
 
 /* PARTICIPANTES */
@@ -477,9 +475,6 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .hero-dest{color:rgba(255,255,255,.6)}
 .hero-sub{color:rgba(255,255,255,.65)}
 .hstat p:first-child{color:rgba(255,255,255,.5)}
-/* Nav tabs — improve contrast */
-.ntab{color:rgba(255,255,255,.75)}
-.ntab.active{color:#fff}
 /* Badge contrast */
 .badge-pago.si{background:rgba(52,199,89,.15);color:#1A7A35}
 .badge-pago.no{background:rgba(255,149,0,.15);color:#A05000}
