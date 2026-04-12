@@ -438,16 +438,16 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 /* DATE NAV BAR */
 .date-nav{position:sticky;top:49px;z-index:90;background:var(--card);border-bottom:1.5px solid var(--border);padding:0;overflow-x:auto;scrollbar-width:none;display:flex;gap:0;-webkit-overflow-scrolling:touch}
 .date-nav::-webkit-scrollbar{display:none}
-.date-pill{flex-shrink:0;padding:10px 14px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;flex-direction:column;align-items:center;gap:1px}
-.date-pill:hover{color:var(--ink)}
-.date-pill.active{color:var(--accent);border-bottom-color:var(--accent)}
+.date-pill{flex-shrink:0;padding:8px 10px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:44px}
+.date-pill:hover{color:#000}
+.date-pill.active{color:#000;border-bottom-color:#000}
 .date-pill.today{color:var(--success)}
 .date-pill.today.active{color:var(--success);border-bottom-color:var(--success)}
-.date-pill-day{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;opacity:.7}
-.date-pill-date{font-size:15px;font-weight:700}
-.date-pill-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:2px;opacity:0}
-.date-pill.has-events .date-pill-dot{opacity:1}
-.date-pill.today .date-pill-dot{background:var(--success)}
+.date-pill-day{font-size:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;color:rgba(60,60,67,.4)}
+.date-pill-date{font-size:20px;font-weight:600;color:rgba(60,60,67,.35);line-height:1.1}
+.date-pill-dot{width:4px;height:4px;border-radius:50%;background:#007AFF;margin-top:2px;opacity:0}
+.date-pill.has-events .date-pill-dot{opacity:.4}
+.date-pill.today .date-pill-dot{background:#34C759}
 
 /* DAY CARD — bigger, cleaner */
 .day-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:8px;overflow:hidden;scroll-margin-top:110px}
@@ -486,6 +486,10 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .mas-item{padding:10px 16px;font-size:15px;font-weight:500;color:#000;border-radius:8px;cursor:pointer;white-space:nowrap}
 .mas-item:hover,.mas-item:active{background:rgba(60,60,67,.06)}
 .mas-item-blue{color:#007AFF}
+.date-pill.active .date-pill-date{color:#000}
+.date-pill.active .date-pill-day{color:rgba(60,60,67,.6)}
+.date-pill.today .date-pill-date{color:#007AFF}
+.date-pill.today .date-pill-day{color:#007AFF}
 </style>
 </head>
 <body data-theme="amsterdam">
