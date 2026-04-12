@@ -83,7 +83,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .weather-chip-day{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;background:var(--accent-light);color:var(--accent);border:1px solid var(--border-s)}
 
 /* DAY CARDS */
-.day-card{background:var(--card);border-radius:12px;margin-bottom:8px;overflow:hidden;scroll-margin-top:100px}
+.day-card{background:#fff;border-radius:12px;margin-bottom:6px;overflow:hidden;scroll-margin-top:100px}
 .day-hd{display:flex;align-items:center;gap:10px;padding:.8rem 1rem;cursor:pointer}
 .cpill{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:20px;white-space:nowrap;flex-shrink:0}
 .p-amsterdam{background:rgba(0,122,255,.1);color:#004DB3}
@@ -114,9 +114,9 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .ecard-sub{font-size:13px;color:var(--muted);margin-top:2px}
 .ecard-time{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:8px;white-space:nowrap;flex-shrink:0}
 .ecard-actions{display:flex;gap:4px;align-items:flex-start;flex-shrink:0}
-.badge-pago{font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px;white-space:nowrap}
-.badge-pago.si{background:#E5F4EB;color:#1A6B3A;border:1px solid #A0CCB0}
-.badge-pago.no{background:#FFF3E0;color:#8B4500;border:1px solid #E0B870}
+.badge-pago{font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;white-space:nowrap}
+.badge-pago.si{background:rgba(52,199,89,.15);color:#1A7A35}
+.badge-pago.no{background:rgba(255,149,0,.15);color:#A05000}
 .edetails{padding:0 1rem .7rem 3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .edetail{background:var(--sand);border-radius:8px;padding:6px 9px;border:1px solid var(--border-s)}
 .edetail label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);display:block;margin-bottom:2px;font-weight:700}
@@ -373,7 +373,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 /* ── Safe area for iPhone notch / Dynamic Island ── */
 @supports(padding:max(0px)){
   .nav-wrap{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
-  .main{padding-left:max(1rem,env(safe-area-inset-left));padding-right:max(1rem,env(safe-area-inset-right))}
+  .main{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
   .hero{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 }
 
@@ -438,19 +438,19 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 /* DATE NAV BAR */
 .date-nav{position:sticky;top:49px;z-index:90;background:var(--card);border-bottom:1.5px solid var(--border);padding:0;overflow-x:auto;scrollbar-width:none;display:flex;gap:0;-webkit-overflow-scrolling:touch}
 .date-nav::-webkit-scrollbar{display:none}
-.date-pill{flex-shrink:0;padding:8px 10px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:44px}
-.date-pill:hover{color:#000}
-.date-pill.active{color:#000;border-bottom-color:#000}
-.date-pill.today{color:var(--success)}
-.date-pill.today.active{color:var(--success);border-bottom-color:var(--success)}
-.date-pill-day{font-size:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;color:rgba(60,60,67,.4)}
-.date-pill-date{font-size:20px;font-weight:600;color:rgba(60,60,67,.35);line-height:1.1}
-.date-pill-dot{width:4px;height:4px;border-radius:50%;background:#007AFF;margin-top:2px;opacity:0}
+.date-pill{flex-shrink:0;width:44px;padding:5px 0 7px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:1px}
+
+.date-pill.active{border-bottom-color:#000}
+
+.date-pill.today.active{border-bottom-color:#007AFF}
+.date-pill-day{font-size:9px;font-weight:600;color:rgba(60,60,67,.4);text-transform:uppercase;letter-spacing:.04em}
+.date-pill-date{font-size:20px;font-weight:600;color:rgba(60,60,67,.3);line-height:1.1}
+.date-pill-dot{width:4px;height:4px;border-radius:50%;background:#007AFF;margin-top:3px;opacity:0}
 .date-pill.has-events .date-pill-dot{opacity:.4}
 .date-pill.today .date-pill-dot{background:#34C759}
 
 /* DAY CARD — bigger, cleaner */
-.day-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:8px;overflow:hidden;scroll-margin-top:110px}
+.day-card{background:#fff;border-radius:12px;margin-bottom:6px;overflow:hidden;scroll-margin-top:100px}
 .day-hd{display:flex;align-items:center;gap:10px;padding:1rem 1.25rem;cursor:pointer}
 .day-date-badge{flex-shrink:0;text-align:center;min-width:44px}
 .day-date-badge .ddb-day{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
@@ -459,7 +459,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .day-date-badge.today-badge .ddb-num{color:var(--success)}
 .day-date-badge.today-badge .ddb-day{color:var(--success)}
 .day-info{flex:1;min-width:0}
-.day-info strong{font-size:15px;font-weight:600;display:block;color:#000;line-height:1.3}
+.day-info strong{font-size:17px;font-weight:700;display:block;color:var(--ink);line-height:1.3}
 .day-info .day-meta{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px}
 
 /* CONTRAST IMPROVEMENTS */
@@ -483,13 +483,14 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .hfield p{color:#0A1628;font-weight:700}
 /* Note text */
 .note-text{font-size:15px;color:#0A1628;line-height:1.65}
-.mas-item{padding:10px 16px;font-size:15px;font-weight:500;color:#000;border-radius:8px;cursor:pointer;white-space:nowrap}
-.mas-item:hover,.mas-item:active{background:rgba(60,60,67,.06)}
-.mas-item-blue{color:#007AFF}
 .date-pill.active .date-pill-date{color:#000}
 .date-pill.active .date-pill-day{color:rgba(60,60,67,.6)}
 .date-pill.today .date-pill-date{color:#007AFF}
 .date-pill.today .date-pill-day{color:#007AFF}
+.date-nav{padding:8px 14px 0;background:var(--bg)}
+.mas-item{padding:10px 16px;font-size:15px;font-weight:500;color:#000;border-radius:8px;cursor:pointer;white-space:nowrap}
+.mas-item:hover,.mas-item:active{background:rgba(60,60,67,.06)}
+.mas-item-blue{color:#007AFF}
 </style>
 </head>
 <body data-theme="amsterdam">
@@ -837,13 +838,13 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
   </nav>
 </div>
 <div id="mas-overlay" onclick="closeMasMenu()" style="display:none;position:fixed;inset:0;z-index:199"></div>
-<div id="mas-dropdown" style="display:none;position:fixed;z-index:200;background:#fff;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.15);min-width:180px;padding:6px;border:0.5px solid rgba(60,60,67,.12)">
+<div id="mas-dropdown" style="display:none;position:fixed;z-index:200;background:#fff;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.15);min-width:180px;padding:6px;border:.5px solid rgba(60,60,67,.12)">
   <div class="mas-item" onclick="showTabMas('ck','Checklist')">Checklist</div>
   <div class="mas-item" onclick="showTabMas('nt','Notas')">Notas</div>
   <div class="mas-item" onclick="showTabMas('ft','Fotos')">Fotos</div>
   <div class="mas-item" onclick="showTabMas('pr','Perfiles')">Perfiles</div>
   <div class="mas-item" onclick="showTabMas('rs','Resumen');initResumen()">Resumen</div>
-  <div style="border-top:0.5px solid rgba(60,60,67,.1);margin:4px 0"></div>
+  <div style="border-top:.5px solid rgba(60,60,67,.1);margin:4px 0"></div>
   <div class="mas-item mas-item-blue" id="etab" onclick="toggleEdit(this);closeMasMenu()">Editar</div>
 </div>
 
@@ -2067,58 +2068,56 @@ window.renderDays=async()=>{
   const wrap=document.getElementById('days-wrap');
   if(!DAYS.length){wrap.innerHTML='<div style="text-align:center;padding:3rem 1rem;color:var(--muted);font-size:13px">El itinerario está vacío</div>';const ob=document.getElementById('onboarding-banner');if(ob&&!TRIP_ID)ob.style.display='block';return;}
   const ob=document.getElementById('onboarding-banner');if(ob)ob.style.display='none';
-  const weatherP={};
-  DAYS.forEach(d=>{if(d.city!=='transito'&&d.fecha){const iso=fmtDateISO(d.fecha)||d.fecha;if(iso&&iso.match(/^\d{4}-\d{2}-\d{2}$/))weatherP[d._id]=getWeather(d.city,iso);}});
+  const wP={};
+  DAYS.forEach(d=>{if(d.city!=='transito'&&d.fecha){const iso=fmtDateISO(d.fecha)||d.fecha;if(iso&&iso.match(/^\d{4}-\d{2}-\d{2}$/))wP[d._id]=getWeather(d.city,iso);}});
   const DN=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  const rows=DAYS.map(d=>{
+  wrap.innerHTML=DAYS.map(d=>{
     const evs=sortEvents(d.events||[]);
     const dp=d.fecha?fmtDateDisplay(d.fecha):(d.date||'');
     const parts=dp.split(' ');
     const dn=d.fecha?DN[new Date(d.fecha+'T12:00:00').getDay()]:'';
     const isToday=d.fecha===todayISO;
     const evHtml=evs.length===0
-      ?`<div style="padding:10px 14px;color:var(--muted);font-size:13px">Sin eventos aún</div>`
+      ?`<div style="padding:10px 14px;color:rgba(60,60,67,.4);font-size:13px">Sin eventos aún</div>`
       :evs.map((ev,j)=>{
-        const ri=ev._origIdx!==undefined?ev._origIdx:j;
-        const tipo=ev.tipo||'otro';
-        const dc=TIPO_COLOR[tipo]||'#8E8E93';
-        const tit=ev.titulo||ev.tt||'Sin título';
-        const hora=fmtTimeDisplay(ev.hora||ev.t||'');
-        const x=ev.extras||{};
-        let sub='';
-        if(tipo==='vuelo'&&x.origen&&x.destino)sub=`${x.origen.split('—')[0].trim()} → ${x.destino.split('—')[0].trim()}${x.pnr?' · '+x.pnr:''}`;
-        else if(tipo==='hotel')sub=`Check-in${x.cinHora?' '+x.cinHora:''}${x.noch?' · '+x.noch:''}`;
-        else if(tipo==='traslado'&&x.medio)sub=`${x.medio}${x.duracion?' · '+x.duracion:''}`;
-        else if(tipo==='actividad'&&x.lugar)sub=x.lugar;
-        else if(tipo==='restaurante'&&(x.nombre||x.dir))sub=x.nombre||x.dir;
-        const si=ev.pago==='si',no=ev.pago==='no';
-        return `<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:.5px solid rgba(60,60,67,.1);cursor:pointer" onclick="openEditEv('${d._id}',${ri})">
-          <div style="width:10px;height:10px;border-radius:50%;background:${dc};flex-shrink:0"></div>
-          <div style="flex:1;min-width:0">
-            <div style="font-size:15px;font-weight:500;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${tit}</div>
-            ${sub?`<div style="font-size:12px;color:rgba(60,60,67,.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${sub}</div>`:''}
-          </div>
-          <div style="display:flex;align-items:center;gap:5px;flex-shrink:0">
-            ${hora?`<span style="font-size:12px;font-weight:500;color:rgba(60,60,67,.4)">${hora}</span>`:''}
-            ${si?`<span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;background:rgba(52,199,89,.15);color:#1A7A35">Pago</span>`:''}
-            ${no?`<span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;background:rgba(255,149,0,.15);color:#A05000">Pendiente</span>`:''}
-            <span style="color:#C7C7CC;font-size:13px">›</span>
-          </div>
-        </div>`;
-      }).join('');
-    const addBtn=`<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;color:var(--accent);font-size:14px;cursor:pointer" onclick="openNewEv('${d._id}')"><span style="font-size:17px;font-weight:300;line-height:1">+</span><span>Agregar evento</span></div>`;
-    const editBtn=EM?`<button class="ibtn" style="font-size:11px;padding:2px 7px;margin-left:4px;flex-shrink:0" onclick="event.stopPropagation();openEditDay('${d._id}')">✏</button>`:'';
-    const dateLabel=`<span style="font-size:12px;font-weight:600;color:${isToday?'var(--accent)':'rgba(60,60,67,.4)'};text-transform:uppercase;letter-spacing:.05em;white-space:nowrap">${dn} ${parts[0]||''}</span>`;
+          const ri=ev._origIdx!==undefined?ev._origIdx:j;
+          const tipo=ev.tipo||'otro';
+          const dc=TIPO_COLOR[tipo]||'#8E8E93';
+          const tit=ev.titulo||ev.tt||'Sin título';
+          const hora=fmtTimeDisplay(ev.hora||ev.t||'');
+          const x=ev.extras||{};
+          let sub='';
+          if(tipo==='vuelo'&&x.origen&&x.destino)sub=`${x.origen.split('—')[0].trim()} → ${x.destino.split('—')[0].trim()}${x.pnr?' · '+x.pnr:''}`;
+          else if(tipo==='hotel')sub=`Check-in${x.cinHora?' '+x.cinHora:''}${x.noch?' · '+x.noch:''}`;
+          else if(tipo==='traslado'&&x.medio)sub=`${x.medio}${x.duracion?' · '+x.duracion:''}`;
+          else if(tipo==='actividad'&&x.lugar)sub=x.lugar;
+          else if(tipo==='restaurante'&&(x.nombre||x.dir))sub=x.nombre||x.dir;
+          const si=ev.pago==='si',no=ev.pago==='no';
+          return `<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:.5px solid rgba(60,60,67,.1);cursor:pointer" onclick="openEditEv('${d._id}',${ri})">
+            <div style="width:9px;height:9px;border-radius:50%;background:${dc};flex-shrink:0"></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:500;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${tit}</div>
+              ${sub?`<div style="font-size:11px;color:rgba(60,60,67,.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${sub}</div>`:''}
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;flex-shrink:0">
+              ${hora?`<span style="font-size:11px;font-weight:500;color:rgba(60,60,67,.4)">${hora}</span>`:''}
+              ${si?`<span style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;background:rgba(52,199,89,.15);color:#1A7A35">Pago</span>`:''}
+              ${no?`<span style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;background:rgba(255,149,0,.15);color:#A05000">Pendiente</span>`:''}
+              <span style="color:#C7C7CC;font-size:12px">›</span>
+            </div>
+          </div>`;
+        }).join('');
+    const addBtn=`<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;color:#007AFF;font-size:13px;cursor:pointer" onclick="openNewEv('${d._id}')"><span style="font-size:16px;font-weight:300;line-height:1">+</span><span>Agregar evento</span></div>`;
+    const editBtn=EM?`<button class="ibtn" style="font-size:11px;padding:2px 7px;flex-shrink:0;margin-left:4px" onclick="event.stopPropagation();openEditDay('${d._id}')">✏</button>`:'';
+    const dayIdHtml=`<div style="font-size:11px;font-weight:600;color:${isToday?'#007AFF':'rgba(60,60,67,.4)'};text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;min-width:52px;flex-shrink:0">${dn?dn+' ':''}<span style="font-size:17px;font-weight:600;color:${isToday?'#007AFF':'rgba(60,60,67,.35)'};letter-spacing:0">${parts[0]||''}</span></div>`;
     return `<div class="day-card" id="day-card-${d._id}" data-day-id="${d._id}">
-      <div style="display:flex;align-items:center;gap:8px;padding:10px 14px 8px;cursor:pointer" onclick="togDay('${d._id}')">${dateLabel}<span style="font-size:16px;font-weight:600;color:#000;letter-spacing:-.1px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.label||''}</span>${editBtn}<span id="ch${d._id}" style="color:#C7C7CC;font-size:12px;transition:transform .2s;display:inline-block;flex-shrink:0">›</span><span id="wc-${d._id}"></span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer" onclick="togDay('${d._id}')">${dayIdHtml}<div style="font-size:15px;font-weight:600;color:#000;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.label||''}</div>${editBtn}<span id="wc-${d._id}"></span><span id="ch${d._id}" style="color:#C7C7CC;font-size:12px;flex-shrink:0;transition:transform .2s;display:inline-block">›</span></div>
       <div class="day-body" id="db${d._id}">${evHtml}${addBtn}</div>
     </div>`;
-  });
-  const divider='<div style="height:.5px;background:rgba(60,60,67,.08);margin:0 14px"></div>';
-  wrap.innerHTML=`<div style="background:#fff;border-radius:12px;overflow:hidden">${rows.join(divider)}</div>`;
+  }).join('');
   autoOpenToday();
   renderDateNav();
-  for(const [id,p] of Object.entries(weatherP)){p.then(w=>{if(!w)return;const el=document.getElementById('wc-'+id);if(el)el.innerHTML=`<span class="weather-chip-day" style="margin-left:6px">${w.ico} ${w.tmax}°/${w.tmin}°</span>`;}).catch(()=>{});}
+  for(const [id,p] of Object.entries(wP)){p.then(w=>{if(!w)return;const el=document.getElementById('wc-'+id);if(el)el.innerHTML=`<span class="weather-chip-day" style="margin-left:4px">${w.ico} ${w.tmax}°/${w.tmin}°</span>`;}).catch(()=>{});}
 };
 window.toggleHotel=id=>{
   const body=document.getElementById('hb-'+id);
@@ -2162,7 +2161,7 @@ window.renderHotels=()=>{
           ${reserva?`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 14px"><div style="display:flex;align-items:center;gap:8px"><div style="width:7px;height:7px;border-radius:2px;background:#8E8E93;flex-shrink:0"></div><span style="font-size:13px;color:rgba(60,60,67,.6)">Reserva</span></div><span style="font-size:13px;font-weight:500;color:#000">${reserva}</span></div>`:''}
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:rgba(60,60,67,.03);border-top:.5px solid rgba(60,60,67,.06)">
-          <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;${si?'background:rgba(52,199,89,.15);color:#1A7A35':no?'background:rgba(255,149,0,.15);color:#A05000':'background:rgba(60,60,67,.08);color:rgba(60,60,67,.5)'}">${si?'Confirmado':no?'Pendiente pago':'Sin estado'}</span>
+          <span style="font-size:9px;font-weight:600;padding:2px 8px;border-radius:20px;${si?'background:rgba(52,199,89,.15);color:#1A7A35':no?'background:rgba(255,149,0,.15);color:#A05000':'background:rgba(60,60,67,.08);color:rgba(60,60,67,.5)'}">${si?'Confirmado':no?'Pendiente pago':'Sin estado'}</span>
           ${monto?`<span style="font-size:13px;font-weight:600;color:#000">${monto}</span>`:''}
         </div>
       </div>
