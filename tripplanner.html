@@ -438,14 +438,14 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 /* DATE NAV BAR */
 .date-nav{position:sticky;top:37px;z-index:90;background:var(--bg);border-bottom:none;padding:10px 14px 0;overflow-x:auto;scrollbar-width:none;display:flex;gap:0;-webkit-overflow-scrolling:touch}
 .date-nav::-webkit-scrollbar{display:none}
-.date-pill{flex-shrink:0;width:44px;padding:5px 0 7px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:1px}
+.date-pill{flex-shrink:0;width:44px;min-width:44px;padding:5px 0 7px;cursor:pointer;border-bottom:2px solid transparent;display:flex;flex-direction:column;align-items:center;gap:1px;overflow:hidden}
 
 .date-pill.active{border-bottom-color:#000}
 
 .date-pill.today.active{border-bottom-color:#007AFF}
-.date-pill-day{font-size:9px;font-weight:600;color:rgba(60,60,67,.4);text-transform:uppercase;letter-spacing:.04em}
-.date-pill-date{font-size:20px;font-weight:600;color:rgba(60,60,67,.3);line-height:1.1}
-.date-pill-dot{width:4px;height:4px;border-radius:50%;background:#007AFF;margin-top:3px;opacity:0}
+.date-pill-day{font-size:9px;font-weight:600;color:rgba(60,60,67,.4);text-transform:uppercase;letter-spacing:.04em;display:block;width:100%;text-align:center;white-space:nowrap;overflow:hidden}
+.date-pill-date{font-size:20px;font-weight:600;color:rgba(60,60,67,.3);line-height:1.1;display:block;width:100%;text-align:center;white-space:nowrap;overflow:hidden}
+.date-pill-dot{width:4px;height:4px;border-radius:50%;background:#007AFF;margin-top:3px;opacity:0;flex-shrink:0}
 .date-pill.has-events .date-pill-dot{opacity:.4}
 .date-pill.today .date-pill-dot{background:#34C759}
 
