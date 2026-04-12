@@ -483,6 +483,10 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .hfield p{color:#0A1628;font-weight:700}
 /* Note text */
 .note-text{font-size:15px;color:#0A1628;line-height:1.65}
+
+/* Apple day section */
+.day-card{background:transparent !important;border-radius:0 !important;margin-bottom:0 !important;border:none !important}
+.day-body{border-top:.5px solid rgba(60,60,67,.08) !important}
 .mas-item{padding:10px 16px;font-size:15px;font-weight:500;color:#000;border-radius:8px;cursor:pointer;white-space:nowrap}
 .mas-item:hover,.mas-item:active{background:rgba(60,60,67,.06)}
 .mas-item-blue{color:#007AFF}
@@ -1130,7 +1134,6 @@ const TVL=[{i:'ER',n:'Eugenia',fn:'Eugenia Romero',a:'av1'},{i:'JN',n:'Juan Jos�
 const FN={ER:'Eugenia Romero',JN:'Juan José Noguera',VS:'Valeria Secchi',GG:'Gustavo García'};
 const AV={ER:'av1',JN:'av2',VS:'av3',GG:'av4'};
 const CL={amsterdam:'Países Bajos',grecia:'Grecia',turquia:'Turquía',transito:'Tránsito'};
-const TIPO_COLOR={vuelo:'#007AFF',hotel:'#34C759',actividad:'#FF9500',restaurante:'#FF2D55',traslado:'#8E8E93',otro:'#AF52DE'};
 const TIPO_ICO={vuelo:'✈',hotel:'🏨',actividad:'🎯',restaurante:'🍽',traslado:'🚕',otro:'📌'};
 const TIPO_CLS={vuelo:'etype-vuelo',hotel:'etype-hotel',actividad:'etype-actividad',restaurante:'etype-restaurante',traslado:'etype-traslado',otro:'etype-otro'};
 
@@ -1563,10 +1566,7 @@ window.om=id=>{
   el.onclick=e=>{if(e.target===el)cm(id);};
 };
 
-window.resetMasTab=()=>{
-  const t=document.getElementById('main-tab-mas');
-  if(t)t.textContent='Más ▾';
-};
+window.resetMasTab=()=>{const t=document.getElementById('main-tab-mas');if(t)t.textContent='Más ▾';};
 window.toggleMasMenu=(e,el)=>{
   e.stopPropagation();
   const d=document.getElementById('mas-dropdown');
@@ -1574,10 +1574,8 @@ window.toggleMasMenu=(e,el)=>{
   if(d.style.display==='block'){closeMasMenu();return;}
   const r=el.getBoundingClientRect();
   d.style.top=(r.bottom+6)+'px';
-  const left=Math.min(r.left,window.innerWidth-200);
-  d.style.left=Math.max(8,left)+'px';
-  d.style.display='block';
-  o.style.display='block';
+  d.style.left=Math.max(8,Math.min(r.left,window.innerWidth-200))+'px';
+  d.style.display='block';o.style.display='block';
 };
 window.closeMasMenu=()=>{
   document.getElementById('mas-dropdown').style.display='none';
@@ -2051,16 +2049,16 @@ function renderEventCard(ev,dayId,j){
   return `
   <div class="ecard">
     <div class="ecard-hd" onclick="${hasDetails?`toggleEcard('${cid}')`:''}" style="${hasDetails?'cursor:pointer':''}">
-      <div class="etype-icon ${cls}"></div>
+      <div class="etype-icon ${cls}">${ico}</div>
       <div class="ecard-main">
         <div class="ecard-title">
-          <span style="font-size:15px;font-weight:500">${titulo}</span>
+          ${hora?`<span class="ecard-time">${hora}</span>`:''}
+          <span style="font-size:16px;font-weight:700">${titulo}</span>
+          ${ev.pago==='no'?pagoBadge(ev.pago):''}
         </div>
-        ${keyInfo?`<div class="ecard-sub">${keyInfo}</div>`:''}
+        ${keyInfo?`<div class="ecard-sub" style="font-size:13px;margin-top:3px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${keyInfo}</div>`:''}
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:4px">
-        ${hora?`<span class="ecard-time">${hora}</span>`:''}
-        ${ev.pago&&ev.pago!=='na'?pagoBadge(ev.pago):''}
         <button class="ecard-opts-btn" onclick="event.stopPropagation();openEditEv('${dayId}',${j})">⋯</button>
         ${hasDetails?`<span id="ecc-${cid}" style="color:var(--muted);font-size:12px;transition:transform .2s;display:inline-block">▾</span>`:''}
       </div>
@@ -2087,87 +2085,90 @@ function routeConnector(ev1, ev2){
 
 window.renderDays=async()=>{
   const todayISO = new Date().toISOString().slice(0,10);
-  const c=document.getElementById('days-wrap');
+  const wrap=document.getElementById('days-wrap');
   if(!DAYS.length){
-    c.innerHTML='<div style="text-align:center;padding:2rem 1rem;color:var(--muted)"><div style="font-size:40px;margin-bottom:10px">📅</div><div style="font-size:15px;font-weight:700;margin-bottom:4px">El itinerario está vacío</div><div style="font-size:13px">Agregá el primer día para empezar</div></div>';
+    wrap.innerHTML='<div style="text-align:center;padding:3rem 1rem;color:var(--muted)"><div style="font-size:13px;margin-bottom:12px">El itinerario está vacío</div><button class="ibtn" style="color:var(--accent);border-color:var(--accent)" onclick="openNewDay()">+ Agregar primer día</button></div>';
     const ob=document.getElementById('onboarding-banner');
-    if(ob&&!TRIP_ID) ob.style.display='block'; // only for legacy trip
+    if(ob&&!TRIP_ID) ob.style.display='block';
     return;
   }
   const ob=document.getElementById('onboarding-banner');if(ob)ob.style.display='none';
 
-  // Fetch weather for all days async (non-blocking)
+  // Weather promises (non-blocking)
   const weatherPromises={};
   DAYS.forEach(d=>{
     if(d.city!=='transito'&&d.fecha){
       const isoDate=fmtDateISO(d.fecha)||d.fecha;
-      if(isoDate&&isoDate.match(/^\d{4}-\d{2}-\d{2}$/)){
+      if(isoDate&&isoDate.match(/^\d{4}-\d{2}-\d{2}$/))
         weatherPromises[d._id]=getWeather(d.city,isoDate);
-      }
     }
   });
 
-  c.innerHTML=DAYS.map(d=>{
-    const evsSorted=sortEvents(d.events||[]);
-    const evCount=evsSorted.length;
-    const dayHighlight=evsSorted.find(e=>e.tipo==='vuelo')||evsSorted.find(e=>e.tipo==='hotel')||evsSorted.find(e=>e.tipo==='traslado')||null;
-    const dateDisp=d.fecha?fmtDateDisplay(d.fecha):d.date;
-    return `
-    <div class="day-card" id="day-card-${d._id}" data-day-id="${d._id}">
-      <div class="day-hd" onclick="togDay('${d._id}')">
-        ${(()=>{
-          const isToday=d.fecha===todayISO;
-          const parts=dateDisp?dateDisp.split(' '):[];
-          const dayNames=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-          let dayName='';
-          if(d.fecha){const dt=new Date(d.fecha+'T12:00:00');dayName=dayNames[dt.getDay()];}
-          return `<div class="day-date-badge${isToday?' today-badge':''}">
-            <div class="ddb-day">${dayName}</div>
-            <div class="ddb-num">${parts[0]||''}</div>
-            <div class="ddb-mon">${parts[1]||''}</div>
+  const dayNames=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+
+  wrap.innerHTML = DAYS.map(d=>{
+    const evsSorted = sortEvents(d.events||[]);
+    const dateDisp = d.fecha ? fmtDateDisplay(d.fecha) : (d.date||'');
+    const parts = dateDisp.split(' ');
+    const dayName = d.fecha ? dayNames[new Date(d.fecha+'T12:00:00').getDay()] : '';
+    const isToday = d.fecha === todayISO;
+
+    // Events HTML — Apple row style
+    const evRows = evsSorted.length === 0
+      ? `<div style="padding:12px 14px;color:var(--muted);font-size:13px">Sin eventos aún</div>`
+      : evsSorted.map((ev,j)=>{
+          const realIdx = ev._origIdx!==undefined ? ev._origIdx : j;
+          const tipo = ev.tipo||'otro';
+          const dotColor = TIPO_COLOR[tipo]||'#8E8E93';
+          const titulo = ev.titulo||ev.tt||'Sin título';
+          const hora = fmtTimeDisplay(ev.hora||ev.t||'');
+          const x = ev.extras||{};
+          // subtitle per type
+          let sub='';
+          if(tipo==='vuelo'&&x.origen&&x.destino) sub=`${x.origen.split('—')[0].trim()} → ${x.destino.split('—')[0].trim()}${x.pnr?' · '+x.pnr:''}`;
+          else if(tipo==='hotel') sub=`Check-in${x.cinHora?' '+x.cinHora:''}${x.noch?' · '+x.noch:''}`;
+          else if(tipo==='traslado'&&x.medio) sub=`${x.medio}${x.duracion?' · '+x.duracion:''}`;
+          else if(tipo==='actividad'&&x.lugar) sub=x.lugar;
+          else if(tipo==='restaurante'&&x.nombre) sub=x.nombre;
+          const pagoSi = ev.pago==='si';
+          const pagoNo = ev.pago==='no';
+          return `<div class="ev-row" onclick="openEditEv('${d._id}',${realIdx})" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:.5px solid rgba(60,60,67,.1);cursor:pointer">
+            <div style="width:10px;height:10px;border-radius:50%;background:${dotColor};flex-shrink:0"></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:15px;font-weight:500;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${titulo}</div>
+              ${sub?`<div style="font-size:12px;color:rgba(60,60,67,.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${sub}</div>`:''}
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+              ${hora?`<span style="font-size:12px;font-weight:500;color:rgba(60,60,67,.4)">${hora}</span>`:''}
+              ${pagoSi?`<span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;background:rgba(52,199,89,.15);color:#1A7A35">Pago</span>`:''}
+              ${pagoNo?`<span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;background:rgba(255,149,0,.15);color:#A05000">Pendiente</span>`:''}
+              <span style="color:#C7C7CC;font-size:13px">›</span>
+            </div>
           </div>`;
-        })()}
-        <div class="day-info">
-          <strong>${d.label}</strong>
-          <div class="day-meta">
-            <span class="cpill p-${d.city}" style="padding:2px 8px;font-size:10px">${CL[d.city]||d.city}</span>
-            <span>${evCount} evento${evCount!==1?'s':''}</span>
-            <span id="wc-${d._id}"></span>
-            ${d.fecha===todayISO?'<span style="background:#1A6B3A;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.04em">HOY</span>':''}
-          </div>
-          ${dayHighlight?`<div style="font-size:12px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:${TIPO_COLOR[dayHighlight.tipo]||'#8E8E93'};flex-shrink:0;display:inline-block"></span>${dayHighlight.hora?dayHighlight.hora+' ':''}${(dayHighlight.titulo||'').slice(0,40)}</div>`:''}
-        </div>
-        <div style="display:flex;align-items:center;gap:6px">
-          ${EM?`<button class="ibtn" onclick="event.stopPropagation();openEditDay('${d._id}')">✏</button>`:''}
-          <span class="chev" id="ch${d._id}">▶</span>
-        </div>
+        }).join('');
+
+    return `<div class="day-card" id="day-card-${d._id}" data-day-id="${d._id}" style="background:#fff;border-radius:12px;margin-bottom:0;overflow:hidden">
+      <div style="display:flex;align-items:baseline;gap:8px;padding:10px 16px 6px;cursor:pointer" onclick="togDay('${d._id}')">
+        <span style="font-size:12px;font-weight:600;color:rgba(60,60,67,.4);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap">${dayName} ${parts[0]||''}</span>
+        <span style="font-size:16px;font-weight:600;color:#000;letter-spacing:-.1px;flex:1">${d.label||''}</span>
+        ${EM?`<button class="ibtn" style="font-size:11px;padding:3px 8px" onclick="event.stopPropagation();openEditDay('${d._id}')">✏</button>`:''}
       </div>
-      <div class="day-body" id="db${d._id}">
-        <div class="elist">
-          ${evsSorted.length===0?`
-            <div style="text-align:center;padding:1.5rem 1rem;color:var(--muted)">
-              <div style="font-size:28px;margin-bottom:6px">📋</div>
-              <div style="font-size:14px;font-weight:700;margin-bottom:4px">Sin eventos aún</div>
-              <div style="font-size:12px;margin-bottom:12px">Agregá vuelos, hoteles, actividades...</div>
-              <button class="ibtn" style="color:var(--accent);border-color:var(--accent)" onclick="openNewEv('${d._id}')">+ Agregar primer evento</button>
-            </div>`:
-          evsSorted.map((ev,j)=>{
-            const realIdx=ev._origIdx!==undefined?ev._origIdx:j;
-            const connector=j<evsSorted.length-1?routeConnector(ev,evsSorted[j+1]):'';
-            return renderEventCard(ev,d._id,realIdx)+connector;
-          }).join('')+`<div style="padding:.4rem .6rem .6rem"><div style="display:flex;align-items:center;gap:8px;padding:10px 14px;color:var(--accent);font-size:14px;font-weight:400;cursor:pointer" onclick="openNewEv('${d._id}')"><span style="font-size:18px;font-weight:300;line-height:1">+</span><span>Agregar evento</span></div></div>`
-          }
+      <div class="day-body${document.getElementById('db'+d._id)?.classList.contains('open')?' open':''}" id="db${d._id}" style="border-top:.5px solid rgba(60,60,67,.08)">
+        ${evRows}
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;color:var(--accent);font-size:14px;cursor:pointer" onclick="openNewEv('${d._id}')">
+          <span style="font-size:17px;font-weight:300;line-height:1">+</span>
+          <span>Agregar evento</span>
         </div>
       </div>
     </div>`;
-  }).join('');
+  }).join('<div style="height:.5px;background:rgba(60,60,67,.08);margin:0 16px"></div>');
 
-  // Auto-open today
+  // Wrap in container with bg
+  wrap.innerHTML = `<div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:8px">${wrap.innerHTML}</div>`;
+
   autoOpenToday();
-  // Render date nav
   renderDateNav();
 
-  // Load weather badges async
   for(const [dayId,promise] of Object.entries(weatherPromises)){
     promise.then(w=>{
       if(!w) return;
@@ -2176,7 +2177,6 @@ window.renderDays=async()=>{
     }).catch(()=>{});
   }
 };
-
 window.toggleHotel=id=>{
   const body=document.getElementById('hb-'+id);
   const chev=document.getElementById('hc-'+id);
@@ -2187,50 +2187,69 @@ window.toggleHotel=id=>{
 };
 
 window.renderHotels=()=>{
-  const c=document.getElementById('htl-wrap');
-  if(!HOTELS.length){c.innerHTML=`<div style="text-align:center;padding:2rem 1rem;color:var(--muted)"><div style="font-size:36px;margin-bottom:8px">🏨</div><div style="font-size:15px;font-weight:700;margin-bottom:4px">Sin alojamientos aún</div><div style="font-size:13px">Agregá hoteles, hostels o Airbnb</div></div>`;return;}
-  c.innerHTML=HOTELS.map(h=>{
-    const cinDisp=h.cinFecha?fmtDateDisplay(h.cinFecha)+(h.cinHora?' · '+h.cinHora:''):(h.cin||'—');
-    const coutDisp=h.coutFecha?fmtDateDisplay(h.coutFecha)+(h.coutHora?' · '+h.coutHora:''):(h.cout||'—');
-    // Key info line for collapsed view
-    const keyInfo=[cinDisp!=='—'?'Check-in '+cinDisp:'',h.noch?h.noch:''].filter(Boolean).join(' · ');
+  const wrap=document.getElementById('htl-wrap');
+  if(!HOTELS.length){
+    wrap.innerHTML='<div style="text-align:center;padding:3rem 1rem;color:var(--muted)"><div style="font-size:13px;margin-bottom:12px">Sin alojamientos aún</div><button class="ibtn" style="color:var(--accent);border-color:var(--accent)" onclick="openNewHotel()">+ Agregar hotel</button></div>';
+    return;
+  }
+  wrap.innerHTML = HOTELS.map(h=>{
+    const cinDisp = h.cinFecha ? fmtDateDisplay(h.cinFecha)+(h.cinHora?' · '+h.cinHora:'') : (h.cin||'—');
+    const coutDisp = h.coutFecha ? fmtDateDisplay(h.coutFecha)+(h.coutHora?' · '+h.coutHora:'') : (h.cout||'—');
+    const cityLabel = (h.city||'').split('·')[0].split(',')[0].trim();
+    const plat = h.plat||'';
+    const conf = h.conf||'';
+    const reservaVal = [plat,conf?'#'+conf:''].filter(Boolean).join(' · ') || '—';
+    const pagoSi = h.pago==='si';
+    const pagoNo = h.pago==='no';
+    const noch = h.noch||'';
+    const monto = h.monto ? `${h.moneda||'USD'} ${h.monto}${noch?' · '+noch:''}` : (noch||'');
     return `
-    <div class="hotel-card" style="padding:0;overflow:hidden">
-      <div style="display:flex;align-items:center;gap:10px;padding:1rem 1.25rem;cursor:pointer" onclick="toggleHotel('${h._id}')">
-        <div style="width:38px;height:38px;border-radius:10px;background:#DDEEE5;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🏨</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--stat);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.name}</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <span class="cpill ${h.cc}" style="padding:2px 8px;font-size:10px">${h.city.split('·')[0].trim()}</span>
-            ${keyInfo?`<span style="font-weight:600">${keyInfo}</span>`:''}
-            ${h.pago==='no'?pagoBadge('no'):''}
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-          <button class="ecard-opts-btn" onclick="event.stopPropagation();openEditHotel('${h._id}')">⋯</button>
-          <span id="hc-${h._id}" style="color:var(--muted);font-size:12px;transition:transform .2s;display:inline-block">▾</span>
-        </div>
+    <div style="padding:0 16px;margin-bottom:2px">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0 8px">
+        <span style="font-size:13px;font-weight:600;color:rgba(60,60,67,.4);text-transform:uppercase;letter-spacing:.06em">${cityLabel}</span>
+        <span style="font-size:12px;color:rgba(60,60,67,.4)">${cinDisp!=='—'?cinDisp:''}</span>
       </div>
-      <div id="hb-${h._id}" style="display:none;border-top:1.5px solid var(--border-s);padding:1rem 1.25rem">
-        <div class="hfields" style="margin-bottom:10px">
-          <div class="hfield"><label>Check-in</label><p>${cinDisp}</p></div>
-          <div class="hfield"><label>Check-out</label><p>${coutDisp}</p></div>
-          <div class="hfield"><label>Duración</label><p>${h.noch||'—'}</p></div>
-          <div class="hfield"><label>N° confirmación</label><p>${h.conf||'Pendiente'}</p></div>
-          ${h.tel?`<div class="hfield"><label>Teléfono</label><p>${h.tel}</p></div>`:''}
-          ${h.hab?`<div class="hfield"><label>Habitaciones</label><p>${h.hab}</p></div>`:''}
-          ${h.plat?`<div class="hfield"><label>Plataforma</label><p>${h.plat}</p></div>`:''}
-          ${h.desayuno?`<div class="hfield"><label>Desayuno</label><p>${h.desayuno}</p></div>`:''}
-          ${h.dir?`<div class="hfield" style="grid-column:1/-1"><label>Dirección</label><p>${h.dir}${h.maps&&h.maps.startsWith('http')?` <a href="${h.maps}" target="_blank" class="action-btn action-secondary" style="display:inline-flex;padding:3px 10px;margin-left:6px;font-size:11px">📍 Maps</a>`:''}</p></div>`:''}
+      <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:8px">
+        <div style="padding:14px 14px 10px;border-bottom:.5px solid rgba(60,60,67,.08)">
+          <div style="font-size:16px;font-weight:600;color:#000;margin-bottom:2px">${h.name}</div>
+          <div style="font-size:12px;color:rgba(60,60,67,.5)">${h.city||''}</div>
         </div>
-        ${h.pago==='si'?`<div style="font-size:13px;color:#0D4A20;background:#C8EED8;padding:6px 10px;border-radius:8px;font-weight:700;margin-bottom:8px;display:inline-block">✓ Pago confirmado</div>`:''}
-        ${h.link?`<div><a href="${h.link}" target="_blank" class="action-btn action-primary" style="display:inline-flex">🔗 Ver reserva</a></div>`:''}
-        ${h.obs?`<div class="hotel-obs" style="margin-top:8px">📌 ${h.obs}</div>`:''}
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:.5px solid rgba(60,60,67,.06)">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:8px;height:8px;border-radius:2px;background:#34C759;flex-shrink:0"></div>
+              <span style="font-size:13px;color:rgba(60,60,67,.6)">Check-in</span>
+            </div>
+            <span style="font-size:13px;font-weight:500;color:#000">${cinDisp}</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:.5px solid rgba(60,60,67,.06)">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:8px;height:8px;border-radius:2px;background:#FF3B30;flex-shrink:0"></div>
+              <span style="font-size:13px;color:rgba(60,60,67,.6)">Check-out</span>
+            </div>
+            <span style="font-size:13px;font-weight:500;color:#000">${coutDisp}</span>
+          </div>
+          ${reservaVal!=='—'?`<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:8px;height:8px;border-radius:2px;background:#8E8E93;flex-shrink:0"></div>
+              <span style="font-size:13px;color:rgba(60,60,67,.6)">Reserva</span>
+            </div>
+            <span style="font-size:13px;font-weight:500;color:#000">${reservaVal}</span>
+          </div>`:''}
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(60,60,67,.03);border-top:.5px solid rgba(60,60,67,.06)">
+          <div style="display:flex;align-items:center;gap:8px">
+            ${pagoSi?`<span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:rgba(52,199,89,.15);color:#1A7A35">Confirmado</span>`:''}
+            ${pagoNo?`<span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:rgba(255,149,0,.15);color:#A05000">Pendiente pago</span>`:''}
+            ${!pagoSi&&!pagoNo?`<span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:rgba(60,60,67,.08);color:rgba(60,60,67,.6)">Sin estado</span>`:''}
+            <button class="ibtn" style="font-size:11px;padding:3px 8px;border-color:rgba(60,60,67,.15)" onclick="openEditHotel('${h._id}')">⋯</button>
+          </div>
+          ${monto?`<span style="font-size:13px;font-weight:600;color:#000">${monto}</span>`:''}
+        </div>
       </div>
     </div>`;
   }).join('');
 };
-
 window.renderChecklist=()=>{
   const c=document.getElementById('chk-wrap');
   if(!Object.keys(CHECKLIST).length){c.innerHTML='<div class="loading">Cargando...</div>';return;}
