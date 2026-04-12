@@ -483,6 +483,9 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .hfield p{color:#0A1628;font-weight:700}
 /* Note text */
 .note-text{font-size:15px;color:#0A1628;line-height:1.65}
+.mas-item{padding:10px 16px;font-size:15px;font-weight:500;color:#000;border-radius:8px;cursor:pointer;white-space:nowrap}
+.mas-item:hover,.mas-item:active{background:rgba(60,60,67,.06)}
+.mas-item-blue{color:#007AFF}
 </style>
 </head>
 <body data-theme="amsterdam">
@@ -823,16 +826,21 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 
 <div class="nav-wrap">
   <nav class="nav">
-    <div class="ntab active" onclick="showTab('it',this)">Itinerario</div>
-    <div class="ntab" onclick="showTab('ht',this)">Hoteles</div>
-    <div class="ntab" onclick="showTab('gs',this)">Gastos</div>
-    <div class="ntab" onclick="showTab('ck',this)">Checklist</div>
-    <div class="ntab" onclick="showTab('nt',this)">Notas</div>
-    <div class="ntab" onclick="showTab('ft',this)">Fotos</div>
-    <div class="ntab" onclick="showTab('pr',this)">Perfiles</div>
-    <div class="ntab" onclick="showTab('rs',this);initResumen()">Resumen</div>
-    <div class="ntab ntab-edit" id="etab" onclick="toggleEdit(this)">Editar</div>
+    <div class="ntab active" id="main-tab-it" onclick="showTab('it',this);resetMasTab()">Itinerario</div>
+    <div class="ntab" id="main-tab-ht" onclick="showTab('ht',this);resetMasTab()">Hoteles</div>
+    <div class="ntab" id="main-tab-gs" onclick="showTab('gs',this);resetMasTab()">Gastos</div>
+    <div class="ntab" id="main-tab-mas" onclick="toggleMasMenu(event,this)">Más ▾</div>
   </nav>
+</div>
+<div id="mas-overlay" onclick="closeMasMenu()" style="display:none;position:fixed;inset:0;z-index:199"></div>
+<div id="mas-dropdown" style="display:none;position:fixed;z-index:200;background:#fff;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.18);min-width:180px;padding:6px;border:0.5px solid rgba(60,60,67,.12)">
+  <div class="mas-item" onclick="showTabMas('ck','Checklist')">Checklist</div>
+  <div class="mas-item" onclick="showTabMas('nt','Notas')">Notas</div>
+  <div class="mas-item" onclick="showTabMas('ft','Fotos')">Fotos</div>
+  <div class="mas-item" onclick="showTabMas('pr','Perfiles')">Perfiles</div>
+  <div class="mas-item" onclick="showTabMas('rs','Resumen');initResumen()">Resumen</div>
+  <div style="border-top:0.5px solid rgba(60,60,67,.1);margin:4px 0"></div>
+  <div class="mas-item mas-item-blue" id="etab" onclick="toggleEdit(this);closeMasMenu()">Editar</div>
 </div>
 
 <main class="main">
@@ -1122,6 +1130,7 @@ const TVL=[{i:'ER',n:'Eugenia',fn:'Eugenia Romero',a:'av1'},{i:'JN',n:'Juan Jos�
 const FN={ER:'Eugenia Romero',JN:'Juan José Noguera',VS:'Valeria Secchi',GG:'Gustavo García'};
 const AV={ER:'av1',JN:'av2',VS:'av3',GG:'av4'};
 const CL={amsterdam:'Países Bajos',grecia:'Grecia',turquia:'Turquía',transito:'Tránsito'};
+const TIPO_COLOR={vuelo:'#007AFF',hotel:'#34C759',actividad:'#FF9500',restaurante:'#FF2D55',traslado:'#8E8E93',otro:'#AF52DE'};
 const TIPO_ICO={vuelo:'✈',hotel:'🏨',actividad:'🎯',restaurante:'🍽',traslado:'🚕',otro:'📌'};
 const TIPO_CLS={vuelo:'etype-vuelo',hotel:'etype-hotel',actividad:'etype-actividad',restaurante:'etype-restaurante',traslado:'etype-traslado',otro:'etype-otro'};
 
@@ -1552,6 +1561,35 @@ window.om=id=>{
   // Close on backdrop tap
   const el=document.getElementById(id);
   el.onclick=e=>{if(e.target===el)cm(id);};
+};
+
+window.resetMasTab=()=>{
+  const t=document.getElementById('main-tab-mas');
+  if(t)t.textContent='Más ▾';
+};
+window.toggleMasMenu=(e,el)=>{
+  e.stopPropagation();
+  const d=document.getElementById('mas-dropdown');
+  const o=document.getElementById('mas-overlay');
+  if(d.style.display==='block'){closeMasMenu();return;}
+  const r=el.getBoundingClientRect();
+  d.style.top=(r.bottom+6)+'px';
+  const left=Math.min(r.left,window.innerWidth-200);
+  d.style.left=Math.max(8,left)+'px';
+  d.style.display='block';
+  o.style.display='block';
+};
+window.closeMasMenu=()=>{
+  document.getElementById('mas-dropdown').style.display='none';
+  document.getElementById('mas-overlay').style.display='none';
+};
+window.showTabMas=(n,label)=>{
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+n).classList.add('active');
+  const t=document.getElementById('main-tab-mas');
+  if(t){t.classList.add('active');t.textContent=label+' ▾';}
+  closeMasMenu();
 };
 window.showTab=(n,el)=>{document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active');};
 window.toggleEdit=el=>{
@@ -2013,16 +2051,16 @@ function renderEventCard(ev,dayId,j){
   return `
   <div class="ecard">
     <div class="ecard-hd" onclick="${hasDetails?`toggleEcard('${cid}')`:''}" style="${hasDetails?'cursor:pointer':''}">
-      <div class="etype-icon ${cls}">${ico}</div>
+      <div class="etype-icon ${cls}"></div>
       <div class="ecard-main">
         <div class="ecard-title">
-          ${hora?`<span class="ecard-time">${hora}</span>`:''}
-          <span style="font-size:16px;font-weight:700">${titulo}</span>
-          ${ev.pago==='no'?pagoBadge(ev.pago):''}
+          <span style="font-size:15px;font-weight:500">${titulo}</span>
         </div>
-        ${keyInfo?`<div class="ecard-sub" style="font-size:13px;margin-top:3px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${keyInfo}</div>`:''}
+        ${keyInfo?`<div class="ecard-sub">${keyInfo}</div>`:''}
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:4px">
+        ${hora?`<span class="ecard-time">${hora}</span>`:''}
+        ${ev.pago&&ev.pago!=='na'?pagoBadge(ev.pago):''}
         <button class="ecard-opts-btn" onclick="event.stopPropagation();openEditEv('${dayId}',${j})">⋯</button>
         ${hasDetails?`<span id="ecc-${cid}" style="color:var(--muted);font-size:12px;transition:transform .2s;display:inline-block">▾</span>`:''}
       </div>
@@ -2097,7 +2135,7 @@ window.renderDays=async()=>{
             <span id="wc-${d._id}"></span>
             ${d.fecha===todayISO?'<span style="background:#1A6B3A;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.04em">HOY</span>':''}
           </div>
-          ${dayHighlight?`<div style="font-size:12px;color:#3A5068;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600">${TIPO_ICO[dayHighlight.tipo]||'📌'} ${dayHighlight.hora||''} ${(dayHighlight.titulo||'').slice(0,40)}</div>`:''}
+          ${dayHighlight?`<div style="font-size:12px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:${TIPO_COLOR[dayHighlight.tipo]||'#8E8E93'};flex-shrink:0;display:inline-block"></span>${dayHighlight.hora?dayHighlight.hora+' ':''}${(dayHighlight.titulo||'').slice(0,40)}</div>`:''}
         </div>
         <div style="display:flex;align-items:center;gap:6px">
           ${EM?`<button class="ibtn" onclick="event.stopPropagation();openEditDay('${d._id}')">✏</button>`:''}
@@ -2117,7 +2155,7 @@ window.renderDays=async()=>{
             const realIdx=ev._origIdx!==undefined?ev._origIdx:j;
             const connector=j<evsSorted.length-1?routeConnector(ev,evsSorted[j+1]):'';
             return renderEventCard(ev,d._id,realIdx)+connector;
-          }).join('')+`<div style="padding:.4rem .6rem .6rem"><button class="ibtn" style="width:100%;text-align:center;justify-content:center;color:var(--accent);border-color:var(--accent);font-size:13px" onclick="openNewEv('${d._id}')">+ Agregar evento</button></div>`
+          }).join('')+`<div style="padding:.4rem .6rem .6rem"><div style="display:flex;align-items:center;gap:8px;padding:10px 14px;color:var(--accent);font-size:14px;font-weight:400;cursor:pointer" onclick="openNewEv('${d._id}')"><span style="font-size:18px;font-weight:300;line-height:1">+</span><span>Agregar evento</span></div></div>`
           }
         </div>
       </div>
