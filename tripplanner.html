@@ -12,6 +12,8 @@
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" type="image/png" href="icon.png">
 <meta name="description" content="Países Bajos · Grecia · Turquía 2026 — Itinerario compartido">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -1032,20 +1034,19 @@ function dref(colName, id){
   return doc(db, colName, id);
 }
 
-// Load trip config if scoped
-async function loadTripConfig(){
-  if(!TRIP_ID) return;
+// ── LOAD TRIP CONFIG + ROLE — single getDoc ──────────────
+async function loadTripInit(){
+  if(!TRIP_ID) return 'owner'; // legacy mode = full access
   try{
     const snap = await getDoc(doc(db,'trips',TRIP_ID));
-    if(!snap.exists()) return;
+    if(!snap.exists()) return 'editor';
     const t = snap.data();
 
-    // ── Hero title: poetic multi-line from trip name ──
+    // ── Hero title ──
     const titleEl = document.getElementById('hero-title');
     const destEl = document.getElementById('hero-dest');
     const subEl = document.querySelector('.hero-sub');
     if(t.nombre && titleEl){
-      // Normalize nombre: Amsterdam → Países Bajos
       const normNombre = t.nombre.replace(/Amsterdam/gi,'Países Bajos');
       const parts = normNombre.split('·').map(p=>p.trim()).filter(Boolean);
       if(parts.length >= 2){
@@ -1054,9 +1055,7 @@ async function loadTripConfig(){
         titleEl.innerHTML = normNombre;
       }
     }
-    // Hero dest: show country/region label
     if(t.destinos?.length && destEl){
-      // Normalize: replace city names with country labels for display
       const normalize = d => {
         if(/amsterdam/i.test(d)) return 'Países Bajos';
         if(/atenas|mykonos|naxos|santorini|milos|paros|koufonisia/i.test(d)) return 'Grecia';
@@ -1066,7 +1065,6 @@ async function loadTripConfig(){
       const destNorm = [...new Set(t.destinos.map(normalize))];
       destEl.textContent = '🌍 ' + destNorm.slice(0,3).join(' · ') + (destNorm.length > 3 ? ' & más' : '');
     }
-    // Subtitle: dates + traveler count (not destinations — avoid repetition)
     if(subEl){
       const from = t.fechaSalida ? fmtDateDisplay(t.fechaSalida) : '';
       const to = t.fechaRegreso ? fmtDateDisplay(t.fechaRegreso) : '';
@@ -1074,10 +1072,7 @@ async function loadTripConfig(){
       const dateStr = from && to ? `${from} → ${to}` : from || '';
       subEl.textContent = [dateStr, memberCount ? `${memberCount} viajeros` : ''].filter(Boolean).join(' · ');
     }
-
-    // ── Dedupe members: prefer entries with uid ──
     if(t.members?.length){
-      // Group by name (case-insensitive), keep the one with uid if exists
       const seen = new Map();
       const deduped = [];
       t.members.forEach(m => {
@@ -1086,11 +1081,8 @@ async function loadTripConfig(){
           seen.set(key, deduped.length);
           deduped.push({...m});
         } else {
-          // If new entry has uid and existing doesn't, replace
           const existingIdx = seen.get(key);
-          if(m.uid && !deduped[existingIdx].uid){
-            deduped[existingIdx] = {...m};
-          }
+          if(m.uid && !deduped[existingIdx].uid){ deduped[existingIdx] = {...m}; }
         }
       });
       window.TVL_OVERRIDE = deduped.map((m,i)=>({
@@ -1100,23 +1092,14 @@ async function loadTripConfig(){
         a: `av${(i%4)+1}`
       }));
     }
-  }catch(e){ console.warn('Could not load trip config', e); }
-}
 
-// ── ROLE CHECK ────────────────────────────────────────────
-async function getUserRole(){
-  if(!TRIP_ID) return 'owner'; // legacy mode = full access
-  try{
-    const tripSnap = await getDoc(doc(db,'trips',TRIP_ID));
-    if(!tripSnap.exists()) return 'editor';
-    const trip = tripSnap.data();
-    const authInstance = getAuth();
-    const user = authInstance.currentUser;
+    // ── Role ──
+    const user = getAuth().currentUser;
     if(!user) return 'viewer';
-    if(trip.ownerId === user.uid) return 'owner';
-    const member = (trip.members||[]).find(m=>m.uid===user.uid);
+    if(t.ownerId === user.uid) return 'owner';
+    const member = (t.members||[]).find(m=>m.uid===user.uid);
     return member?.role || 'editor';
-  }catch(e){ return 'editor'; }
+  }catch(e){ console.warn('Could not load trip config', e); return 'editor'; }
 }
 
 let USER_ROLE = 'editor'; // will be set on load
@@ -1524,13 +1507,61 @@ function cacheKey(name){return'tp_cache_'+(TRIP_ID||'root')+'_'+name;}
 function saveCache(name,data){try{localStorage.setItem(cacheKey(name),JSON.stringify(data));}catch(e){}}
 function loadCache(name){try{const d=localStorage.getItem(cacheKey(name));return d?JSON.parse(d):null;}catch(e){return null;}}
 
+// Tracks which lazy listeners have been registered
+const _L={};
+
+// Register listeners for secondary tabs on first visit
+function ensureListeners(tab){
+  if(tab==='ck'&&!_L.ck){
+    _L.ck=true;
+    const cachedCL=loadCache('checklist');
+    if(cachedCL&&Object.keys(cachedCL).length){CHECKLIST=cachedCL;renderChecklist();}
+    const cachedCK=loadCache('checks');
+    if(cachedCK&&Object.keys(cachedCK).length){CHECKS=cachedCK;renderChecklist();}
+    onSnapshot(col('checklist'),s=>{
+      const items=s.docs.map(d=>({...d.data(),_id:d.id})).sort((a,b)=>(a.order||0)-(b.order||0));
+      CHECKLIST={};items.forEach(i=>{if(!CHECKLIST[i.group])CHECKLIST[i.group]=[];CHECKLIST[i.group].push(i);});
+      saveCache('checklist',CHECKLIST);
+      renderChecklist();
+    });
+    onSnapshot(col('checks'),s=>{
+      CHECKS={};s.docs.forEach(d=>CHECKS[d.id]=d.data().done);
+      saveCache('checks',CHECKS);
+      renderChecklist();
+    });
+  }
+  if(tab==='nt'&&!_L.nt){
+    _L.nt=true;
+    const cachedNT=loadCache('notes');
+    if(cachedNT&&cachedNT.length){NOTES=cachedNT;renderNotes();}
+    onSnapshot(query(col('notes'),orderBy('ts','desc')),s=>{
+      NOTES=s.docs.map(d=>({...d.data(),_id:d.id}));
+      saveCache('notes',NOTES);
+      renderNotes();
+    });
+  }
+  if(tab==='ft'&&!_L.ft){
+    _L.ft=true;
+    const cachedFT=loadCache('photos');
+    if(cachedFT&&cachedFT.length){PHOTOS=cachedFT;renderPhotos();}
+    onSnapshot(query(col('photos'),orderBy('ts','desc')),s=>{
+      PHOTOS=s.docs.map(d=>({...d.data(),_id:d.id}));
+      saveCache('photos',PHOTOS);
+      renderPhotos();
+    });
+  }
+}
+
 function initListeners(){
   // Render from cache instantly, then update when Firestore responds
   const cachedDays=loadCache('days');
   if(cachedDays&&cachedDays.length){DAYS=cachedDays;renderDays();updateStats();autoTheme();}
-
   const cachedHotels=loadCache('hotels');
   if(cachedHotels&&cachedHotels.length){HOTELS=cachedHotels;renderHotels();updateStats();populateHotelSelector();}
+  const cachedProfiles=loadCache('profiles');
+  if(cachedProfiles&&Object.keys(cachedProfiles).length){PROFILES=cachedProfiles;renderProfiles();}
+  const cachedAvatars=loadCache('avatars');
+  if(cachedAvatars&&Object.keys(cachedAvatars).length){AVATARS=cachedAvatars;renderTvl();renderNotesPbtns();renderPhotoPbtns();renderProfiles();}
 
   onSnapshot(query(col('days'),orderBy('order')),s=>{
     DAYS=s.docs.map(d=>({...d.data(),_id:d.id}));
@@ -1542,22 +1573,21 @@ function initListeners(){
     saveCache('hotels',HOTELS);
     renderHotels();updateStats();populateHotelSelector();
   });
-  onSnapshot(col('checklist'),s=>{
-    const items=s.docs.map(d=>({...d.data(),_id:d.id})).sort((a,b)=>(a.order||0)-(b.order||0));
-    CHECKLIST={};items.forEach(i=>{if(!CHECKLIST[i.group])CHECKLIST[i.group]=[];CHECKLIST[i.group].push(i);});
-    renderChecklist();
+  onSnapshot(col('profiles'),s=>{
+    PROFILES={};s.docs.forEach(d=>PROFILES[d.id]=d.data());
+    saveCache('profiles',PROFILES);
+    renderProfiles();
   });
-  onSnapshot(col('checks'),s=>{CHECKS={};s.docs.forEach(d=>CHECKS[d.id]=d.data().done);renderChecklist();});
-  onSnapshot(query(col('notes'),orderBy('ts','desc')),s=>{NOTES=s.docs.map(d=>({...d.data(),_id:d.id}));renderNotes();});
-  onSnapshot(query(col('photos'),orderBy('ts','desc')),s=>{PHOTOS=s.docs.map(d=>({...d.data(),_id:d.id}));renderPhotos();});
-  onSnapshot(col('profiles'),s=>{PROFILES={};s.docs.forEach(d=>PROFILES[d.id]=d.data());renderProfiles();});
-  onSnapshot(col('avatars'),s=>{AVATARS={};s.docs.forEach(d=>AVATARS[d.id]=d.data().data);renderTvl();renderNotesPbtns();renderPhotoPbtns();renderProfiles();});
+  onSnapshot(col('avatars'),s=>{
+    AVATARS={};s.docs.forEach(d=>AVATARS[d.id]=d.data().data);
+    saveCache('avatars',AVATARS);
+    renderTvl();renderNotesPbtns();renderPhotoPbtns();renderProfiles();
+  });
   setSS('ok','🌍 Sincronizado en tiempo real');
-// Show role badge in sync bar
-if(USER_ROLE==='viewer'){
-  document.getElementById('stxt').innerHTML = '👁 Solo lectura';
-  document.getElementById('sdot').style.background = '#FF9800';
-}
+  if(USER_ROLE==='viewer'){
+    document.getElementById('stxt').innerHTML='👁 Solo lectura';
+    document.getElementById('sdot').style.background='#FF9800';
+  }
 }
 
 function autoTheme(){
@@ -1568,8 +1598,7 @@ function autoTheme(){
   if(top&&top[1]>0){const b=document.querySelector(`[data-t="${top[0]}"]`);if(b)window.setTheme(top[0],b);}
 }
 
-await loadTripConfig();
-USER_ROLE = await getUserRole();
+USER_ROLE = await loadTripInit();
 // Hide edit tab for viewers
 if(USER_ROLE === 'viewer'){
   const etab = document.getElementById('etab');
@@ -1626,7 +1655,7 @@ window.om=id=>{
 window.resetMasTab=()=>{const t=document.getElementById('main-tab-mas');if(t)t.textContent='Más ▾';};
 window.toggleMasMenu=(e,el)=>{e.stopPropagation();const d=document.getElementById('mas-dropdown');const o=document.getElementById('mas-overlay');if(d.style.display==='block'){closeMasMenu();return;}const r=el.getBoundingClientRect();d.style.top=(r.bottom+6)+'px';d.style.left=Math.max(8,Math.min(r.left,window.innerWidth-200))+'px';d.style.display='block';o.style.display='block';};
 window.closeMasMenu=()=>{document.getElementById('mas-dropdown').style.display='none';document.getElementById('mas-overlay').style.display='none';};
-window.showTabMas=(n,label)=>{document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');const t=document.getElementById('main-tab-mas');if(t){t.classList.add('active');t.textContent=label+' ▾';}closeMasMenu();};
+window.showTabMas=(n,label)=>{document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');const t=document.getElementById('main-tab-mas');if(t){t.classList.add('active');t.textContent=label+' ▾';}closeMasMenu();ensureListeners(n);};
 window.showTab=(n,el)=>{document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active');};
 window.toggleEdit=el=>{
   if(USER_ROLE==='viewer'){
