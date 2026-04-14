@@ -1520,13 +1520,26 @@ async function seedIfEmpty(){
   for(const n of SN) await addDoc(col('notes'),n);
 }
 
+function cacheKey(name){return'tp_cache_'+(TRIP_ID||'root')+'_'+name;}
+function saveCache(name,data){try{localStorage.setItem(cacheKey(name),JSON.stringify(data));}catch(e){}}
+function loadCache(name){try{const d=localStorage.getItem(cacheKey(name));return d?JSON.parse(d):null;}catch(e){return null;}}
+
 function initListeners(){
+  // Render from cache instantly, then update when Firestore responds
+  const cachedDays=loadCache('days');
+  if(cachedDays&&cachedDays.length){DAYS=cachedDays;renderDays();updateStats();autoTheme();}
+
+  const cachedHotels=loadCache('hotels');
+  if(cachedHotels&&cachedHotels.length){HOTELS=cachedHotels;renderHotels();updateStats();populateHotelSelector();}
+
   onSnapshot(query(col('days'),orderBy('order')),s=>{
     DAYS=s.docs.map(d=>({...d.data(),_id:d.id}));
+    saveCache('days',DAYS);
     renderDays();updateStats();autoTheme();
   });
   onSnapshot(query(col('hotels'),orderBy('order')),s=>{
     HOTELS=s.docs.map(d=>({...d.data(),_id:d.id}));
+    saveCache('hotels',HOTELS);
     renderHotels();updateStats();populateHotelSelector();
   });
   onSnapshot(col('checklist'),s=>{
