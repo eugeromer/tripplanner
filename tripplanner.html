@@ -831,10 +831,43 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 
 <div class="hero">
   <div class="hi">
-    <p class="hero-dest" id="hero-dest">PAÍSES BAJOS · GRECIA · TURQUÍA</p>
-    <h1 id="hero-title">Países Bajos<br><em>Grecia · Turquía</em></h1>
-    <p class="hero-sub" id="hero-sub-txt">21 jun – 15 jul · 22 días · 4 viajeros</p>
-    <div class="travelers" id="tvl-list"></div>
+    <!-- Hidden legacy elements — kept for JS compatibility -->
+    <span id="hero-dest" style="display:none"></span>
+    <span id="hero-title" style="display:none"></span>
+
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+
+      <!-- IZQUIERDA -->
+      <div style="flex:1;min-width:0">
+        <div style="font-size:22px;font-weight:700;color:#000;letter-spacing:-.4px;margin-bottom:6px">Verano 2026</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(0,122,255,.1);color:#004DB3">Países Bajos</span>
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(52,199,89,.1);color:#1A7A35">Grecia</span>
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(175,82,222,.1);color:#7B2FA8">Turquía</span>
+        </div>
+        <p class="hero-sub" id="hero-sub-txt">21 jun → 15 jul · 22 días · 4 viajeros</p>
+        <div class="travelers" id="tvl-list"></div>
+      </div>
+
+      <!-- DERECHA — countdown -->
+      <div style="flex-shrink:0;display:flex;gap:5px;align-items:flex-end" id="countdown-wrap">
+        <div style="background:#fff;border-radius:10px;padding:7px 9px;text-align:center;border:0.5px solid rgba(60,60,67,.08);min-width:36px">
+          <div style="font-size:20px;font-weight:700;color:#000;line-height:1;letter-spacing:-.5px" id="cd-dias">—</div>
+          <div style="font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(60,60,67,.4);margin-top:2px">días</div>
+        </div>
+        <div style="font-size:18px;font-weight:300;color:rgba(60,60,67,.25);padding-bottom:10px">:</div>
+        <div style="background:#fff;border-radius:10px;padding:7px 9px;text-align:center;border:0.5px solid rgba(60,60,67,.08);min-width:36px">
+          <div style="font-size:20px;font-weight:700;color:#000;line-height:1;letter-spacing:-.5px" id="cd-horas">—</div>
+          <div style="font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(60,60,67,.4);margin-top:2px">hs</div>
+        </div>
+        <div style="font-size:18px;font-weight:300;color:rgba(60,60,67,.25);padding-bottom:10px">:</div>
+        <div style="background:#fff;border-radius:10px;padding:7px 9px;text-align:center;border:0.5px solid rgba(60,60,67,.08);min-width:36px">
+          <div style="font-size:20px;font-weight:700;color:#000;line-height:1;letter-spacing:-.5px" id="cd-mins">—</div>
+          <div style="font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(60,60,67,.4);margin-top:2px">min</div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -1155,7 +1188,7 @@ const TM={
 window.setTheme=(t,el)=>{
   document.body.setAttribute('data-theme',t);
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
-  const m=TM[t];if(m){document.getElementById('hero-dest').textContent=m.dest;document.getElementById('hero-title').innerHTML=m.title;}
+  const m=TM[t];if(m){const hd=document.getElementById('hero-dest');const ht=document.getElementById('hero-title');if(hd)hd.textContent=m.dest;if(ht)ht.innerHTML=m.title;}
   try{localStorage.setItem('tp_theme',t);localStorage.setItem('tp_theme_m','1');}catch(e){}
 };
 try{const s=localStorage.getItem('tp_theme');if(s){const b=document.querySelector(`[data-t="${s}"]`);if(b)setTheme(s,b);}}catch(e){}
@@ -3511,6 +3544,22 @@ function renderFromCache(){
 
 renderFromCache();
 renderTvl();
+
+// ── COUNTDOWN ─────────────────────────────────────────────
+function updateCountdown(){
+  const target=new Date('2026-06-21T00:00:00');
+  const now=new Date();
+  const diff=target-now;
+  if(diff<=0){const w=document.getElementById('countdown-wrap');if(w)w.style.display='none';return;}
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor((diff%86400000)/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  document.getElementById('cd-dias').textContent=d;
+  document.getElementById('cd-horas').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-mins').textContent=String(m).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown,30000);
 </script>
 </body>
 </html>
