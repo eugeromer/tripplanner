@@ -1553,16 +1553,6 @@ function ensureListeners(tab){
 }
 
 function initListeners(){
-  // Render from cache instantly, then update when Firestore responds
-  const cachedDays=loadCache('days');
-  if(cachedDays&&cachedDays.length){DAYS=cachedDays;renderDays();updateStats();autoTheme();}
-  const cachedHotels=loadCache('hotels');
-  if(cachedHotels&&cachedHotels.length){HOTELS=cachedHotels;renderHotels();updateStats();populateHotelSelector();}
-  const cachedProfiles=loadCache('profiles');
-  if(cachedProfiles&&Object.keys(cachedProfiles).length){PROFILES=cachedProfiles;renderProfiles();}
-  const cachedAvatars=loadCache('avatars');
-  if(cachedAvatars&&Object.keys(cachedAvatars).length){AVATARS=cachedAvatars;renderTvl();renderNotesPbtns();renderPhotoPbtns();renderProfiles();}
-
   onSnapshot(query(col('days'),orderBy('order')),s=>{
     DAYS=s.docs.map(d=>({...d.data(),_id:d.id}));
     saveCache('days',DAYS);
@@ -3459,6 +3449,19 @@ function observeDays(){
   document.querySelectorAll('[data-day-id]').forEach(el=>dayObserver.observe(el));
 }
 
+// Render cached data immediately — called after all render functions are defined
+function renderFromCache(){
+  const cachedDays=loadCache('days');
+  if(cachedDays&&cachedDays.length){DAYS=cachedDays;renderDays();updateStats();autoTheme();}
+  const cachedHotels=loadCache('hotels');
+  if(cachedHotels&&cachedHotels.length){HOTELS=cachedHotels;renderHotels();updateStats();populateHotelSelector();}
+  const cachedProfiles=loadCache('profiles');
+  if(cachedProfiles&&Object.keys(cachedProfiles).length){PROFILES=cachedProfiles;renderProfiles();}
+  const cachedAvatars=loadCache('avatars');
+  if(cachedAvatars&&Object.keys(cachedAvatars).length){AVATARS=cachedAvatars;renderTvl();renderNotesPbtns();renderPhotoPbtns();renderProfiles();}
+}
+
+renderFromCache();
 renderTvl();
 </script>
 </body>
