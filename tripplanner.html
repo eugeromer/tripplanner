@@ -90,7 +90,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .weather-chip-day{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;background:var(--accent-light);color:var(--accent);border:1px solid var(--border-s)}
 
 /* DAY CARDS */
-.day-card{background:#fff;border-radius:12px;margin-bottom:6px;overflow:hidden;scroll-margin-top:100px}
+.day-card{background:#fff;border-radius:12px;margin-bottom:6px;overflow:hidden;scroll-margin-top:140px}
 .day-hd{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
 .cpill{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:20px;white-space:nowrap;flex-shrink:0}
 .p-amsterdam{background:rgba(0,122,255,.1);color:#004DB3}
@@ -461,7 +461,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .date-pill.today .date-pill-dot{background:#34C759}
 
 /* DAY CARD — compact iOS style */
-.day-card{background:#fff;border-radius:12px;margin-bottom:6px;overflow:hidden;scroll-margin-top:100px}
+.day-card{background:#fff;border-radius:12px;margin-bottom:6px;overflow:hidden;scroll-margin-top:140px}
 .day-hd{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
 .day-date-badge{flex-shrink:0;text-align:left;min-width:52px;display:flex;align-items:baseline;gap:4px}
 .day-date-badge .ddb-day{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:rgba(60,60,67,.4)}
@@ -3429,7 +3429,14 @@ function renderDateNav(){
   observeDays();
 }
 
+let _jumpLock = false;
 function jumpToDay(id){
+  // Ensure itinerary tab is active (pills can be visible from any tab)
+  const tabEl = document.getElementById('main-tab-it');
+  if(tabEl && !tabEl.classList.contains('active')){
+    showTab('it', tabEl);
+    resetMasTab();
+  }
   const el = document.getElementById('day-card-'+id);
   if(!el) return;
   // Open if closed
@@ -3439,8 +3446,11 @@ function jumpToDay(id){
     const chev = document.getElementById('ch'+id);
     if(chev) chev.classList.add('open');
   }
-  el.scrollIntoView({behavior:'smooth', block:'start'});
+  // Lock observer so it doesn't override the active pill during scroll animation
+  _jumpLock = true;
   setActiveDatePill(id);
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(()=>{ _jumpLock = false; }, 700);
 }
 
 function setActiveDatePill(id){
@@ -3458,6 +3468,7 @@ let dayObserver = null;
 function observeDays(){
   if(dayObserver) dayObserver.disconnect();
   dayObserver = new IntersectionObserver(entries=>{
+    if(_jumpLock) return; // Don't override during programmatic scroll
     entries.forEach(e=>{
       if(e.isIntersecting && e.intersectionRatio > 0.3){
         const id = e.target.dataset.dayId;
