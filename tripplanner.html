@@ -208,21 +208,22 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .vclose{position:absolute;top:18px;right:22px;background:rgba(255,255,255,.18);border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;font-size:24px;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
 
 /* PERFILES */
-.profile-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:12px}
-.profile-hd{display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1.5px solid var(--border-s)}
-.profile-av{width:56px;height:56px;border-radius:50%;font-size:16px;font-weight:700;flex-shrink:0;border:3px solid var(--border);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+.profile-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;margin-bottom:10px}
+.profile-hd{display:flex;align-items:center;gap:14px;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border-s)}
+.profile-av{width:56px;height:56px;border-radius:50%;font-size:16px;font-weight:700;flex-shrink:0;border:2.5px solid var(--border-s);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
 .profile-av img{width:100%;height:100%;object-fit:cover}
 .profile-av .av-up{position:absolute;bottom:0;right:0;width:20px;height:20px;background:var(--nav-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #fff;pointer-events:none}
-.profile-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--stat)}
-.profile-sub{font-size:13px;color:var(--muted);font-weight:700}
-.profile-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pf{background:var(--sand);border-radius:10px;padding:10px 12px;border:1px solid var(--sand2)}
+.profile-name{font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-.3px}
+.profile-sub{font-size:12px;color:var(--success);font-weight:600;margin-top:2px}
+.profile-sub.incomplete{color:var(--muted)}
+.profile-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pf{background:var(--sand);border-radius:10px;padding:10px 12px;border:1px solid var(--border-s)}
 .pf.full{grid-column:1/-1}
-.pf-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:5px}
-.pf-val{font-size:14px;color:var(--ink);line-height:1.55}
-.pf-empty{color:var(--muted);font-style:italic;font-size:13px}
-.edit-prof-btn{margin-top:12px;width:100%;padding:9px;border:1.5px solid var(--border);border-radius:9px;background:none;font-family:'Lato',sans-serif;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer}
-.edit-prof-btn:hover{background:var(--accent-light)}
+.pf-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:4px}
+.pf-val{font-size:13px;color:var(--ink2);line-height:1.5;font-weight:400}
+.pf-empty{color:var(--muted2);font-style:italic;font-size:13px}
+.edit-prof-btn{margin-top:10px;width:100%;padding:10px;border:none;border-radius:10px;background:var(--accent-light);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;font-weight:600;color:var(--accent);cursor:pointer}
+.edit-prof-btn:hover{opacity:.8}
 .add-row{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:2px dashed var(--border);border-radius:12px;cursor:pointer;font-size:14px;font-weight:700;color:var(--accent);margin-top:6px;background:rgba(0,0,0,.02)}
 .add-row:hover{background:var(--accent-light)}
 .loading{text-align:center;padding:2rem;color:var(--muted);font-size:15px;font-weight:700}
@@ -389,25 +390,27 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .costo-pp.show{display:block}
 
 /* RESUMEN DE GASTOS */
-.gasto-total-bar{background:#0D2B4E;color:#fff;border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
-.gasto-total-bar h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:1rem;color:rgba(255,255,255,.9)}
+.gasto-total-bar{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;margin-bottom:1rem;overflow:hidden;position:relative;}
+.gasto-total-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--success),var(--warn));}
+.gasto-total-bar h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:1rem;}
 .gasto-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.gasto-card{background:rgba(255,255,255,.1);border-radius:10px;padding:10px 12px;border:1px solid rgba(255,255,255,.15)}
-.gasto-card label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);display:block;margin-bottom:3px;font-weight:700}
-.gasto-card p{font-size:1.3rem;font-family:'Playfair Display',serif;font-weight:700;color:#fff}
-.gasto-card p small{font-size:11px;font-family:'Lato',sans-serif;color:rgba(255,255,255,.6);font-weight:400}
-.gasto-by-cat{margin-bottom:1.25rem}
-.gasto-by-cat h4{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--stat);font-weight:700;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--border)}
-.gasto-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-s);font-size:14px}
-.gasto-row:last-child{border-bottom:none}
+.gasto-card{background:var(--sand);border-radius:12px;padding:12px 14px;border:1px solid var(--border-s)}
+.gasto-card label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:4px;font-weight:700}
+.gasto-card p{font-size:1.4rem;font-family:'Playfair Display',serif;font-weight:700;color:var(--ink)}
+.gasto-card p small{font-size:11px;font-family:'Lato',sans-serif;color:var(--muted);font-weight:400}
+.gasto-section-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:1.25rem 0 6px;}
+.gasto-by-cat{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1rem 1rem 0;margin-bottom:10px}
+.gasto-by-cat h4{display:none}
+.gasto-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border-s);font-size:14px}
+.gasto-row:last-child{border-bottom:none;padding-bottom:1rem}
 .gasto-row span:first-child{color:var(--ink2);font-weight:400}
 .gasto-row span:last-child{font-weight:700;color:var(--ink)}
-.gasto-person-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:8px}
+.gasto-person-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:8px}
 .gasto-person-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.gasto-person-hd strong{font-size:15px;font-weight:700;color:var(--ink)}
+.gasto-person-hd strong{font-size:15px;font-weight:600;color:var(--ink)}
 .gasto-person-hd span{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--stat);margin-left:auto}
 .gasto-person-items{font-size:13px;color:var(--muted)}
-.gasto-refresh{width:100%;padding:10px;border:1.5px solid var(--border);border-radius:9px;background:var(--accent-light);color:var(--accent);font-family:'Lato',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:1.25rem}
+.gasto-refresh{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:10px;background:var(--accent-light);color:var(--accent);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:6px}
 .badge-moneda{font-size:11px;font-weight:700;padding:2px 7px;border-radius:8px;background:var(--sand);color:var(--muted);border:1px solid var(--border-s);margin-left:4px}
 
 /* SUBTIPO */
@@ -910,7 +913,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
   </section>
 
   <section id="tab-pr" class="section">
-    <p style="font-size:15px;color:var(--ink2);margin-bottom:1.5rem;line-height:1.6">Tocá la foto para cambiarla. Completá tu perfil para que el grupo te conozca mejor.</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;font-weight:500">Tocá la foto para cambiarla. Completá tu perfil para que el grupo te conozca mejor.</p>
     <div id="profiles-wrap"><div class="loading">Cargando perfiles...</div></div>
   </section>
   <section id="tab-gs" class="section">
@@ -2299,7 +2302,7 @@ window.renderProfiles=()=>{
     <div class="profile-card">
       <div class="profile-hd">
         ${avHtml(t.i,'profile-av',56)}
-        <div><div class="profile-name">${t.fn}</div><div class="profile-sub">${has?'✓ Perfil completo':'Tocá la foto para cambiarla'}</div></div>
+        <div><div class="profile-name">${t.fn}</div><div class="profile-sub${has?'':' incomplete'}">${has?'✓ Perfil completo':'Sin completar'}</div></div>
       </div>
       <div class="profile-fields">
         <div class="pf"><div class="pf-lbl">🍽 Comida</div><div class="pf-val${!p.comida?' pf-empty':''}">${p.comida||'Sin completar'}</div></div>
@@ -2517,6 +2520,7 @@ window.calcGastos = async () => {
   </div>`;
 
   // By category
+  html += `<div class="gasto-section-lbl">Por categoría</div>`;
   html += `<div class="gasto-by-cat"><h4>Por categoría</h4>`;
   Object.entries(byCat).sort((a,b)=>b[1]-a[1]).forEach(([cat,usd])=>{
     const pct = grandTotal > 0 ? Math.round(usd/grandTotal*100) : 0;
@@ -2528,6 +2532,7 @@ window.calcGastos = async () => {
   html += '</div>';
 
   // By destination
+  html += `<div class="gasto-section-lbl">Por destino</div>`;
   html += `<div class="gasto-by-cat"><h4>Por destino</h4>`;
   Object.entries(byCity).sort((a,b)=>b[1]-a[1]).forEach(([city,usd])=>{
     html += `<div class="gasto-row">
@@ -2538,6 +2543,7 @@ window.calcGastos = async () => {
   html += '</div>';
 
   // By person
+  html += `<div class="gasto-section-lbl">Por viajero</div>`;
   html += `<div class="gasto-by-cat"><h4>Por viajero</h4>`;
   ['ER','JN','VS','GG'].forEach(p => {
     const total = byPerson[p];
