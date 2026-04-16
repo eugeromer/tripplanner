@@ -722,35 +722,58 @@ function renderTrips(){
       const travelerAvatars = (t.members||[]).slice(0,4).map((m,i)=>
         `<div class="trip-av av-c${(i%6)+1}" style="background:${['#1B5E8E','#A03020','#155A30','#5E2E8E','#5E4E0E','#2E5E4E'][i%6]}">${(m.name||'?')[0].toUpperCase()}</div>`
       ).join('');
+      const roleLabel = getUserRole(t)==='owner' ? '✦ Creador' : getUserRole(t)==='editor' ? '✏ Editor' : '👁 Solo ver';
+      const roleColor = getUserRole(t)==='owner' ? 'background:rgba(52,199,89,.12);color:#1A7A35' : getUserRole(t)==='editor' ? 'background:rgba(0,122,255,.1);color:#0055CC' : 'background:rgba(60,60,67,.08);color:rgba(60,60,67,.6)';
+      const statusPill = isActive
+        ? `<span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(52,199,89,.12);color:#1A7A35">En curso</span>`
+        : isUpcoming
+        ? `<span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,149,0,.12);color:#A05000">Próximo</span>`
+        : `<span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(60,60,67,.08);color:rgba(60,60,67,.5)">Completado</span>`;
       return `
-      <div class="trip-card" onclick="openTrip('${t._id}')">
-        <div class="trip-banner ${bannerClass}" style="${t.color?`background:linear-gradient(135deg,${t.color},${t.color}CC)`:''}">
-          <div>
-            <h3>${t.nombre||'Mi viaje'}</h3>
-            <p>${destStr||'Sin destinos definidos'}</p>
+      <div style="background:#fff;border-radius:16px;overflow:hidden;border:.5px solid rgba(60,60,67,.12);margin-bottom:12px;cursor:pointer" onclick="openTrip('${t._id}')">
+
+        <!-- HEADER -->
+        <div style="padding:16px 18px 14px;border-bottom:.5px solid rgba(60,60,67,.08)">
+          <div style="font-size:17px;font-weight:700;color:#000;letter-spacing:-.3px;margin-bottom:3px;font-family:-apple-system,BlinkMacSystemFont,sans-serif">
+            ${t.nombre||'Mi viaje'}
+          </div>
+          <div style="font-size:12px;color:rgba(60,60,67,.5);font-family:-apple-system,BlinkMacSystemFont,sans-serif">
+            ${destStr||'Sin destinos definidos'}
           </div>
         </div>
-        <div class="trip-body">
-          <div>
-            <div class="trip-meta">
-              ${status?`<span class="trip-chip ${status}">${statusLabel}</span>`:''}
-              ${t.fechaSalida?`<span class="trip-chip">${fmtDate(t.fechaSalida)} → ${fmtDate(t.fechaRegreso)}</span>`:''}
-              ${getUserRole(t)==='viewer'?'<span class="role-badge role-viewer">👁 Solo ver</span>':
-                getUserRole(t)==='owner'?'<span class="role-badge role-owner">✦ Creador</span>':
-                '<span class="role-badge role-editor">✏ Editor</span>'}
+
+        <!-- BODY -->
+        <div style="padding:12px 18px">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+
+            <!-- Pills izquierda -->
+            <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+              ${statusPill}
+              ${t.fechaSalida?`<span style="font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;background:rgba(60,60,67,.08);color:rgba(60,60,67,.7)">${fmtDate(t.fechaSalida)} → ${fmtDate(t.fechaRegreso)}</span>`:''}
+              <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;${roleColor}">${roleLabel}</span>
             </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <div class="trip-travelers">${travelerAvatars}</div>
-            <button class="trip-options-btn" onclick="event.stopPropagation();openTripOptions('${t._id}','${(t.nombre||'Mi viaje').replace(/'/g,"\\'")}',getUserRole(t),this)">⋯</button>
-            <span class="trip-chevron">›</span>
+
+            <!-- Avatares + opciones derecha -->
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="trip-travelers">${travelerAvatars}</div>
+              <button class="trip-options-btn" onclick="event.stopPropagation();openTripOptions('${t._id}','${(t.nombre||'Mi viaje').replace(/'/g,"\\'")}',getUserRole(t),this)">⋯</button>
+              <span style="color:#C7C7CC;font-size:16px;font-weight:300">›</span>
+            </div>
+
           </div>
         </div>
-        <div class="trip-summary" id="ts-${t._id}">
-          <span class="trip-stat neutral">📅 ${t.totalDays||'—'} días</span>
-          <span class="trip-stat neutral">👥 ${(t.members||[]).length} viajeros</span>
-          ${t.pendingCount>0?`<span class="trip-stat warn">⏳ ${t.pendingCount} pendiente${t.pendingCount>1?'s':''}</span>`:''}
+
+        <!-- FOOTER -->
+        <div style="display:flex;align-items:center;gap:16px;padding:10px 18px 14px;border-top:.5px solid rgba(60,60,67,.06)">
+          <span style="font-size:12px;color:rgba(60,60,67,.5);font-family:-apple-system,BlinkMacSystemFont,sans-serif">
+            <strong style="color:#000;font-weight:600">${t.totalDays||'—'}</strong> días
+          </span>
+          <span style="font-size:12px;color:rgba(60,60,67,.5);font-family:-apple-system,BlinkMacSystemFont,sans-serif">
+            <strong style="color:#000;font-weight:600">${(t.members||[]).length}</strong> viajeros
+          </span>
+          ${t.pendingCount>0?`<span style="font-size:12px;font-weight:600;color:#E03030">${t.pendingCount} pendiente${t.pendingCount>1?'s':''}</span>`:''}
         </div>
+
       </div>`;
     }).join('');
 
