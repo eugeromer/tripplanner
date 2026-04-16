@@ -79,7 +79,8 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .ntab:hover{color:#000}.ntab.active{color:#000;font-weight:600;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.1)}
 .ntab-edit{color:var(--accent) !important;font-size:11px}
 .main{max-width:860px;margin:0 auto;padding:1rem}
-.section{display:none}.section.active{display:block}
+.section{display:none}.section.active{display:block;animation:fadeIn .18s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.75rem}
 .scard{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center}
 .scard p:first-child{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px;font-weight:700}
@@ -506,6 +507,31 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .mas-item{padding:10px 16px;font-size:15px;font-weight:500;color:#000;border-radius:8px;cursor:pointer;white-space:nowrap}
 .mas-item:hover,.mas-item:active{background:rgba(60,60,67,.06)}
 .mas-item-blue{color:#007AFF}
+/* Colapsables formulario vuelo */
+.sep-toggle{cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.sep-arrow{font-size:11px;color:rgba(60,60,67,.4);transition:transform .2s}
+.sep-toggle.closed .sep-arrow{transform:rotate(-90deg)}
+.sep-body{overflow:hidden;transition:max-height .3s ease;max-height:800px}
+.sep-body.closed{max-height:0!important}
+/* Badge "Más" */
+.mas-badge{display:inline-block;width:7px;height:7px;border-radius:50%;background:#E03030;margin-left:4px;vertical-align:middle;margin-top:-2px;flex-shrink:0}
+/* Modo oscuro */
+@media(prefers-color-scheme:dark){
+  :root{--bg:#1C1C1E;--card:#2C2C2E;--sand:#3A3A3C;--sand2:#48484A;--ink:#FFFFFF;--ink2:#EBEBF5;--muted:rgba(235,235,245,.6);--border:rgba(255,255,255,.1);--border-s:rgba(255,255,255,.06);--nav-bg:#1C1C1E}
+  body{background:#000}
+  .day-card{background:#1C1C1E}
+  .date-nav{background:#000}
+  .ntab.active{background:#3A3A3C;color:#fff}
+  .hero{background:#000}
+  .sync-bar{background:#000}
+  .nav-wrap{background:#000}
+  .toast{background:#F2F2F7;color:#000}
+  .mbox{background:#2C2C2E}
+  .mft{background:#2C2C2E}
+  .sep{color:rgba(235,235,245,.5)}
+  .frow label{color:rgba(235,235,245,.6)}
+  .frow input,.frow select,.frow textarea{background:#3A3A3C;color:#fff;border-color:rgba(255,255,255,.12)}
+}
 </style>
 </head>
 <body data-theme="amsterdam">
@@ -540,59 +566,70 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 
   <!-- VUELO -->
   <div id="campos-vuelo">
-    <div class="sep">Ruta del vuelo</div>
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-      <div class="frow" style="flex:1;margin:0"><label>Origen</label><input id="v-cod-origen" placeholder="EZE" maxlength="4" style="text-transform:uppercase;font-size:18px;font-weight:700;letter-spacing:.05em;text-align:center" oninput="this.value=this.value.toUpperCase();autoFillVueloTitulo()"></div>
-      <div style="font-size:22px;color:var(--muted);font-weight:300;padding-top:18px">→</div>
-      <div class="frow" style="flex:1;margin:0"><label>Destino</label><input id="v-cod-destino" placeholder="AMS" maxlength="4" style="text-transform:uppercase;font-size:18px;font-weight:700;letter-spacing:.05em;text-align:center" oninput="this.value=this.value.toUpperCase();autoFillVueloTitulo()"></div>
+    <div class="sep sep-toggle" onclick="toggleSep(this)">Ruta del vuelo <span class="sep-arrow">▾</span></div>
+    <div class="sep-body">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+        <div class="frow" style="flex:1;margin:0"><label>Origen</label><input id="v-cod-origen" placeholder="EZE" maxlength="4" style="text-transform:uppercase;font-size:18px;font-weight:700;letter-spacing:.05em;text-align:center" oninput="this.value=this.value.toUpperCase();autoFillVueloTitulo()"></div>
+        <div style="font-size:22px;color:var(--muted);font-weight:300;padding-top:18px">→</div>
+        <div class="frow" style="flex:1;margin:0"><label>Destino</label><input id="v-cod-destino" placeholder="AMS" maxlength="4" style="text-transform:uppercase;font-size:18px;font-weight:700;letter-spacing:.05em;text-align:center" oninput="this.value=this.value.toUpperCase();autoFillVueloTitulo()"></div>
+      </div>
     </div>
-    <div class="sep">Datos del vuelo</div>
-    <div class="f2">
-      <div class="frow"><label>Aerolínea</label><input id="v-aerolinea" placeholder="Ej: KLM" oninput="autoFillVueloTitulo()"></div>
-      <div class="frow"><label>N° de vuelo</label><input id="v-numero" placeholder="Ej: KL702"></div>
+    <div class="sep sep-toggle" onclick="toggleSep(this)">Datos del vuelo <span class="sep-arrow">▾</span></div>
+    <div class="sep-body">
+      <div class="f2">
+        <div class="frow"><label>Aerolínea</label><input id="v-aerolinea" placeholder="Ej: KLM" oninput="autoFillVueloTitulo()"></div>
+        <div class="frow"><label>N° de vuelo</label><input id="v-numero" placeholder="Ej: KL702"></div>
+      </div>
+      <div class="f2">
+        <div class="frow"><label>Nombre aeropuerto origen</label><input id="v-origen" placeholder="Ej: EZE — Ministro Pistarini"></div>
+        <div class="frow"><label>Nombre aeropuerto destino</label><input id="v-destino" placeholder="Ej: AMS — Amsterdam Schiphol"></div>
+      </div>
     </div>
-    <div class="f2">
-      <div class="frow"><label>Nombre aeropuerto origen</label><input id="v-origen" placeholder="Ej: EZE — Ministro Pistarini"></div>
-      <div class="frow"><label>Nombre aeropuerto destino</label><input id="v-destino" placeholder="Ej: AMS — Amsterdam Schiphol"></div>
+    <div class="sep sep-toggle" onclick="toggleSep(this)">Horarios <span class="sep-arrow">▾</span></div>
+    <div class="sep-body">
+      <div class="f2">
+        <div class="frow"><label>Hora salida</label><input type="time" id="v-salida" oninput="syncVueloHora();calcDuracion()"></div>
+        <div class="frow">
+          <label>Hora llegada</label>
+          <input type="time" id="v-llegada" oninput="calcDuracion()">
+          <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+            <input type="checkbox" id="v-next-day" onchange="calcDuracion()" style="width:16px;height:16px">
+            <label for="v-next-day" style="font-size:12px;color:var(--muted);font-weight:700;cursor:pointer">+1 día (llega al día siguiente)</label>
+          </div>
+        </div>
+      </div>
+      <div class="frow"><label>Duración <span id="duracion-auto" style="color:var(--success);font-weight:700"></span></label><input id="v-duracion" placeholder="Se calcula automáticamente"></div>
+      <div class="f2">
+        <div class="frow"><label>Terminal</label><input id="v-terminal" placeholder="Ej: Terminal 3"></div>
+        <div class="frow"><label>Escala</label><input id="v-escala" placeholder="Ej: Sin escala"></div>
+      </div>
+      <div class="f2">
+        <div class="frow"><label>Código PNR</label><input id="v-pnr" placeholder="Ej: BWCTB7" style="font-weight:700;letter-spacing:.05em"></div>
+        <div class="frow"><label>Clase</label><input id="v-clase" placeholder="Ej: Economy"></div>
+      </div>
     </div>
-    <div class="sep">Horarios</div>
-    <div class="f2">
-      <div class="frow"><label>Hora salida</label><input type="time" id="v-salida" oninput="syncVueloHora();calcDuracion()"></div>
-      <div class="frow">
-        <label>Hora llegada</label>
-        <input type="time" id="v-llegada" oninput="calcDuracion()">
-        <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
-          <input type="checkbox" id="v-next-day" onchange="calcDuracion()" style="width:16px;height:16px">
-          <label for="v-next-day" style="font-size:12px;color:var(--muted);font-weight:700;cursor:pointer">+1 día (llega al día siguiente)</label>
+    <div class="sep sep-toggle closed" onclick="toggleSep(this)">Equipaje <span class="sep-arrow">▾</span></div>
+    <div class="sep-body closed">
+      <div class="f3">
+        <div class="frow">
+          <label>🧳 Maleta (kg)</label>
+          <input type="number" id="v-eq-maleta" placeholder="23" min="0" max="99" style="text-align:center;font-size:16px;font-weight:700">
+        </div>
+        <div class="frow">
+          <label>🎒 Carry-on (kg)</label>
+          <input type="number" id="v-eq-carry" placeholder="10" min="0" max="99" style="text-align:center;font-size:16px;font-weight:700">
+        </div>
+        <div class="frow">
+          <label>👜 Equipaje de mano</label>
+          <input type="number" id="v-eq-mano" placeholder="0" min="0" max="99" style="text-align:center;font-size:16px;font-weight:700">
         </div>
       </div>
     </div>
-    <div class="frow"><label>Duración <span id="duracion-auto" style="color:var(--success);font-weight:700"></span></label><input id="v-duracion" placeholder="Se calcula automáticamente"></div>
-    <div class="f2">
-      <div class="frow"><label>Terminal</label><input id="v-terminal" placeholder="Ej: Terminal 3"></div>
-      <div class="frow"><label>Escala</label><input id="v-escala" placeholder="Ej: Sin escala"></div>
+    <div class="sep sep-toggle closed" onclick="toggleSep(this)">Asientos y notas <span class="sep-arrow">▾</span></div>
+    <div class="sep-body closed">
+      <div class="frow"><label>Asientos</label><input id="v-asientos" placeholder="Ej: ER 14A · JN 14B · VS 15A · GG 15B"></div>
+      <div class="frow"><label>Notas</label><textarea id="v-notas" placeholder="Check-in online, millas, upgrade..."></textarea></div>
     </div>
-    <div class="f2">
-      <div class="frow"><label>Código PNR</label><input id="v-pnr" placeholder="Ej: BWCTB7" style="font-weight:700;letter-spacing:.05em"></div>
-      <div class="frow"><label>Clase</label><input id="v-clase" placeholder="Ej: Economy"></div>
-    </div>
-    <div class="sep">Equipaje</div>
-    <div class="f3">
-      <div class="frow">
-        <label>🧳 Maleta (kg)</label>
-        <input type="number" id="v-eq-maleta" placeholder="23" min="0" max="99" style="text-align:center;font-size:16px;font-weight:700">
-      </div>
-      <div class="frow">
-        <label>🎒 Carry-on (kg)</label>
-        <input type="number" id="v-eq-carry" placeholder="10" min="0" max="99" style="text-align:center;font-size:16px;font-weight:700">
-      </div>
-      <div class="frow">
-        <label>👜 Equipaje de mano</label>
-        <input type="number" id="v-eq-mano" placeholder="0" min="0" max="99" style="text-align:center;font-size:16px;font-weight:700">
-      </div>
-    </div>
-    <div class="frow"><label>Asientos</label><input id="v-asientos" placeholder="Ej: ER 14A · JN 14B · VS 15A · GG 15B"></div>
-    <div class="frow"><label>Notas</label><textarea id="v-notas" placeholder="Check-in online, millas, upgrade..."></textarea></div>
     <input type="hidden" id="v-equipaje">
   </div>
 
@@ -1613,6 +1650,7 @@ function ensureListeners(tab){
       NOTES=s.docs.map(d=>({...d.data(),_id:d.id}));
       saveCache('notes',NOTES);
       renderNotes();
+      updateMasBadge();
     });
   }
   if(tab==='ft'&&!_L.ft){
@@ -1623,6 +1661,7 @@ function ensureListeners(tab){
       PHOTOS=s.docs.map(d=>({...d.data(),_id:d.id}));
       saveCache('photos',PHOTOS);
       renderPhotos();
+      updateMasBadge();
     });
   }
 }
@@ -1720,7 +1759,11 @@ window.om=id=>{
 window.resetMasTab=()=>{const t=document.getElementById('main-tab-mas');if(t)t.textContent='Más ▾';};
 window.toggleMasMenu=(e,el)=>{e.stopPropagation();const d=document.getElementById('mas-dropdown');const o=document.getElementById('mas-overlay');if(d.style.display==='block'){closeMasMenu();return;}const r=el.getBoundingClientRect();d.style.top=(r.bottom+6)+'px';d.style.left=Math.max(8,Math.min(r.left,window.innerWidth-200))+'px';d.style.display='block';o.style.display='block';};
 window.closeMasMenu=()=>{document.getElementById('mas-dropdown').style.display='none';document.getElementById('mas-overlay').style.display='none';};
-window.showTabMas=(n,label)=>{document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');const t=document.getElementById('main-tab-mas');if(t){t.classList.add('active');t.textContent=label+' ▾';}closeMasMenu();ensureListeners(n);};
+window.showTabMas=(n,label)=>{
+  localStorage.setItem('tabi-last-seen',Date.now().toString());
+  updateMasBadge();
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');const t=document.getElementById('main-tab-mas');if(t){t.classList.add('active');t.textContent=label+' ▾';}closeMasMenu();ensureListeners(n);
+};
 window.showTab=(n,el)=>{document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active');};
 window.toggleEdit=el=>{
   if(USER_ROLE==='viewer'){
@@ -1885,7 +1928,9 @@ window.savEv=async()=>{
   const titulo=document.getElementById('ev-titulo').value.trim();
   if(!titulo){showFieldError('ev-titulo','El título es obligatorio');return;}
   const di=document.getElementById('ev-di').value;const ei=document.getElementById('ev-ei').value;
-  const o={tipo:EVTIPO,hora:document.getElementById('ev-hora').value||'',fecha:document.getElementById('ev-fecha').value||'',titulo:titulo,pago:PAGADO,extras:collectExtras()};
+  const _tvlMe=TVL.find(t=>t.uid===getAuth().currentUser?.uid);
+  const _editorI=_tvlMe?.i||(getAuth().currentUser?.email||'?')[0].toUpperCase();
+  const o={tipo:EVTIPO,hora:document.getElementById('ev-hora').value||'',fecha:document.getElementById('ev-fecha').value||'',titulo:titulo,pago:PAGADO,extras:collectExtras(),_lastEdit:{user:_editorI,ts:Date.now()}};
   const d=DAYS.find(x=>x._id===di);if(!d)return;
   const evs=[...(d.events||[])];
   if(ei!=='')evs[parseInt(ei)]=o;else evs.push(o);
@@ -2275,6 +2320,7 @@ window.renderDays=async()=>{
             <div style="flex:1;min-width:0">
               <div style="font-size:14px;font-weight:500;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${tit}</div>
               ${sub?`<div style="font-size:11px;color:rgba(60,60,67,.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${sub}</div>`:''}
+              ${ev._lastEdit?`<div style="font-size:10px;color:rgba(60,60,67,.35);margin-top:2px;font-weight:500">Editado por ${ev._lastEdit.user} · ${timeAgo(ev._lastEdit.ts)}</div>`:''}
             </div>
             <div style="display:flex;align-items:center;gap:5px;flex-shrink:0">
               ${hora?`<span style="font-size:11px;font-weight:500;color:rgba(60,60,67,.4)">${hora}</span>`:''}
@@ -3614,6 +3660,33 @@ function updateCountdown(){
 }
 updateCountdown();
 setInterval(updateCountdown,30000);
+
+// ── COLLAPSIBLE SECTIONS ──────────────────────────────────
+window.toggleSep=el=>{const body=el.nextElementSibling;el.classList.toggle('closed');body.classList.toggle('closed');};
+
+// ── TIME AGO ──────────────────────────────────────────────
+function timeAgo(ts){
+  if(!ts)return'';
+  const diff=Date.now()-ts;
+  const m=Math.floor(diff/60000);
+  const h=Math.floor(diff/3600000);
+  const d=Math.floor(diff/86400000);
+  if(m<1)return'ahora';
+  if(m<60)return`hace ${m}m`;
+  if(h<24)return`hace ${h}h`;
+  return`hace ${d}d`;
+}
+
+// ── MAS BADGE ────────────────────────────────────────────
+function updateMasBadge(){
+  const tab=document.getElementById('main-tab-mas');
+  if(!tab)return;
+  const lastSeen=parseInt(localStorage.getItem('tabi-last-seen')||'0');
+  const hasNew=NOTES.some(n=>(n.ts||0)>lastSeen)||PHOTOS.some(f=>(f.ts||0)>lastSeen);
+  let badge=tab.querySelector('.mas-badge');
+  if(hasNew&&!badge){badge=document.createElement('span');badge.className='mas-badge';tab.appendChild(badge);}
+  else if(!hasNew&&badge){badge.remove();}
+}
 
 // ── TOAST ─────────────────────────────────────────────────
 let _toastTimer;
