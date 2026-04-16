@@ -42,7 +42,7 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .sync-bar{background:var(--bg);color:var(--muted);font-size:12px;font-weight:500;text-align:center;padding:4px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:101}
 .sdot{width:7px;height:7px;border-radius:50%;background:#34C759;flex-shrink:0;transition:background .3s}
 .sdot.warn{background:#FF9500}.sdot.err{background:#FF3B30}
-.hero{background:var(--bg);color:var(--ink);padding:4px 18px 10px;position:relative}
+.hero{background:var(--bg);color:var(--ink);padding:12px 20px 20px;position:relative}
 .hero::after{display:none}
 .hi{max-width:860px;margin:0 auto}
 .hero-dest{display:none}
@@ -839,28 +839,28 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 
       <!-- IZQUIERDA -->
       <div style="flex:1;min-width:0">
-        <div style="font-size:22px;font-weight:700;color:#000;letter-spacing:-.4px;margin-bottom:6px">Verano 2026</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        <div style="font-size:22px;font-weight:700;color:#000;letter-spacing:-.4px;margin-bottom:10px">Verano 2026</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
           <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(0,122,255,.1);color:#004DB3">Países Bajos</span>
           <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(52,199,89,.1);color:#1A7A35">Grecia</span>
           <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(175,82,222,.1);color:#7B2FA8">Turquía</span>
         </div>
-        <p class="hero-sub" id="hero-sub-txt">21 jun → 15 jul · 22 días · 4 viajeros</p>
-        <div class="travelers" id="tvl-list"></div>
+        <p class="hero-sub" style="margin-bottom:10px" id="hero-sub-txt">21 jun → 15 jul · 22 días · 4 viajeros</p>
+        <div class="travelers" style="margin-top:6px" id="tvl-list"></div>
       </div>
 
       <!-- DERECHA — countdown -->
-      <div style="flex-shrink:0;display:flex;gap:5px;align-items:flex-end" id="countdown-wrap">
+      <div style="flex-shrink:0;display:flex;gap:5px;align-items:flex-start;margin-top:4px" id="countdown-wrap">
         <div style="background:#fff;border-radius:10px;padding:7px 9px;text-align:center;border:0.5px solid rgba(60,60,67,.08);min-width:36px">
           <div style="font-size:20px;font-weight:700;color:#000;line-height:1;letter-spacing:-.5px" id="cd-dias">—</div>
           <div style="font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(60,60,67,.4);margin-top:2px">días</div>
         </div>
-        <div style="font-size:18px;font-weight:300;color:rgba(60,60,67,.25);padding-bottom:10px">:</div>
+        <div style="font-size:18px;font-weight:300;color:rgba(60,60,67,.25);padding-top:8px">:</div>
         <div style="background:#fff;border-radius:10px;padding:7px 9px;text-align:center;border:0.5px solid rgba(60,60,67,.08);min-width:36px">
           <div style="font-size:20px;font-weight:700;color:#000;line-height:1;letter-spacing:-.5px" id="cd-horas">—</div>
           <div style="font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(60,60,67,.4);margin-top:2px">hs</div>
         </div>
-        <div style="font-size:18px;font-weight:300;color:rgba(60,60,67,.25);padding-bottom:10px">:</div>
+        <div style="font-size:18px;font-weight:300;color:rgba(60,60,67,.25);padding-top:8px">:</div>
         <div style="background:#fff;border-radius:10px;padding:7px 9px;text-align:center;border:0.5px solid rgba(60,60,67,.08);min-width:36px">
           <div style="font-size:20px;font-weight:700;color:#000;line-height:1;letter-spacing:-.5px" id="cd-mins">—</div>
           <div style="font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(60,60,67,.4);margin-top:2px">min</div>
