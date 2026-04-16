@@ -251,6 +251,8 @@ input,select,textarea{-webkit-appearance:none;appearance:none;border-radius:9px}
 .f3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .mft{flex-shrink:0;padding:1rem 1.75rem 1.5rem;border-top:.5px solid rgba(60,60,67,.1);background:var(--card);display:flex;gap:8px;flex-wrap:wrap}
 .bcnl{padding:9px 18px;border:2px solid var(--border);border-radius:9px;background:none;font-family:'Lato',sans-serif;font-size:14px;cursor:pointer;color:var(--muted);font-weight:700}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1C1C1E;color:#fff;font-size:14px;font-weight:500;padding:10px 20px;border-radius:20px;opacity:0;transition:opacity .25s,transform .25s;z-index:9999;white-space:nowrap;font-family:-apple-system,BlinkMacSystemFont,sans-serif;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .bsav{padding:9px 18px;border:none;border-radius:9px;background:var(--accent);color:#fff;font-family:'Lato',sans-serif;font-size:14px;cursor:pointer;font-weight:700}
 .bdel{padding:9px 18px;border:none;border-radius:9px;background:#B02020;color:#fff;font-family:'Lato',sans-serif;font-size:14px;cursor:pointer;font-weight:700}
 .sep{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;padding:.5rem 0 .25rem;border-top:1px solid var(--border-s);margin-top:4px}
@@ -1880,8 +1882,10 @@ function collectExtras(){
 }
 
 window.savEv=async()=>{
+  const titulo=document.getElementById('ev-titulo').value.trim();
+  if(!titulo){showFieldError('ev-titulo','El título es obligatorio');return;}
   const di=document.getElementById('ev-di').value;const ei=document.getElementById('ev-ei').value;
-  const o={tipo:EVTIPO,hora:document.getElementById('ev-hora').value||'',fecha:document.getElementById('ev-fecha').value||'',titulo:document.getElementById('ev-titulo').value||'Sin título',pago:PAGADO,extras:collectExtras()};
+  const o={tipo:EVTIPO,hora:document.getElementById('ev-hora').value||'',fecha:document.getElementById('ev-fecha').value||'',titulo:titulo,pago:PAGADO,extras:collectExtras()};
   const d=DAYS.find(x=>x._id===di);if(!d)return;
   const evs=[...(d.events||[])];
   if(ei!=='')evs[parseInt(ei)]=o;else evs.push(o);
@@ -1889,21 +1893,28 @@ window.savEv=async()=>{
   const sorted=sortEvents(evs);
   await updateDoc(dref('days',di),{events:sorted});
   cm('m-ev');
+  showToast('Evento guardado');
 };
-window.delEv=async()=>{const di=document.getElementById('ev-di').value;const ei=parseInt(document.getElementById('ev-ei').value);const d=DAYS.find(x=>x._id===di);if(!d)return;const evs=[...(d.events||[])];evs.splice(ei,1);await updateDoc(dref('days',di),{events:evs});cm('m-ev');};
+window.delEv=async()=>{
+  if(!confirm('¿Eliminar este evento? Esta acción no se puede deshacer.'))return;
+  const di=document.getElementById('ev-di').value;const ei=parseInt(document.getElementById('ev-ei').value);const d=DAYS.find(x=>x._id===di);if(!d)return;const evs=[...(d.events||[])];evs.splice(ei,1);await updateDoc(dref('days',di),{events:evs});cm('m-ev');showToast('Evento eliminado');
+};
 
 // ── DAYS ──────────────────────────────────────────────────
 window.openNewDay=()=>{document.getElementById('m-day-t').textContent='Nuevo día';document.getElementById('d-idx').value='';document.getElementById('d-label').value='';document.getElementById('d-fecha').value='';document.getElementById('d-city').value='amsterdam';document.getElementById('b-ddel').style.display='none';om('m-day');};
 window.openEditDay=id=>{const d=DAYS.find(x=>x._id===id);if(!d)return;document.getElementById('m-day-t').textContent='Editar día';document.getElementById('d-idx').value=id;document.getElementById('d-label').value=d.label;document.getElementById('d-fecha').value=d.fecha||'';document.getElementById('d-city').value=d.city;document.getElementById('b-ddel').style.display='inline-block';om('m-day');};
 window.savDay=async()=>{
+  const label=document.getElementById('d-label').value.trim();
+  if(!label){showFieldError('d-label','El título del día es obligatorio');return;}
   const idx=document.getElementById('d-idx').value;
   const fechaISO=document.getElementById('d-fecha').value;
   const dateDisp=fechaISO?fmtDateDisplay(fechaISO):(document.getElementById('d-fecha').value||'');
-  const o={date:dateDisp||'—',fecha:fechaISO||'',label:document.getElementById('d-label').value||'Sin título',city:document.getElementById('d-city').value,order:idx?(DAYS.find(x=>x._id===idx)?.order||99):DAYS.length+1,events:idx?(DAYS.find(x=>x._id===idx)?.events||[]):[]};
+  const o={date:dateDisp||'—',fecha:fechaISO||'',label,city:document.getElementById('d-city').value,order:idx?(DAYS.find(x=>x._id===idx)?.order||99):DAYS.length+1,events:idx?(DAYS.find(x=>x._id===idx)?.events||[]):[]};
   if(idx)await setDoc(dref('days',idx),o);else await addDoc(col('days'),o);
   cm('m-day');
+  showToast('Día guardado');
 };
-window.delDay=async()=>{const idx=document.getElementById('d-idx').value;if(idx&&confirm('¿Eliminar este día y todos sus eventos?')){await deleteDoc(dref('days',idx));cm('m-day');}};
+window.delDay=async()=>{const idx=document.getElementById('d-idx').value;if(idx&&confirm('¿Eliminar este día y todos sus eventos? Esta acción no se puede deshacer.')){await deleteDoc(dref('days',idx));cm('m-day');showToast('Día eliminado');}};
 
 // ── HOTELS ────────────────────────────────────────────────
 let HOTEL_PAGO_STATE='no';
@@ -1940,6 +1951,8 @@ window.openEditHotel=id=>{
   om('m-hotel');
 };
 window.savHotel=async()=>{
+  const name=document.getElementById('ht-name').value.trim();
+  if(!name){showFieldError('ht-name','El nombre del hotel es obligatorio');return;}
   const idx=document.getElementById('ht-idx').value;
   const c=document.getElementById('ht-city').value.toLowerCase();
   const cc=c.includes('amster')?'p-amsterdam':c.includes('santa')||c.includes('aten')||c.includes('mykon')||c.includes('naxo')||c.includes('koufo')||c.includes('paros')||c.includes('milos')||c.includes('grecia')?'p-grecia':c.includes('estam')||c.includes('turq')||c.includes('capado')?'p-turquia':'p-transito';
@@ -1968,14 +1981,15 @@ window.savHotel=async()=>{
   };
   if(idx)await setDoc(dref('hotels',idx),o);else await addDoc(col('hotels'),o);
   cm('m-hotel');
+  showToast('Alojamiento guardado');
 };
-window.delHotel=async()=>{const idx=document.getElementById('ht-idx').value;if(idx&&confirm('¿Eliminar?')){await deleteDoc(dref('hotels',idx));cm('m-hotel');}};
+window.delHotel=async()=>{const idx=document.getElementById('ht-idx').value;if(idx&&confirm('¿Eliminar este alojamiento? Esta acción no se puede deshacer.')){await deleteDoc(dref('hotels',idx));cm('m-hotel');showToast('Alojamiento eliminado');}};
 
 // ── CHECKLIST ─────────────────────────────────────────────
 window.openNewChk=gk=>{document.getElementById('m-chk-t').textContent='Nueva tarea · '+gk;document.getElementById('ck-gk').value=gk;document.getElementById('ck-idx').value='';document.getElementById('ck-txt').value='';document.getElementById('b-ckdel').style.display='none';om('m-chk');};
 window.openEditChk=(gk,id)=>{const item=(CHECKLIST[gk]||[]).find(x=>x._id===id||x.id===id);if(!item)return;document.getElementById('m-chk-t').textContent='Editar tarea';document.getElementById('ck-gk').value=gk;document.getElementById('ck-idx').value=item._id||item.id;document.getElementById('ck-txt').value=item.text;document.getElementById('b-ckdel').style.display='inline-block';om('m-chk');};
-window.savChk=async()=>{const gk=document.getElementById('ck-gk').value;const idx=document.getElementById('ck-idx').value;const txt=document.getElementById('ck-txt').value.trim();if(!txt)return;if(idx)await updateDoc(dref('checklist',idx),{text:txt});else await setDoc(dref('checklist','c'+Date.now()),{id:'c'+Date.now(),group:gk,text:txt,order:100+Date.now()%1000});cm('m-chk');};
-window.delChk=async()=>{const idx=document.getElementById('ck-idx').value;if(idx&&confirm('¿Eliminar?')){await deleteDoc(dref('checklist',idx));cm('m-chk');}};
+window.savChk=async()=>{const gk=document.getElementById('ck-gk').value;const idx=document.getElementById('ck-idx').value;const txt=document.getElementById('ck-txt').value.trim();if(!txt){showFieldError('ck-txt','La descripción es obligatoria');return;}if(idx)await updateDoc(dref('checklist',idx),{text:txt});else await setDoc(dref('checklist','c'+Date.now()),{id:'c'+Date.now(),group:gk,text:txt,order:100+Date.now()%1000});cm('m-chk');showToast('Tarea guardada');};
+window.delChk=async()=>{const idx=document.getElementById('ck-idx').value;if(idx&&confirm('¿Eliminar esta tarea? Esta acción no se puede deshacer.')){await deleteDoc(dref('checklist',idx));cm('m-chk');showToast('Tarea eliminada');}};
 window.toggleChk=async id=>{await setDoc(dref('checks',id),{done:!CHECKS[id]});};
 
 // ── NOTES ─────────────────────────────────────────────────
@@ -2047,6 +2061,7 @@ window.savProfile = async () => {
   };
   await setDoc(dref('profiles', saveKey), data);
   cm('m-profile');
+  showToast('Perfil actualizado');
 };
 
 // ── RENDERS ───────────────────────────────────────────────
@@ -3600,6 +3615,28 @@ function updateCountdown(){
 updateCountdown();
 setInterval(updateCountdown,30000);
 
+// ── TOAST ─────────────────────────────────────────────────
+let _toastTimer;
+function showToast(msg='Guardado'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ── FIELD ERROR ───────────────────────────────────────────
+function showFieldError(fieldId,msg){
+  const el=document.getElementById(fieldId);
+  if(!el)return;
+  el.style.borderColor='#E03030';
+  el.style.borderWidth='2px';
+  el.focus();
+  el.addEventListener('input',()=>{el.style.borderColor='';el.style.borderWidth='';},{once:true});
+  showToast('⚠ '+msg);
+}
+
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>
