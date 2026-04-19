@@ -1418,12 +1418,41 @@ window.calcGastos = async () => {
   });
   html += '</div>';
 
-  // Warning if events without price
-  const sinPrecio = allEvents.length - eventsWithPrice.length;
-  if(sinPrecio > 0){
-    html += `<div style="background:#FFF8E7;border:1.5px solid #E8A020;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;color:#7A4A00">
-      ⚠ ${sinPrecio} evento${sinPrecio>1?'s':''} sin precio cargado — el resumen puede estar incompleto.
-    </div>`;
+  // Warning if events without price — show list
+  const sinPrecio = allEvents.filter(e => !(e.monto > 0));
+  if (sinPrecio.length > 0) {
+    const listaItems = sinPrecio.slice(0, 15).map(ev => {
+      const dia = DAYS.find(d => (d.events||[]).some(e => e === ev));
+      const diaLabel = dia ? (dia.label || dia.fecha || '') : '';
+      return `<li style="padding:3px 0;border-bottom:.5px solid rgba(0,0,0,.06)">
+        <strong>${escapeHtml(ev.titulo || 'Sin título')}</strong>
+        <span style="color:rgba(60,60,67,.5);font-size:11px;margin-left:6px">
+          ${escapeHtml(diaLabel)} · ${ev.tipo || ''}
+        </span>
+      </li>`;
+    }).join('');
+
+    const masItems = sinPrecio.length > 15
+      ? `<li style="color:rgba(60,60,67,.4);font-size:12px;padding-top:4px">
+          ... y ${sinPrecio.length - 15} eventos más sin monto
+         </li>`
+      : '';
+
+    html += `
+      <div style="background:#FFF8E7;border:1.5px solid #E8A020;border-radius:12px;
+                  padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:#7A4A00;margin-bottom:8px">
+          ⚠ ${sinPrecio.length} evento${sinPrecio.length > 1 ? 's' : ''}
+          sin monto — el total está incompleto
+        </div>
+        <div style="font-size:12px;color:#7A4A00;margin-bottom:8px">
+          Abrí cada evento y completá el campo <strong>Monto</strong>
+          con el número para que aparezca en el resumen:
+        </div>
+        <ul style="margin:0;padding:0;list-style:none;font-size:13px">
+          ${listaItems}${masItems}
+        </ul>
+      </div>`;
   }
 
   document.getElementById('gastos-wrap').innerHTML = html;
