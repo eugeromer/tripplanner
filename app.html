@@ -1624,6 +1624,26 @@ const _L={};
 
 // Register listeners for secondary tabs on first visit
 function ensureListeners(tab){
+  if(tab==='ht'&&!_L.ht){
+    _L.ht=true;
+    const cachedHT=loadCache('hotels');
+    if(cachedHT&&cachedHT.length){HOTELS=cachedHT;renderHotels();updateStats();populateHotelSelector();}
+    onSnapshot(query(col('hotels'),orderBy('order')),s=>{
+      HOTELS=s.docs.map(d=>({...d.data(),_id:d.id}));
+      saveCache('hotels',HOTELS);
+      renderHotels();updateStats();populateHotelSelector();
+    });
+  }
+  if(tab==='pr'&&!_L.pr){
+    _L.pr=true;
+    const cachedPR=loadCache('profiles');
+    if(cachedPR&&Object.keys(cachedPR).length){PROFILES=cachedPR;renderProfiles();}
+    onSnapshot(col('profiles'),s=>{
+      PROFILES={};s.docs.forEach(d=>PROFILES[d.id]=d.data());
+      saveCache('profiles',PROFILES);
+      renderProfiles();
+    });
+  }
   if(tab==='ck'&&!_L.ck){
     _L.ck=true;
     const cachedCL=loadCache('checklist');
@@ -1671,16 +1691,6 @@ function initListeners(){
     DAYS=s.docs.map(d=>({...d.data(),_id:d.id}));
     saveCache('days',DAYS);
     renderDays();updateStats();autoTheme();
-  });
-  onSnapshot(query(col('hotels'),orderBy('order')),s=>{
-    HOTELS=s.docs.map(d=>({...d.data(),_id:d.id}));
-    saveCache('hotels',HOTELS);
-    renderHotels();updateStats();populateHotelSelector();
-  });
-  onSnapshot(col('profiles'),s=>{
-    PROFILES={};s.docs.forEach(d=>PROFILES[d.id]=d.data());
-    saveCache('profiles',PROFILES);
-    renderProfiles();
   });
   onSnapshot(col('avatars'),s=>{
     AVATARS={};s.docs.forEach(d=>AVATARS[d.id]=d.data().data);
@@ -1764,7 +1774,7 @@ window.showTabMas=(n,label)=>{
   updateMasBadge();
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');const t=document.getElementById('main-tab-mas');if(t){t.classList.add('active');t.textContent=label+' ▾';}closeMasMenu();ensureListeners(n);
 };
-window.showTab=(n,el)=>{document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active');};
+window.showTab=(n,el)=>{document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active');ensureListeners(n);};
 window.toggleEdit=el=>{
   if(USER_ROLE==='viewer'){
     alert('Tenés acceso de solo lectura en este viaje. Pedile al creador que te dé permisos de edición.');
