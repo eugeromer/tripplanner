@@ -135,9 +135,15 @@ const TVL=[{i:'ER',n:'Eugenia',fn:'Eugenia Romero',a:'av1'},{i:'JN',n:'Juan Jos�
 const FN={ER:'Eugenia Romero',JN:'Juan José Noguera',VS:'Valeria Secchi',GG:'Gustavo García'};
 const AV={ER:'av1',JN:'av2',VS:'av3',GG:'av4'};
 const CL={amsterdam:'Países Bajos',grecia:'Grecia',turquia:'Turquía',transito:'Tránsito'};
-const TIPO_COLOR={vuelo:'#007AFF',hotel:'#34C759',actividad:'#FF9500',restaurante:'#FF2D55',traslado:'#8E8E93',otro:'#AF52DE'};
+const TIPO_COLOR={vuelo:'#2563EB',hotel:'#7C3AED',actividad:'#059669',restaurante:'#DC2626',traslado:'#D97706',otro:'#64748B'};
+const TIPO_LABEL={vuelo:'Vuelo',hotel:'Hotel',actividad:'Actividad',restaurante:'Restaurante',traslado:'Traslado',otro:'Otro'};
 const TIPO_ICO={vuelo:'✈',hotel:'🏨',actividad:'🎯',restaurante:'🍽',traslado:'🚕',otro:'📌'};
 const TIPO_CLS={vuelo:'etype-vuelo',hotel:'etype-hotel',actividad:'etype-actividad',restaurante:'etype-restaurante',traslado:'etype-traslado',otro:'etype-otro'};
+const DEST_COLOR={amsterdam:'#B5621E',grecia:'#0891B2',turquia:'#DC4626',transito:'#9C876E'};
+const DEST_FLAG={amsterdam:'🇳🇱',grecia:'🇬🇷',turquia:'🇹🇷',transito:'✈'};
+const DEST_LABEL={amsterdam:'Países Bajos',grecia:'Grecia',turquia:'Turquía',transito:'Tránsito'};
+const PAGO_COLOR={si:'#059669',no:'#D97706',na:null};
+let CURRENT_DAY_IDX=0;
 
 // CITY COORDS para clima
 const CITY_COORDS={
@@ -522,13 +528,14 @@ window.om=id=>{
   el.onclick=e=>{if(e.target===el)cm(id);};
 };
 
-window.resetMasTab=()=>{const t=document.getElementById('main-tab-mas');if(t)t.textContent='Más ▾';};
-window.toggleMasMenu=(e,el)=>{e.stopPropagation();const d=document.getElementById('mas-dropdown');const o=document.getElementById('mas-overlay');if(d.style.display==='block'){closeMasMenu();return;}const r=el.getBoundingClientRect();d.style.top=(r.bottom+6)+'px';d.style.left=Math.max(8,Math.min(r.left,window.innerWidth-200))+'px';d.style.display='block';o.style.display='block';};
+window.resetMasTab=()=>{const t=document.getElementById('main-tab-mas');if(t){t.classList.remove('active');const lbl=t.querySelector('.ntab-label');if(lbl)lbl.textContent='Más';}};
+window.toggleMasMenu=(e,el)=>{e.stopPropagation();const d=document.getElementById('mas-dropdown');const o=document.getElementById('mas-overlay');if(d.style.display==='block'){closeMasMenu();return;}const r=el.getBoundingClientRect();// Nav is now fixed at bottom — open dropdown upward
+d.style.top='auto';d.style.bottom=(window.innerHeight-r.top+6)+'px';d.style.left=Math.max(8,Math.min(r.left,window.innerWidth-200))+'px';d.style.display='block';o.style.display='block';};
 window.closeMasMenu=()=>{document.getElementById('mas-dropdown').style.display='none';document.getElementById('mas-overlay').style.display='none';};
 window.showTabMas=(n,label)=>{
   localStorage.setItem('tabi-last-seen',Date.now().toString());
   updateMasBadge();
-  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');const t=document.getElementById('main-tab-mas');if(t){t.classList.add('active');t.textContent=label+' ▾';}closeMasMenu();ensureListeners(n);
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');const t=document.getElementById('main-tab-mas');if(t){t.classList.add('active');const lbl=t.querySelector('.ntab-label');if(lbl)lbl.textContent=label;}closeMasMenu();ensureListeners(n);
 };
 window.showTab=(n,el)=>{document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active');ensureListeners(n);};
 window.toggleEdit=el=>{
@@ -999,63 +1006,111 @@ function routeConnector(ev1, ev2){
 }
 
 window.renderDays=async()=>{
-  const todayISO=new Date().toISOString().slice(0,10);
   const wrap=document.getElementById('days-wrap');
   if(!DAYS.length){wrap.innerHTML='<div style="text-align:center;padding:3rem 1rem;color:var(--muted);font-size:13px">El itinerario está vacío</div>';const ob=document.getElementById('onboarding-banner');if(ob&&!TRIP_ID)ob.style.display='block';return;}
   const ob=document.getElementById('onboarding-banner');if(ob)ob.style.display='none';
-  const wP={};
-  DAYS.forEach(d=>{if(d.city!=='transito'&&d.fecha){const iso=fmtDateISO(d.fecha)||d.fecha;if(iso&&iso.match(/^\d{4}-\d{2}-\d{2}$/))wP[d._id]=getWeather(d.city,iso);}});
-  const DN=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  wrap.innerHTML=getDisplayDays().map(d=>{
-    const evs=sortEvents(d.events||[]);
-    const dp=d.fecha?fmtDateDisplay(d.fecha):(d.date||'');
-    const parts=dp.split(' ');
-    const _dt=getDateObjFromDay(d);
-    const dn=_dt?DN[_dt.getDay()]:'';
-    const isToday=_dt?_dt.toISOString().slice(0,10)===todayISO:false;
-    const evHtml=evs.length===0
-      ?`<div style="padding:10px 14px;color:rgba(60,60,67,.4);font-size:13px">Sin eventos aún</div>`
-      :evs.map((ev,j)=>{
-          const ri=ev._origIdx!==undefined?ev._origIdx:j;
-          const tipo=ev.tipo||'otro';
-          const dc=TIPO_COLOR[tipo]||'#8E8E93';
-          const tit=ev.titulo||ev.tt||'Sin título';
-          const hora=fmtTimeDisplay(ev.hora||ev.t||'');
-          const x=ev.extras||{};
-          let sub='';
-          if(tipo==='vuelo'&&x.origen&&x.destino)sub=`${escapeHtml(x.origen.split('—')[0].trim())} → ${escapeHtml(x.destino.split('—')[0].trim())}${x.pnr?' · '+escapeHtml(x.pnr):''}`;
-          else if(tipo==='hotel')sub=`Check-in${x.cinHora?' '+escapeHtml(x.cinHora):''}${x.noch?' · '+escapeHtml(x.noch):''}`;
-          else if(tipo==='traslado'&&x.medio)sub=`${escapeHtml(x.medio)}${x.duracion?' · '+escapeHtml(x.duracion):''}`;
-          else if(tipo==='actividad'&&x.lugar)sub=escapeHtml(x.lugar);
-          else if(tipo==='restaurante'&&(x.nombre||x.dir))sub=escapeHtml(x.nombre||x.dir);
-          const si=ev.pago==='si',no=ev.pago==='no';
-          return `<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:.5px solid rgba(60,60,67,.1);cursor:pointer" onclick="openEditEv('${d._id}',${ri})">
-            <div style="width:9px;height:9px;border-radius:50%;background:${dc};flex-shrink:0"></div>
-            <div style="flex:1;min-width:0">
-              <div style="font-size:14px;font-weight:500;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(tit)}</div>
-              ${sub?`<div style="font-size:11px;color:rgba(60,60,67,.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${sub}</div>`:''}
-              ${ev._lastEdit?`<div style="font-size:10px;color:rgba(60,60,67,.35);margin-top:2px;font-weight:500">Editado por ${escapeHtml(ev._lastEdit.user)} · ${timeAgo(ev._lastEdit.ts)}</div>`:''}
-            </div>
-            <div style="display:flex;align-items:center;gap:5px;flex-shrink:0">
-              ${hora?`<span style="font-size:11px;font-weight:500;color:rgba(60,60,67,.4)">${hora}</span>`:''}
-              ${si?`<span style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;background:rgba(52,199,89,.15);color:#1A7A35">Pago</span>`:''}
-              ${no?`<span style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;background:rgba(255,149,0,.15);color:#A05000">Pendiente</span>`:''}
-              <span style="color:#C7C7CC;font-size:12px">›</span>
-            </div>
-          </div>`;
-        }).join('');
-    const addBtn=`<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;color:#007AFF;font-size:13px;cursor:pointer" onclick="openNewEv('${d._id}')"><span style="font-size:16px;font-weight:300;line-height:1">+</span><span>Agregar evento</span></div>`;
-    const editBtn=EM?`<button class="ibtn" style="font-size:11px;padding:2px 7px;flex-shrink:0;margin-left:4px" onclick="event.stopPropagation();openEditDay('${d._id}')">✏</button>`:'';
-    const dayIdHtml=`<div style="font-size:11px;font-weight:600;color:${isToday?'#007AFF':'rgba(60,60,67,.4)'};text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;min-width:52px;flex-shrink:0">${dn?dn+' ':''}<span style="font-size:17px;font-weight:600;color:${isToday?'#007AFF':'rgba(60,60,67,.35)'};letter-spacing:0">${parts[0]||''}</span></div>`;
-    const isExpanded=d._displayId!==d._id;
-    return `<div class="day-card" id="day-card-${d._displayId}" data-day-id="${d._displayId}">
-      <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer" onclick="togDay('${d._displayId}')">${dayIdHtml}<div style="font-size:15px;font-weight:600;color:#000;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(d.label||'')}</div>${editBtn}<span id="wc-${d._id}"></span><span id="ch${d._displayId}" style="color:#C7C7CC;font-size:12px;flex-shrink:0;transition:transform .2s;display:inline-block">›</span></div>
-      <div class="day-body" id="db${d._displayId}">${evHtml}${isExpanded?'':addBtn}</div>
-    </div>`;
-  }).join('');
-  autoOpenToday();
   renderDateNav();
-  for(const [id,p] of Object.entries(wP)){p.then(w=>{if(!w)return;const el=document.getElementById('wc-'+id);if(el)el.innerHTML=`<span class="weather-chip-day" style="margin-left:4px">${w.ico} ${w.tmax}°/${w.tmin}°</span>`;}).catch(()=>{});}
+  renderCurrentDay();
+};
+
+// Render only the currently selected day (single-day view)
+window.renderCurrentDay=()=>{
+  const allDays=getDisplayDays();
+  if(!allDays.length)return;
+  // Clamp index
+  if(CURRENT_DAY_IDX>=allDays.length)CURRENT_DAY_IDX=0;
+  const d=allDays[CURRENT_DAY_IDX];
+  const wrap=document.getElementById('days-wrap');
+  if(!wrap)return;
+
+  const evs=sortEvents(d.events||[]);
+  const _dt=getDateObjFromDay(d);
+  const ciudad=d.city||d.ciudad||'transito';
+  const destCol=DEST_COLOR[ciudad]||'#9C876E';
+  const destFlag=DEST_FLAG[ciudad]||'';
+  const destLbl=DEST_LABEL[ciudad]||ciudad;
+
+  // Fecha larga
+  let fechaLarga='';
+  if(_dt){fechaLarga=_dt.toLocaleDateString('es',{weekday:'long',day:'numeric',month:'long'});}
+
+  // Day number (1-indexed, padded)
+  const dayNum=String(CURRENT_DAY_IDX+1).padStart(2,'0');
+
+  // Event cards
+  const evHtml=evs.length===0
+    ?`<div style="padding:10px 0;color:var(--muted);font-size:13px">Sin eventos aún</div>`
+    :evs.map((ev,j)=>{
+        const ri=ev._origIdx!==undefined?ev._origIdx:j;
+        const tipo=ev.tipo||'otro';
+        const tc=TIPO_COLOR[tipo]||'#64748B';
+        const tlbl=TIPO_LABEL[tipo]||tipo;
+        const tit=escapeHtml(ev.titulo||ev.tt||'Sin título');
+        const hora=fmtTimeDisplay(ev.hora||ev.t||'');
+        const x=ev.extras||{};
+        let sub='';
+        if(tipo==='vuelo'&&x.origen&&x.destino)sub=`${escapeHtml(x.origen.split('—')[0].trim())} → ${escapeHtml(x.destino.split('—')[0].trim())}${x.pnr?' · PNR: '+escapeHtml(x.pnr):''}`;
+        else if(tipo==='hotel')sub=`Check-in${x.cinHora?' '+escapeHtml(x.cinHora):''}${x.noch?' · '+escapeHtml(x.noch):''}`;
+        else if(tipo==='traslado'&&x.medio)sub=`${escapeHtml(x.medio)}${x.duracion?' · '+escapeHtml(x.duracion):''}`;
+        else if(tipo==='actividad'&&x.lugar)sub=escapeHtml(x.lugar);
+        else if(tipo==='restaurante'&&(x.nombre||x.dir))sub=escapeHtml(x.nombre||x.dir);
+        const pagoCol=PAGO_COLOR[ev.pago||'na'];
+        return `<div class="ev-card" onclick="openEditEv('${d._id}',${ri})">
+          <div class="ev-top">
+            <div class="ev-type-pill" style="color:${tc};--dot-bg:${tc}">
+              <div class="ev-type-dot"></div>
+              <span>${tlbl}</span>
+            </div>
+            ${hora?`<span class="ev-hora">${hora}</span>`:''}
+          </div>
+          <div class="ev-titulo">${tit}</div>
+          ${sub?`<div class="ev-sub">${sub}</div>`:''}
+          ${pagoCol?`<div class="ev-pago-dot" style="background:${pagoCol}"></div>`:`<div class="ev-pago-dot na"></div>`}
+        </div>`;
+      }).join('');
+
+  const editBtn=EM?`<button class="ibtn" style="font-size:11px;padding:2px 8px;margin-left:8px" onclick="event.stopPropagation();openEditDay('${d._id}')">✏</button>`:'';
+  const addBtn=EM?`<button class="ev-add-btn" onclick="openNewEv('${d._id}')">+ Agregar evento</button>`:'';
+
+  wrap.innerHTML=`
+    <div id="day-card-${d._displayId}" data-day-id="${d._displayId}">
+      <div class="day-header">
+        <div class="day-dest-label" style="color:${destCol}">
+          <div class="day-dest-dot" style="background:${destCol}"></div>
+          <span>${destFlag} ${destLbl}</span>
+          ${editBtn}
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div class="day-title">${escapeHtml(d.label||'')}</div>
+            <div class="day-fecha">${fechaLarga}</div>
+          </div>
+          <div class="day-num">${dayNum}</div>
+        </div>
+      </div>
+      <div style="padding:0 16px 8px">
+        ${evHtml}
+        ${addBtn}
+      </div>
+    </div>`;
+};
+
+// Switch to a different day (called from date nav buttons)
+window.showDay=(idx)=>{
+  CURRENT_DAY_IDX=idx;
+  // Update date nav active state
+  const allDays=getDisplayDays();
+  document.querySelectorAll('.date-btn').forEach((btn,i)=>{
+    const isActive=i===idx;
+    btn.classList.toggle('active',isActive);
+    const ciudad=(allDays[i]||{}).city||(allDays[i]||{}).ciudad||'transito';
+    btn.style.background=isActive?(DEST_COLOR[ciudad]||'#9C876E'):'transparent';
+  });
+  renderCurrentDay();
+  // Scroll content to top
+  const main=document.querySelector('.main');
+  if(main)main.scrollTop=0;
+  window.scrollTo(0,0);
 };
 window.toggleHotel=id=>{
   const body=document.getElementById('hb-'+id);
@@ -1070,37 +1125,42 @@ window.renderHotels=()=>{
   const wrap=document.getElementById('htl-wrap');
   if(!HOTELS.length){wrap.innerHTML='<div style="text-align:center;padding:3rem 1rem;color:var(--muted);font-size:13px">Sin alojamientos aún</div>';return;}
   wrap.innerHTML=HOTELS.map(h=>{
-    const cin=h.cinFecha?fmtDateDisplay(h.cinFecha)+(h.cinHora?' · '+h.cinHora:''):(h.cin||'—');
-    const cout=h.coutFecha?fmtDateDisplay(h.coutFecha)+(h.coutHora?' · '+h.coutHora:''):(h.cout||'—');
-    const city=(h.city||'').split('·')[0].split(',')[0].trim();
-    const reserva=[h.plat||'',h.conf?'#'+h.conf:''].filter(Boolean).join(' · ')||'';
+    const cin=h.cinFecha?fmtDateDisplay(h.cinFecha):(h.cin||'—');
+    const cout=h.coutFecha?fmtDateDisplay(h.coutFecha):(h.cout||'—');
+    const noch=h.noch||(h.cinFecha&&h.coutFecha?Math.round((new Date(h.coutFecha)-new Date(h.cinFecha))/86400000):'')||'';
+    const ciudad=h.city||'';
+    const dest=(h.destino||h.city||'').toLowerCase();
+    const destKey=Object.keys(DEST_COLOR).find(k=>dest.includes(k))||'transito';
+    const destCol=DEST_COLOR[destKey]||'#9C876E';
+    const destLbl=DEST_LABEL[destKey]||(h.city||'');
     const si=h.pago==='si',no=h.pago==='no';
-    const noch=h.noch||'';
-    const monto=h.monto?`${h.moneda||'USD'} ${h.monto}${noch?' · '+noch:''}`:(noch||'');
-    return `<div style="padding:0 0 2px">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px 6px">
-        <span style="font-size:12px;font-weight:600;color:rgba(60,60,67,.4);text-transform:uppercase;letter-spacing:.06em">${city}</span>
-        <button class="ibtn" style="font-size:11px;padding:2px 8px;border-color:rgba(60,60,67,.15)" onclick="openEditHotel('${h._id}')">⋯</button>
+    const estado=si?'Confirmado':no?'Pendiente pago':'A confirmar';
+    return `<div class="hotel-card" onclick="openEditHotel('${h._id}')">
+      <div class="hotel-card-header">
+        <div class="hotel-card-meta">
+          <div class="hotel-dest-label" style="color:${destCol}">
+            <div style="width:5px;height:5px;border-radius:50%;background:${destCol};flex-shrink:0"></div>
+            <span>${destLbl}</span>
+          </div>
+          <div class="hotel-nombre">${escapeHtml(h.name||'')}</div>
+          <div class="hotel-ciudad">${escapeHtml(ciudad)}</div>
+        </div>
+        <div class="hotel-estado">${estado}</div>
       </div>
-      <div style="background:#fff;border-radius:12px;overflow:hidden;margin:0 0 8px">
-        <div style="padding:12px 14px 10px;border-bottom:.5px solid rgba(60,60,67,.08)">
-          <div style="font-size:15px;font-weight:600;color:#000;margin-bottom:2px">${escapeHtml(h.name)}</div>
-          <div style="font-size:12px;color:rgba(60,60,67,.5)">${escapeHtml(h.city||'')}</div>
+      <div class="hotel-dates">
+        <div class="hotel-date-col">
+          <div class="hotel-date-label">Check-in</div>
+          <div class="hotel-date-val">${cin}</div>
         </div>
-        <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 14px;border-bottom:.5px solid rgba(60,60,67,.06)">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:7px;height:7px;border-radius:2px;background:#34C759;flex-shrink:0"></div><span style="font-size:13px;color:rgba(60,60,67,.6)">Check-in</span></div>
-            <span style="font-size:13px;font-weight:500;color:#000">${cin}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 14px${reserva?';border-bottom:.5px solid rgba(60,60,67,.06)':''}">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:7px;height:7px;border-radius:2px;background:#FF3B30;flex-shrink:0"></div><span style="font-size:13px;color:rgba(60,60,67,.6)">Check-out</span></div>
-            <span style="font-size:13px;font-weight:500;color:#000">${cout}</span>
-          </div>
-          ${reserva?`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 14px"><div style="display:flex;align-items:center;gap:8px"><div style="width:7px;height:7px;border-radius:2px;background:#8E8E93;flex-shrink:0"></div><span style="font-size:13px;color:rgba(60,60,67,.6)">Reserva</span></div><span style="font-size:13px;font-weight:500;color:#000">${reserva}</span></div>`:''}
+        <div class="hotel-date-divider"></div>
+        <div class="hotel-date-col">
+          <div class="hotel-date-label">Check-out</div>
+          <div class="hotel-date-val">${cout}</div>
         </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:rgba(60,60,67,.03);border-top:.5px solid rgba(60,60,67,.06)">
-          <span style="font-size:9px;font-weight:600;padding:2px 8px;border-radius:20px;${si?'background:rgba(52,199,89,.15);color:#1A7A35':no?'background:rgba(255,149,0,.15);color:#A05000':'background:rgba(60,60,67,.08);color:rgba(60,60,67,.5)'}">${si?'Confirmado':no?'Pendiente pago':'Sin estado'}</span>
-          ${monto?`<span style="font-size:13px;font-weight:600;color:#000">${monto}</span>`:''}
+        <div class="hotel-date-divider"></div>
+        <div class="hotel-date-col">
+          <div class="hotel-date-label">Noches</div>
+          <div class="hotel-date-val">${noch||'—'}</div>
         </div>
       </div>
     </div>`;
@@ -2284,23 +2344,27 @@ function renderDateNav(){
   if(!nav) return;
   const todayISO = new Date().toISOString().slice(0,10);
   const dayNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const allDays = getDisplayDays();
 
-  nav.innerHTML = getDisplayDays().map(d => {
+  nav.innerHTML = allDays.map((d, idx) => {
     const _dt = getDateObjFromDay(d);
-    const isToday = _dt ? _dt.toISOString().slice(0,10) === todayISO : false;
-    const parts = d.fecha ? fmtDateDisplay(d.fecha).split(' ') : (d.date||'—').split(' ');
     const dayName = _dt ? dayNames[_dt.getDay()] : '';
-    const hasEvents = (d.events||[]).length > 0;
-    return `<div class="date-pill${isToday?' today':''}${hasEvents?' has-events':''}"
-      id="dp-${d._displayId}" onclick="jumpToDay('${d._displayId}')">
-      <div class="date-pill-day">${dayName}</div>
-      <div class="date-pill-date">${parts[0]}</div>
-      <div class="date-pill-dot"></div>
-    </div>`;
+    const dayNum = _dt ? _dt.getDate() : (d.fecha||'').split('-')[2]||'';
+    const ciudad = d.city || d.ciudad || 'transito';
+    const destCol = DEST_COLOR[ciudad] || '#9C876E';
+    const isActive = idx === CURRENT_DAY_IDX;
+    const bg = isActive ? destCol : 'transparent';
+    return `<button class="date-btn${isActive?' active':''}" style="background:${bg}"
+      onclick="showDay(${idx})">
+      <span class="dw">${dayName}</span>
+      <span class="dn">${dayNum}</span>
+      <span class="dd" style="background:${isActive?'rgba(255,255,255,.5)':destCol}"></span>
+    </button>`;
   }).join('');
 
-  // Highlight active day on scroll
-  observeDays();
+  // Auto-scroll active button into view
+  const activeBtn = nav.querySelector('.date-btn.active');
+  if(activeBtn) activeBtn.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
 }
 
 let _jumpLock = false;
