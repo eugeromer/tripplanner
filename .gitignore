@@ -6,3 +6,5 @@ AUDIT-DAYS-CONSOLE.js
 fix-days.mjs
 package.json
 package-lock.json
+.DS_Store
+audit-days.js
