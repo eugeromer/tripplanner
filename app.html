@@ -65,17 +65,6 @@
         <div class="frow" style="flex:1;margin:0"><label>Destino</label><input id="v-cod-destino" placeholder="AMS" maxlength="4" style="text-transform:uppercase;font-size:18px;font-weight:700;letter-spacing:.05em;text-align:center" oninput="this.value=this.value.toUpperCase();autoFillVueloTitulo()"></div>
       </div>
     </div>
-    <div class="sep sep-toggle" onclick="toggleSep(this)">Datos del vuelo <span class="sep-arrow">▾</span></div>
-    <div class="sep-body">
-      <div class="f2">
-        <div class="frow"><label>Aerolínea</label><input id="v-aerolinea" placeholder="Ej: KLM" oninput="autoFillVueloTitulo()"></div>
-        <div class="frow"><label>N° de vuelo</label><input id="v-numero" placeholder="Ej: KL702"></div>
-      </div>
-      <div class="f2">
-        <div class="frow"><label>Nombre aeropuerto origen</label><input id="v-origen" placeholder="Ej: EZE — Ministro Pistarini"></div>
-        <div class="frow"><label>Nombre aeropuerto destino</label><input id="v-destino" placeholder="Ej: AMS — Amsterdam Schiphol"></div>
-      </div>
-    </div>
     <div class="sep sep-toggle" onclick="toggleSep(this)">Horarios <span class="sep-arrow">▾</span></div>
     <div class="sep-body">
       <div class="f2">
@@ -99,6 +88,22 @@
         <div class="frow"><label>Clase</label><input id="v-clase" placeholder="Ej: Economy"></div>
       </div>
     </div>
+    <div class="sep sep-toggle" onclick="toggleSep(this)">Asientos y notas <span class="sep-arrow">▾</span></div>
+    <div class="sep-body">
+      <div class="frow"><label>Asientos</label><input id="v-asientos" placeholder="Ej: ER 14A · JN 14B · VS 15A · GG 15B"></div>
+      <div class="frow"><label>Notas</label><textarea id="v-notas" placeholder="Check-in online, millas, upgrade..."></textarea></div>
+    </div>
+    <div class="sep sep-toggle closed" onclick="toggleSep(this)">Datos del vuelo <span class="sep-arrow">▾</span></div>
+    <div class="sep-body closed">
+      <div class="f2">
+        <div class="frow"><label>Aerolínea</label><input id="v-aerolinea" placeholder="Ej: KLM" oninput="autoFillVueloTitulo()"></div>
+        <div class="frow"><label>N° de vuelo</label><input id="v-numero" placeholder="Ej: KL702"></div>
+      </div>
+      <div class="f2">
+        <div class="frow"><label>Nombre aeropuerto origen</label><input id="v-origen" placeholder="Ej: EZE — Ministro Pistarini"></div>
+        <div class="frow"><label>Nombre aeropuerto destino</label><input id="v-destino" placeholder="Ej: AMS — Amsterdam Schiphol"></div>
+      </div>
+    </div>
     <div class="sep sep-toggle closed" onclick="toggleSep(this)">Equipaje <span class="sep-arrow">▾</span></div>
     <div class="sep-body closed">
       <div class="f3">
@@ -114,18 +119,6 @@
           <label>👜 Equipaje de mano</label>
           <input type="number" id="v-eq-mano" placeholder="0" min="0" max="99" style="text-align:center;font-size:16px;font-weight:700">
         </div>
-      </div>
-    </div>
-    <div class="sep sep-toggle closed" onclick="toggleSep(this)">Asientos y notas <span class="sep-arrow">▾</span></div>
-    <div class="sep-body closed">
-      <div class="frow"><label>Asientos</label><input id="v-asientos" placeholder="Ej: ER 14A · JN 14B · VS 15A · GG 15B"></div>
-      <div class="frow"><label>Notas</label><textarea id="v-notas" placeholder="Check-in online, millas, upgrade..."></textarea></div>
-      <div class="frow">
-        <label>Link boarding pass / documento</label>
-        <input type="url" id="ev-doc-link" placeholder="https://... (boarding pass, reserva, PDF)" style="font-size:16px">
-      </div>
-      <div class="frow" id="ev-doc-link-preview" style="display:none">
-        <a id="ev-doc-link-btn" href="#" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:#007AFF;text-decoration:none;display:flex;align-items:center;gap:6px">📎 Abrir documento adjunto</a>
       </div>
     </div>
     <input type="hidden" id="v-equipaje">
@@ -255,6 +248,13 @@
       <label class="part-btn sel" data-p="GG" onclick="togglePart(event,this)"><div class="av av4 np" style="width:28px;height:28px;font-size:10px;flex-shrink:0">GG</div>Gustavo</label>
     </div>
     <div id="costo-pp" class="costo-pp"></div>
+  </div>
+  <div class="frow">
+    <label>Link documento / ticket</label>
+    <input type="url" id="ev-doc-link" placeholder="https://... (boarding pass, reserva, e-ticket)" style="font-size:16px">
+  </div>
+  <div id="ev-doc-link-preview" style="display:none;padding:4px 0">
+    <a id="ev-doc-link-btn" href="#" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:#007AFF;text-decoration:none;display:inline-flex;align-items:center;gap:6px">📎 Abrir documento adjunto</a>
   </div>
   <div class="sep">Estado de pago</div>
   <div class="pago-row"><label>¿Está pago?</label>
@@ -521,7 +521,7 @@
 
   <section id="tab-gs" class="section">
     <button class="gasto-refresh" onclick="calcGastos()">🔄 Actualizar resumen de gastos</button>
-    <div id="gastos-wrap"><div class="loading">Los gastos se calculan en base a los montos cargados en los eventos del itinerario.</div></div>
+    <div id="gastos-wrap"><div style="text-align:center;padding:32px 16px;color:rgba(60,60,67,.5);font-size:14px;line-height:1.6">Los gastos se calculan en base a los montos<br>cargados en los eventos del itinerario.<br><span style="font-size:12px;color:rgba(60,60,67,.35);margin-top:8px;display:block">Editá cada evento y completá el campo Monto para que aparezca en el resumen.</span></div></div>
   </section>
 
   <section id="tab-rs" class="section">

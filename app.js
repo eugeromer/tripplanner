@@ -139,10 +139,12 @@ async function loadTripInit(){
     // ── Role ──
     const user = getAuth().currentUser;
     if(!user) return 'viewer';
-    if(t.ownerId === user.uid) return 'owner';
+    if(t.ownerId === user.uid){sessionStorage.setItem('tp_role','owner');return 'owner';}
     const member = (t.members||[]).find(m=>m.uid===user.uid);
-    return member?.role || 'editor';
-  }catch(e){ console.warn('Could not load trip config', e); return 'editor'; }
+    const role=member?.role||'editor';
+    sessionStorage.setItem('tp_role',role);
+    return role;
+  }catch(e){ console.warn('Could not load trip config', e); return sessionStorage.getItem('tp_role')||'viewer'; }
 }
 
 let USER_ROLE = 'editor'; // will be set on load
@@ -785,14 +787,18 @@ window.savEv=async()=>{
   const evs=[...(d.events||[])];
   if(ei!=='')evs[parseInt(ei)]=o;else evs.push(o);
   const sorted=sortEvents(evs);
+  const _btn=document.querySelector('#m-ev .bsav');
+  if(_btn){_btn.disabled=true;_btn.textContent='Guardando...';}
   try{
     await updateDoc(dref('days',di),{events:sorted});
     cm('m-ev');
-    showToast('Evento guardado');
+    showToast('Evento guardado','success');
     logActivity(ei!==''?'editó':'agregó','evento',titulo);
   }catch(e){
     console.error(e);
-    showToast('⚠ Error al guardar el evento');
+    showToast('⚠ Error al guardar el evento','error');
+  }finally{
+    if(_btn){_btn.disabled=false;_btn.textContent='Guardar';}
   }
 };
 window.delEv=async()=>{
@@ -812,14 +818,18 @@ window.savDay=async()=>{
   const fechaISO=document.getElementById('d-fecha').value;
   const dateDisp=fechaISO?fmtDateDisplay(fechaISO):(document.getElementById('d-fecha').value||'');
   const o={date:dateDisp||'—',fecha:fechaISO||'',label,city:document.getElementById('d-city').value,order:idx?(DAYS.find(x=>x._id===idx)?.order||99):DAYS.length+1,events:idx?(DAYS.find(x=>x._id===idx)?.events||[]):[]};
+  const _btn=document.querySelector('#m-day .bsav');
+  if(_btn){_btn.disabled=true;_btn.textContent='Guardando...';}
   try{
     if(idx)await setDoc(dref('days',idx),o);else await addDoc(col('days'),o);
     cm('m-day');
-    showToast('Día guardado');
+    showToast('Día guardado','success');
     logActivity(idx?'editó':'agregó','día',label);
   }catch(e){
     console.error(e);
-    showToast('⚠ Error al guardar el día');
+    showToast('⚠ Error al guardar el día','error');
+  }finally{
+    if(_btn){_btn.disabled=false;_btn.textContent='Guardar';}
   }
 };
 window.delDay=async()=>{if(USER_ROLE==='viewer'){showToast('Solo lectura — no tenés permisos para editar');return;}const idx=document.getElementById('d-idx').value;if(idx&&confirm('¿Eliminar este día y todos sus eventos? Esta acción no se puede deshacer.')){await deleteDoc(dref('days',idx));cm('m-day');showToast('Día eliminado');}};
@@ -889,14 +899,18 @@ window.savHotel=async()=>{
     pago:HOTEL_PAGO,
     order:idx?(HOTELS.find(x=>x._id===idx)?.order||99):HOTELS.length+1
   };
+  const _btn=document.querySelector('#m-hotel .bsav');
+  if(_btn){_btn.disabled=true;_btn.textContent='Guardando...';}
   try{
     if(idx)await setDoc(dref('hotels',idx),o);else await addDoc(col('hotels'),o);
     cm('m-hotel');
-    showToast('Alojamiento guardado');
+    showToast('Alojamiento guardado','success');
     logActivity(idx?'editó':'agregó','hotel',o.name);
   }catch(e){
     console.error(e);
-    showToast('⚠ Error al guardar el alojamiento');
+    showToast('⚠ Error al guardar el alojamiento','error');
+  }finally{
+    if(_btn){_btn.disabled=false;_btn.textContent='Guardar';}
   }
 };
 window.delHotel=async()=>{if(USER_ROLE==='viewer'){showToast('Solo lectura — no tenés permisos para editar');return;}const idx=document.getElementById('ht-idx').value;if(idx&&confirm('¿Eliminar este alojamiento? Esta acción no se puede deshacer.')){const _hname=HOTELS.find(x=>x._id===idx)?.name||'hotel';await deleteDoc(dref('hotels',idx));cm('m-hotel');showToast('Alojamiento eliminado');logActivity('eliminó','hotel',_hname);}};
@@ -904,7 +918,7 @@ window.delHotel=async()=>{if(USER_ROLE==='viewer'){showToast('Solo lectura — n
 // ── CHECKLIST ─────────────────────────────────────────────
 window.openNewChk=gk=>{document.getElementById('m-chk-t').textContent='Nueva tarea · '+gk;document.getElementById('ck-gk').value=gk;document.getElementById('ck-idx').value='';document.getElementById('ck-txt').value='';document.getElementById('b-ckdel').style.display='none';om('m-chk');};
 window.openEditChk=(gk,id)=>{const item=(CHECKLIST[gk]||[]).find(x=>x._id===id||x.id===id);if(!item)return;document.getElementById('m-chk-t').textContent='Editar tarea';document.getElementById('ck-gk').value=gk;document.getElementById('ck-idx').value=item._id||item.id;document.getElementById('ck-txt').value=item.text;document.getElementById('b-ckdel').style.display='inline-block';om('m-chk');};
-window.savChk=async()=>{if(USER_ROLE==='viewer'){showToast('Solo lectura — no tenés permisos para editar');return;}const gk=document.getElementById('ck-gk').value;const idx=document.getElementById('ck-idx').value;const txt=document.getElementById('ck-txt').value.trim();if(!txt){showFieldError('ck-txt','La descripción es obligatoria');return;}try{if(idx)await updateDoc(dref('checklist',idx),{text:txt});else await setDoc(dref('checklist','c'+Date.now()),{id:'c'+Date.now(),group:gk,text:txt,order:100+Date.now()%1000});cm('m-chk');showToast('Tarea guardada');}catch(e){console.error(e);showToast('⚠ Error al guardar la tarea');}};
+window.savChk=async()=>{if(USER_ROLE==='viewer'){showToast('Solo lectura — no tenés permisos para editar');return;}const gk=document.getElementById('ck-gk').value;const idx=document.getElementById('ck-idx').value;const txt=document.getElementById('ck-txt').value.trim();if(!txt){showFieldError('ck-txt','La descripción es obligatoria');return;}const _btn=document.querySelector('#m-chk .bsav');if(_btn){_btn.disabled=true;_btn.textContent='Guardando...';}try{if(idx)await updateDoc(dref('checklist',idx),{text:txt});else await setDoc(dref('checklist','c'+Date.now()),{id:'c'+Date.now(),group:gk,text:txt,order:100+Date.now()%1000});cm('m-chk');showToast('Tarea guardada','success');}catch(e){console.error(e);showToast('⚠ Error al guardar la tarea','error');}finally{if(_btn){_btn.disabled=false;_btn.textContent='Guardar';}}};
 window.delChk=async()=>{if(USER_ROLE==='viewer'){showToast('Solo lectura — no tenés permisos para editar');return;}const idx=document.getElementById('ck-idx').value;if(idx&&confirm('¿Eliminar esta tarea? Esta acción no se puede deshacer.')){await deleteDoc(dref('checklist',idx));cm('m-chk');showToast('Tarea eliminada');}};
 window.toggleChk=async id=>{if(USER_ROLE==='viewer'){showToast('Solo lectura — no tenés permisos para editar');return;}await setDoc(dref('checks',id),{done:!CHECKS[id]});};
 
@@ -970,13 +984,17 @@ window.savProfile = async () => {
     nota: document.getElementById('prof-nota').value,
     _name: tvlItem.fn || key, // store name for lookup
   };
+  const _btn=document.querySelector('#m-profile .bsav');
+  if(_btn){_btn.disabled=true;_btn.textContent='Guardando...';}
   try{
     await setDoc(dref('profiles', saveKey), data);
     cm('m-profile');
-    showToast('Perfil actualizado');
+    showToast('Perfil actualizado','success');
   }catch(e){
     console.error(e);
-    showToast('⚠ Error al guardar el perfil');
+    showToast('⚠ Error al guardar el perfil','error');
+  }finally{
+    if(_btn){_btn.disabled=false;_btn.textContent='Guardar perfil';}
   }
 };
 
@@ -2483,12 +2501,14 @@ function updateMasBadge(){
 
 // ── TOAST ─────────────────────────────────────────────────
 let _toastTimer;
-function showToast(msg='Guardado'){
+function showToast(msg='Guardado',type='default'){
   const t=document.getElementById('toast');
   t.textContent=msg;
-  t.classList.add('show');
+  t.className='toast show';
+  if(type==='error')t.classList.add('toast-error');
+  if(type==='success')t.classList.add('toast-success');
   clearTimeout(_toastTimer);
-  _toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+  _toastTimer=setTimeout(()=>{t.classList.remove('show','toast-error','toast-success');},2500);
 }
 
 // ── ACTIVITY FEED ────────────────────────────────────────
