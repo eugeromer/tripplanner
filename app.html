@@ -120,6 +120,13 @@
     <div class="sep-body closed">
       <div class="frow"><label>Asientos</label><input id="v-asientos" placeholder="Ej: ER 14A · JN 14B · VS 15A · GG 15B"></div>
       <div class="frow"><label>Notas</label><textarea id="v-notas" placeholder="Check-in online, millas, upgrade..."></textarea></div>
+      <div class="frow">
+        <label>Link boarding pass / documento</label>
+        <input type="url" id="ev-doc-link" placeholder="https://... (boarding pass, reserva, PDF)" style="font-size:16px">
+      </div>
+      <div class="frow" id="ev-doc-link-preview" style="display:none">
+        <a id="ev-doc-link-btn" href="#" target="_blank" style="font-size:13px;color:#007AFF;text-decoration:none;display:flex;align-items:center;gap:6px">📎 Abrir documento adjunto</a>
+      </div>
     </div>
     <input type="hidden" id="v-equipaje">
   </div>

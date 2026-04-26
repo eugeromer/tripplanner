@@ -660,6 +660,8 @@ window.openNewEv=dayId=>{
   document.getElementById('costo-pp').classList.remove('show');
   document.getElementById('costo-pp').textContent='';
   resetSubtipo();
+  const docLinkInp=document.getElementById('ev-doc-link');
+  if(docLinkInp){docLinkInp.value='';const pr=document.getElementById('ev-doc-link-preview');if(pr)pr.style.display='none';}
   om('m-ev');
 };
 
@@ -707,6 +709,14 @@ window.openEditEv=(dayId,ei)=>{
   setParticipantes(ev.participantes||[]);
   calcCostoPP();
   if(tipo==='actividad')setSubtipo(ev.extras?.subtipo||'actividad');
+  const docLinkInput=document.getElementById('ev-doc-link');
+  if(docLinkInput){
+    const val=ev.extras?.docLink||ev.docLink||'';
+    docLinkInput.value=val;
+    const preview=document.getElementById('ev-doc-link-preview');
+    const btn=document.getElementById('ev-doc-link-btn');
+    if(preview&&btn){preview.style.display=val?'block':'none';if(val)btn.href=val;}
+  }
   om('m-ev');
 };
 
@@ -748,7 +758,8 @@ window.savEv=async()=>{
   const _editorI=_tvlMe?.i||(getAuth().currentUser?.email||'?')[0].toUpperCase();
   const extras=collectExtras();
   if(EVTIPO==='actividad')extras.subtipo=EVSUBTIPO;
-  const o={tipo:EVTIPO,hora:document.getElementById('ev-hora').value||'',fecha:document.getElementById('ev-fecha').value||'',titulo,pago:PAGADO,extras,monto,moneda,participantes,_lastEdit:{user:_editorI,ts:Date.now()}};
+  const docLink=document.getElementById('ev-doc-link')?.value.trim()||null;
+  const o={tipo:EVTIPO,hora:document.getElementById('ev-hora').value||'',fecha:document.getElementById('ev-fecha').value||'',titulo,pago:PAGADO,extras,monto,moneda,participantes,docLink,_lastEdit:{user:_editorI,ts:Date.now()}};
   const d=DAYS.find(x=>x._id===di);if(!d)return;
   const evs=[...(d.events||[])];
   if(ei!=='')evs[parseInt(ei)]=o;else evs.push(o);
@@ -966,6 +977,9 @@ function buildActionBtns(ev){
   }
 
   // ── SECONDARY: extra actions when relevant ──
+  if(ev.tipo==='vuelo'&&ev.docLink){
+    secondary+=`<a href="${escapeHtml(ev.docLink)}" target="_blank" rel="noopener noreferrer" class="action-btn action-secondary">📎 Ver documento</a>`;
+  }
   if(ev.tipo==='vuelo'&&(x.maps||(x.origen&&x.destino))){
     // Flight already has primary, add maps as secondary if available
   }
@@ -1015,6 +1029,7 @@ function buildDetails(ev){
     if(x.equipaje) d+=`<div class="edetail full"><label>Equipaje</label><p>${escapeHtml(x.equipaje)}</p></div>`;
     if(x.asientos) d+=`<div class="edetail full"><label>Asientos</label><p>${escapeHtml(x.asientos)}</p></div>`;
     if(x.notas) d+=`<div class="edetail full"><label>Notas</label><p>${escapeHtml(x.notas)}</p></div>`;
+    if(ev.docLink) d+=`<div class="edetail full"><label>Documento</label><p><a href="${escapeHtml(ev.docLink)}" target="_blank" rel="noopener noreferrer" style="color:#007AFF;text-decoration:none">📎 Abrir boarding pass / documento</a></p></div>`;
   }else if(tipo==='hotel'){
     if(x.dir) d+=`<div class="edetail full"><label>Dirección</label><p>${escapeHtml(x.dir)}${x.maps&&x.maps.startsWith('http')?` <a href="${x.maps}" target="_blank">📍 Maps</a>`:''}</p></div>`;
     if(x.cinFecha||x.cinHora) d+=`<div class="edetail"><label>Check-in</label><p>${x.cinFecha?fmtDateDisplay(x.cinFecha):''} ${escapeHtml(x.cinHora||'')}</p></div>`;
@@ -1133,6 +1148,7 @@ window.renderCurrentDay=()=>{
           </div>
           <div class="ev-titulo">${tit}</div>
           ${sub?`<div class="ev-sub">${sub}</div>`:''}
+          ${ev.docLink?`<a href="${escapeHtml(ev.docLink)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="font-size:11px;color:#007AFF;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-top:2px">📎 Ver documento</a>`:''}
           ${pagoCol?`<div class="ev-pago-dot" style="background:${pagoCol}"></div>`:`<div class="ev-pago-dot na"></div>`}
         </div>`;
       }).join('');
@@ -2466,4 +2482,12 @@ function showFieldError(fieldId,msg){
   el.addEventListener('input',()=>{el.style.borderColor='';el.style.borderWidth='';},{once:true});
   showToast('⚠ '+msg);
 }
+
+// ── DOC LINK PREVIEW ─────────────────────────────────────
+document.getElementById('ev-doc-link')?.addEventListener('input',function(){
+  const preview=document.getElementById('ev-doc-link-preview');
+  const btn=document.getElementById('ev-doc-link-btn');
+  if(this.value.trim()){preview.style.display='block';btn.href=this.value.trim();}
+  else{preview.style.display='none';}
+});
 
