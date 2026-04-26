@@ -397,6 +397,8 @@ function loadCache(name){try{const d=localStorage.getItem(cacheKey(name));return
 
 // Tracks which lazy listeners have been registered
 const _L={};
+// Stores unsubscribe functions for all active Firestore listeners
+const _UNSUB={};
 
 // Register listeners for secondary tabs on first visit
 function ensureListeners(tab){
@@ -404,7 +406,7 @@ function ensureListeners(tab){
     _L.ht=true;
     const cachedHT=loadCache('hotels');
     if(cachedHT&&cachedHT.length){HOTELS=cachedHT;renderHotels();updateStats();populateHotelSelector();}
-    onSnapshot(query(col('hotels'),orderBy('order')),s=>{
+    _UNSUB.hotels=onSnapshot(query(col('hotels'),orderBy('order')),s=>{
       HOTELS=s.docs.map(d=>({...d.data(),_id:d.id}));
       saveCache('hotels',HOTELS);
       renderHotels();updateStats();populateHotelSelector();
@@ -414,7 +416,7 @@ function ensureListeners(tab){
     _L.pr=true;
     const cachedPR=loadCache('profiles');
     if(cachedPR&&Object.keys(cachedPR).length){PROFILES=cachedPR;renderProfiles();}
-    onSnapshot(col('profiles'),s=>{
+    _UNSUB.profiles=onSnapshot(col('profiles'),s=>{
       PROFILES={};s.docs.forEach(d=>PROFILES[d.id]=d.data());
       saveCache('profiles',PROFILES);
       renderProfiles();
@@ -426,13 +428,13 @@ function ensureListeners(tab){
     if(cachedCL&&Object.keys(cachedCL).length){CHECKLIST=cachedCL;renderChecklist();}
     const cachedCK=loadCache('checks');
     if(cachedCK&&Object.keys(cachedCK).length){CHECKS=cachedCK;renderChecklist();}
-    onSnapshot(col('checklist'),s=>{
+    _UNSUB.checklist=onSnapshot(col('checklist'),s=>{
       const items=s.docs.map(d=>({...d.data(),_id:d.id})).sort((a,b)=>(a.order||0)-(b.order||0));
       CHECKLIST={};items.forEach(i=>{if(!CHECKLIST[i.group])CHECKLIST[i.group]=[];CHECKLIST[i.group].push(i);});
       saveCache('checklist',CHECKLIST);
       renderChecklist();
     });
-    onSnapshot(col('checks'),s=>{
+    _UNSUB.checks=onSnapshot(col('checks'),s=>{
       CHECKS={};s.docs.forEach(d=>CHECKS[d.id]=d.data().done);
       saveCache('checks',CHECKS);
       renderChecklist();
@@ -442,7 +444,7 @@ function ensureListeners(tab){
     _L.nt=true;
     const cachedNT=loadCache('notes');
     if(cachedNT&&cachedNT.length){NOTES=cachedNT;renderNotes();}
-    onSnapshot(query(col('notes'),orderBy('ts','desc')),s=>{
+    _UNSUB.notes=onSnapshot(query(col('notes'),orderBy('ts','desc')),s=>{
       NOTES=s.docs.map(d=>({...d.data(),_id:d.id}));
       saveCache('notes',NOTES);
       renderNotes();
@@ -453,7 +455,7 @@ function ensureListeners(tab){
     _L.ft=true;
     const cachedFT=loadCache('photos');
     if(cachedFT&&cachedFT.length){PHOTOS=cachedFT;renderPhotos();}
-    onSnapshot(query(col('photos'),orderBy('ts','desc')),s=>{
+    _UNSUB.photos=onSnapshot(query(col('photos'),orderBy('ts','desc')),s=>{
       PHOTOS=s.docs.map(d=>({...d.data(),_id:d.id}));
       saveCache('photos',PHOTOS);
       renderPhotos();
@@ -463,12 +465,12 @@ function ensureListeners(tab){
 }
 
 function initListeners(){
-  onSnapshot(query(col('days'),orderBy('order')),s=>{
+  _UNSUB.days=onSnapshot(query(col('days'),orderBy('order')),s=>{
     DAYS=s.docs.map(d=>({...d.data(),_id:d.id}));
     saveCache('days',DAYS);
     renderDays();updateStats();autoTheme();
   });
-  onSnapshot(col('avatars'),s=>{
+  _UNSUB.avatars=onSnapshot(col('avatars'),s=>{
     AVATARS={};s.docs.forEach(d=>AVATARS[d.id]=d.data().data);
     saveCache('avatars',AVATARS);
     renderTvl();renderNotesPbtns();renderPhotoPbtns();renderProfiles();
@@ -2448,6 +2450,11 @@ function showToast(msg='Guardado'){
   clearTimeout(_toastTimer);
   _toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
 }
+
+// ── LISTENER CLEANUP ─────────────────────────────────────
+window.addEventListener('beforeunload',()=>{
+  Object.values(_UNSUB).forEach(unsub=>{if(typeof unsub==='function')unsub();});
+});
 
 // ── FIELD ERROR ───────────────────────────────────────────
 function showFieldError(fieldId,msg){
