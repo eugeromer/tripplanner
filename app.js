@@ -586,7 +586,7 @@ window.showTabMas=(n,label)=>{
   updateMasBadge();
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');const t=document.getElementById('main-tab-mas');if(t){t.classList.add('active');const lbl=t.querySelector('.ntab-label');if(lbl)lbl.textContent=label;}closeMasMenu();ensureListeners(n);
 };
-window.showTab=(n,el)=>{document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active');ensureListeners(n);};
+window.showTab=(n,el)=>{document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active');ensureListeners(n);if(n==='gs')calcGastos();};
 window.toggleEdit=el=>{
   if(USER_ROLE==='viewer'){
     alert('Tenés acceso de solo lectura en este viaje. Pedile al creador que te dé permisos de edición.');

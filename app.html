@@ -28,14 +28,14 @@
 <body data-theme="amsterdam">
 
 <div class="vbg" id="vbg" onclick="closeViewer()">
-  <button class="vclose" onclick="closeViewer()">×</button>
+  <button class="vclose" aria-label="Cerrar" onclick="closeViewer()">×</button>
   <img class="vimg" id="vimg" src="" alt="">
   <div class="vcap" id="vcap"></div>
 </div>
 
 <!-- MODAL EVENTO -->
 <div class="mbg" id="m-ev"><div class="mbox">
-  <div class="mbox-handle"></div><h3 id="m-ev-t">Evento <button onclick="cm('m-ev')">×</button></h3>
+  <div class="mbox-handle"></div><h3 id="m-ev-t">Evento <button aria-label="Cerrar" onclick="cm('m-ev')">×</button></h3>
   <div class="mbox-body">
   <input type="hidden" id="ev-di"><input type="hidden" id="ev-ei">
   <div class="frow">
@@ -125,7 +125,7 @@
         <input type="url" id="ev-doc-link" placeholder="https://... (boarding pass, reserva, PDF)" style="font-size:16px">
       </div>
       <div class="frow" id="ev-doc-link-preview" style="display:none">
-        <a id="ev-doc-link-btn" href="#" target="_blank" style="font-size:13px;color:#007AFF;text-decoration:none;display:flex;align-items:center;gap:6px">📎 Abrir documento adjunto</a>
+        <a id="ev-doc-link-btn" href="#" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:#007AFF;text-decoration:none;display:flex;align-items:center;gap:6px">📎 Abrir documento adjunto</a>
       </div>
     </div>
     <input type="hidden" id="v-equipaje">
@@ -274,7 +274,7 @@
 
 <!-- MODAL DÍA -->
 <div class="mbg" id="m-day"><div class="mbox">
-  <div class="mbox-handle"></div><h3 id="m-day-t">Día <button onclick="cm('m-day')">×</button></h3>
+  <div class="mbox-handle"></div><h3 id="m-day-t">Día <button aria-label="Cerrar" onclick="cm('m-day')">×</button></h3>
   <div class="mbox-body">
   <input type="hidden" id="d-idx">
   <div class="frow"><label>Título del día</label><input id="d-label" placeholder="Ej: Amsterdam — canales y museos"></div>
@@ -294,7 +294,7 @@
 
 <!-- MODAL HOTEL COMPLETO -->
 <div class="mbg" id="m-hotel"><div class="mbox">
-  <div class="mbox-handle"></div><h3 id="m-hotel-t">Alojamiento <button onclick="cm('m-hotel')">×</button></h3>
+  <div class="mbox-handle"></div><h3 id="m-hotel-t">Alojamiento <button aria-label="Cerrar" onclick="cm('m-hotel')">×</button></h3>
   <div class="mbox-body">
   <input type="hidden" id="ht-idx">
   <div class="frow"><label>Nombre del hotel</label><input id="ht-name" placeholder="Ej: Katikies Santorini"></div>
@@ -343,7 +343,7 @@
 
 <!-- MODAL CHECKLIST -->
 <div class="mbg" id="m-chk"><div class="mbox">
-  <div class="mbox-handle"></div><h3 id="m-chk-t">Tarea <button onclick="cm('m-chk')">×</button></h3>
+  <div class="mbox-handle"></div><h3 id="m-chk-t">Tarea <button aria-label="Cerrar" onclick="cm('m-chk')">×</button></h3>
   <div class="mbox-body">
   <input type="hidden" id="ck-gk"><input type="hidden" id="ck-idx">
   <div class="frow"><label>Descripción</label><textarea id="ck-txt"></textarea></div>
@@ -357,7 +357,7 @@
 
 <!-- MODAL PERFIL -->
 <div class="mbg" id="m-profile"><div class="mbox">
-  <div class="mbox-handle"></div><h3 id="m-profile-t">Perfil <button onclick="cm('m-profile')">×</button></h3>
+  <div class="mbox-handle"></div><h3 id="m-profile-t">Perfil <button aria-label="Cerrar" onclick="cm('m-profile')">×</button></h3>
   <div class="mbox-body">
   <input type="hidden" id="prof-key">
   <div class="frow"><label>🍽 Comida — gustos y restricciones</label><textarea id="prof-comida"></textarea></div>
@@ -373,7 +373,7 @@
 
 <!-- APP -->
 <div class="sync-bar" id="sbar" style="justify-content:space-between;padding:4px 16px">
-  <a href="index.html" style="color:var(--accent);text-decoration:none;font-size:13px;font-weight:500;display:flex;align-items:center;gap:3px">‹ Mis viajes</a>
+  <a href="index.html" style="color:var(--accent);text-decoration:none;font-size:13px;font-weight:500;display:flex;align-items:center;gap:3px">‹ Inicio</a>
   <div style="display:flex;align-items:center;gap:6px"><div class="sdot warn" id="sdot"></div><span id="stxt" style="font-size:12px;font-weight:500">Conectando...</span></div>
   <div style="width:80px"></div>
 </div>
@@ -515,13 +515,13 @@
       </div>
     </div>
     <div style="text-align:center;padding:12px">
-      <button onclick="clearOldActivity()" style="font-size:12px;color:rgba(60,60,67,.4);background:none;border:none;cursor:pointer">Limpiar actividad antigua</button>
+      <button onclick="clearOldActivity()" style="font-size:12px;color:rgba(60,60,67,.4);background:none;border:none;cursor:pointer">Limpiar actividad de hace +7 días</button>
     </div>
   </section>
 
   <section id="tab-gs" class="section">
     <button class="gasto-refresh" onclick="calcGastos()">🔄 Actualizar resumen de gastos</button>
-    <div id="gastos-wrap"><div class="loading">Tocá "Actualizar" para calcular los gastos del viaje.</div></div>
+    <div id="gastos-wrap"><div class="loading">Los gastos se calculan en base a los montos cargados en los eventos del itinerario.</div></div>
   </section>
 
   <section id="tab-rs" class="section">
@@ -612,6 +612,6 @@
     navigator.serviceWorker.register("sw.js", { scope: "/tabi/" });
   }
 </script>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>
