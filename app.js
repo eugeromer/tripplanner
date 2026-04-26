@@ -373,30 +373,13 @@ function getDateObjFromDay(d){
   return null;
 }
 
-// Normaliza rangos ("25–26 jun") mostrando solo el día de inicio por card
+// fecha ISO es la fuente de verdad. NO expande rangos del campo `date` (eso es solo display).
+// Filtra docs sin fecha válida y ordena cronológicamente — una entrada por doc.
 function getDisplayDays(){
-  const MNUM={ene:1,feb:2,mar:3,abr:4,may:5,jun:6,jul:7,ago:8,sep:9,oct:10,nov:11,dic:12};
-  const MNAME=['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-  const yr=parseInt((DAYS.find(x=>x.fecha?.match(/^\d{4}/))?.fecha||'2026').slice(0,4));
-  return DAYS.map(d=>{
-    const rm=(d.date||'').match(/^(\d+)[-–](\d+)(?:\s*([a-záéíóú]+))?/i);
-    if(rm){
-      const s=parseInt(rm[1]);
-      let mon=rm[3]?MNUM[rm[3].toLowerCase()]:null;
-      if(!mon){
-        for(const x of DAYS){
-          if(x.fecha?.match(/^\d{4}-\d{2}-\d{2}$/)){mon=parseInt(x.fecha.slice(5,7));break;}
-          const mm=(x.date||'').match(/\b(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)\b/i);
-          if(mm){mon=MNUM[mm[1].toLowerCase()];break;}
-        }
-      }
-      if(mon&&!isNaN(s)){
-        const fecha=`${yr}-${String(mon).padStart(2,'0')}-${String(s).padStart(2,'0')}`;
-        return {...d,fecha,date:`${s} ${MNAME[mon]}`,_displayId:d._id};
-      }
-    }
-    return {...d,_displayId:d._id};
-  });
+  return DAYS
+    .filter(d=>typeof d.fecha==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d.fecha))
+    .map(d=>({...d,_displayId:d._id}))
+    .sort((a,b)=>a.fecha.localeCompare(b.fecha));
 }
 
 // ── HOTEL SELECTOR IN EVENT FORM ─────────────────────────
