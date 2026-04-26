@@ -63,7 +63,8 @@ async function loadTripInit(){
     // ── Hero title ──
     const titleEl = document.getElementById('hero-title');
     const destEl = document.getElementById('hero-dest');
-    const subEl = document.querySelector('.hero-sub');
+    const subEl = document.getElementById('hero-sub');
+    const pillsEl = document.getElementById('hero-pills');
     if(t.nombre && titleEl){
       const normNombre = t.nombre.replace(/Amsterdam/gi,'Países Bajos');
       const parts = normNombre.split('·').map(p=>p.trim()).filter(Boolean);
@@ -82,13 +83,6 @@ async function loadTripInit(){
       };
       const destNorm = [...new Set(t.destinos.map(normalize))];
       destEl.textContent = '🌍 ' + destNorm.slice(0,3).join(' · ') + (destNorm.length > 3 ? ' & más' : '');
-    }
-    if(subEl){
-      const from = t.fechaSalida ? fmtDateDisplay(t.fechaSalida) : '';
-      const to = t.fechaRegreso ? fmtDateDisplay(t.fechaRegreso) : '';
-      const memberCount = (t.members||[]).length;
-      const dateStr = from && to ? `${from} → ${to}` : from || '';
-      subEl.textContent = [dateStr, memberCount ? `${memberCount} viajeros` : ''].filter(Boolean).join(' · ');
     }
     if(t.members?.length){
       const seen = new Map();
@@ -109,7 +103,38 @@ async function loadTripInit(){
         fn: m.name||`Viajero ${i+1}`,
         a: `av${(i%4)+1}`
       }));
+      // Update FN and AV from TVL_OVERRIDE
+      FN={};window.TVL_OVERRIDE.forEach(x=>FN[x.i]=x.fn||x.n);
+      AV={};window.TVL_OVERRIDE.forEach((x,i)=>AV[x.i]='av'+(i+1));
     }
+    // ── Hero sub (fechas + días + viajeros) ──
+    if(subEl){
+      const from = t.fechaSalida ? fmtDateDisplay(t.fechaSalida) : '';
+      const to = t.fechaRegreso ? fmtDateDisplay(t.fechaRegreso) : '';
+      const tvlList = window.TVL_OVERRIDE || TVL;
+      const dateStr = from && to ? `${from} → ${to}` : from || '';
+      let diasStr = '';
+      if(t.fechaSalida && t.fechaRegreso){
+        const d1=new Date(t.fechaSalida);const d2=new Date(t.fechaRegreso);
+        const dias=Math.round((d2-d1)/(1000*60*60*24))+1;
+        diasStr=`${dias} días`;
+      }
+      subEl.textContent = [dateStr, diasStr, tvlList.length ? `${tvlList.length} viajeros` : ''].filter(Boolean).join(' · ');
+    }
+    // ── Hero pills (destinos dinámicos) ──
+    if(pillsEl && t.destinos?.length){
+      const FLAG={Amsterdam:'🇳🇱',Ámsterdam:'🇳🇱','Países Bajos':'🇳🇱',Grecia:'🇬🇷',Turquía:'🇹🇷'};
+      const normalize = d => {
+        if(/amsterdam/i.test(d)) return 'Países Bajos';
+        if(/atenas|mykonos|naxos|santorini|milos|paros|koufonisia/i.test(d)) return 'Grecia';
+        if(/estambul|capadocia|estanbul/i.test(d)) return 'Turquía';
+        return d;
+      };
+      const destNorm = [...new Set(t.destinos.map(normalize))];
+      pillsEl.innerHTML = destNorm.map(d=>`<div class="dest-chip">${escapeHtml((FLAG[d]||'🌍')+' '+d)}</div>`).join('');
+    }
+    // ── Countdown departure date ──
+    if(t.fechaSalida) TRIP_DEPARTURE=new Date(t.fechaSalida+'T00:00:00');
 
     // ── Role ──
     const user = getAuth().currentUser;
@@ -132,8 +157,9 @@ let DAYS=[],HOTELS=[],CHECKLIST={},CHECKS={},NOTES=[],PHOTOS=[],PROFILES={},AVAT
 let WEATHER_CACHE={};
 
 const TVL=[{i:'ER',n:'Eugenia',fn:'Eugenia Romero',a:'av1'},{i:'JN',n:'Juan José',fn:'Juan José Noguera',a:'av2'},{i:'VS',n:'Valeria',fn:'Valeria Secchi',a:'av3'},{i:'GG',n:'Gustavo',fn:'Gustavo García',a:'av4'}];
-const FN={ER:'Eugenia Romero',JN:'Juan José Noguera',VS:'Valeria Secchi',GG:'Gustavo García'};
-const AV={ER:'av1',JN:'av2',VS:'av3',GG:'av4'};
+let FN={};TVL.forEach(t=>FN[t.i]=t.fn||t.n);
+let AV={};TVL.forEach((t,i)=>AV[t.i]='av'+(i+1));
+let TRIP_DEPARTURE=new Date('2026-06-21T00:00:00');
 const CL={amsterdam:'Países Bajos',grecia:'Grecia',turquia:'Turquía',transito:'Tránsito'};
 const TIPO_COLOR={vuelo:'#2563EB',hotel:'#7C3AED',actividad:'#059669',restaurante:'#DC2626',traslado:'#D97706',otro:'#64748B'};
 const TIPO_LABEL={vuelo:'Vuelo',hotel:'Hotel',actividad:'Actividad',restaurante:'Restaurante',traslado:'Traslado',otro:'Otro'};
@@ -2367,7 +2393,7 @@ renderTvl();
 
 // ── COUNTDOWN ─────────────────────────────────────────────
 function updateCountdown(){
-  const target=new Date('2026-06-21T00:00:00');
+  const target=TRIP_DEPARTURE;
   const now=new Date();
   const diff=target-now;
   if(diff<=0){const w=document.getElementById('countdown-wrap');if(w)w.style.display='none';return;}
