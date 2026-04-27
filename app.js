@@ -682,10 +682,34 @@ window.setPago=(v)=>{PAGADO=v;['si','no','na'].forEach(x=>{const b=document.getE
 window.setHotelPago=(v)=>{HOTEL_PAGO=v;['si','no','na'].forEach(x=>{const b=document.getElementById('ht-pago-'+x);if(b)b.className='ptbtn'+(x===v?' '+x:'');});};
 
 // ── EVENTS ────────────────────────────────────────────────
+function _setupFechaAviso(dayId){
+  const _diaActual=DAYS.find(x=>x._id===dayId);
+  const _fechaDia=_diaActual?.fecha||'';
+  const avisoEl=document.getElementById('ev-fecha-aviso');
+  if(avisoEl){avisoEl.style.display='none';avisoEl.textContent='';}
+  const fechaInp=document.getElementById('ev-fecha');
+  if(!fechaInp)return;
+  if(fechaInp._onFechaChange)fechaInp.removeEventListener('change',fechaInp._onFechaChange);
+  fechaInp._onFechaChange=function(){
+    const dst=DAYS.find(x=>x.fecha===this.value);
+    if(avisoEl){
+      if(this.value&&this.value!==_fechaDia&&dst){
+        avisoEl.textContent='⚠ Al guardar, este evento se moverá a: '+dst.label;
+        avisoEl.style.display='block';
+      }else{
+        avisoEl.style.display='none';
+        avisoEl.textContent='';
+      }
+    }
+  };
+  fechaInp.addEventListener('change',fechaInp._onFechaChange);
+}
+
 window.openNewEv=dayId=>{
   document.getElementById('m-ev-t').textContent='Nuevo evento';
   document.getElementById('ev-di').value=dayId;document.getElementById('ev-ei').value='';
   document.getElementById('ev-hora').value='';document.getElementById('ev-fecha').value='';
+  _setupFechaAviso(dayId);
   const nd=document.getElementById('v-next-day');if(nd)nd.checked=false;
   document.getElementById('ev-titulo').value='';
   ['v-cod-origen','v-cod-destino','v-eq-maleta','v-eq-carry','v-eq-mano','v-aerolinea','v-numero','v-origen','v-destino','v-salida','v-llegada','v-duracion','v-terminal','v-escala','v-pnr','v-clase','v-equipaje','v-asientos','v-notas',
@@ -762,6 +786,7 @@ window.openEditEv=(dayId,ei)=>{
     const btn=document.getElementById('ev-doc-link-btn');
     if(preview&&btn){preview.style.display=val?'block':'none';if(val)btn.href=val;}
   }
+  _setupFechaAviso(dayId);
   om('m-ev');
 };
 
@@ -808,6 +833,38 @@ window.savEv=async()=>{
   if(docLink&&!docLink.startsWith('http')){showToast('⚠ El link debe empezar con https://','error');return;}
   const o={tipo:EVTIPO,hora:document.getElementById('ev-hora').value||'',fecha:document.getElementById('ev-fecha').value||'',titulo,pago:PAGADO,extras,monto,moneda,participantes,docLink,_lastEdit:{user:_editorI,ts:Date.now()}};
   const d=DAYS.find(x=>x._id===di);if(!d)return;
+
+  const evFecha=document.getElementById('ev-fecha')?.value;
+  const fechaDiaActual=d.fecha;
+  if(evFecha&&fechaDiaActual&&evFecha!==fechaDiaActual){
+    const diaDestino=DAYS.find(x=>x.fecha===evFecha);
+    if(!diaDestino){showToast('⚠ No existe un día para esa fecha','error');return;}
+    const _btn=document.querySelector('#m-ev .bsav');
+    if(_btn){_btn.disabled=true;_btn.textContent='Guardando...';}
+    try{
+      const evsActual=[...(d.events||[])];
+      if(ei!=='')evsActual.splice(parseInt(ei),1);
+      const evsDestino=[...(diaDestino.events||[])];
+      evsDestino.push(o);
+      const sortedActual=sortEvents(evsActual);
+      const sortedDestino=sortEvents(evsDestino);
+      await updateDoc(dref('days',di),{events:sortedActual});
+      try{await updateDoc(doc(db,'days',di),{events:sortedActual});}catch(_){}
+      await updateDoc(dref('days',diaDestino._id),{events:sortedDestino});
+      try{await updateDoc(doc(db,'days',diaDestino._id),{events:sortedDestino});}catch(_){}
+      cm('m-ev');
+      showToast('Evento movido al '+diaDestino.label,'success');
+      logActivity('movió','evento',titulo);
+    }catch(e){
+      console.error(e);
+      showToast('⚠ Error al mover el evento','error');
+    }finally{
+      const _btn2=document.querySelector('#m-ev .bsav');
+      if(_btn2){_btn2.disabled=false;_btn2.textContent='Guardar';}
+    }
+    return;
+  }
+
   const evs=[...(d.events||[])];
   if(ei!=='')evs[parseInt(ei)]=o;else evs.push(o);
   const sorted=sortEvents(evs);
